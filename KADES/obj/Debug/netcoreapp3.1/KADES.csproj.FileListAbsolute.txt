@@ -1,0 +1,8 @@
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.csproj.AssemblyReference.cache
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.GeneratedMSBuildEditorConfig.editorconfig
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.AssemblyInfoInputs.cache
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.AssemblyInfo.cs
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.csproj.CoreCompileInputs.cache
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.MvcApplicationPartsAssemblyInfo.cache
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.RazorAssemblyInfo.cache
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\netcoreapp3.1\KADES.RazorAssemblyInfo.cs

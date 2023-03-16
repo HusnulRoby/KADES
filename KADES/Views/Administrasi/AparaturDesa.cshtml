@@ -1,0 +1,208 @@
+﻿@using KADES.Models.Administrasi;
+@{
+    ViewData["Title"] = "Administrasi";
+
+}
+
+@model AdministrasiModels;
+
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- table section -->
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Buku Aparatur Desa</h2>
+                        <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
+
+                    </div>
+
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table id="dataTable" class="table" style="width:100%">
+                            <thead class="thead-light" style="text-align:center">
+                                <tr>
+                                    <th width="150px">#</th>
+                                    <th>Nama</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Jabatan</th>
+                                    <th>No Telp</th>
+                                    <th>Alamat</th>
+                                    <th>Tanggal Pengangkatan</th>
+                                    <th>Tanggal Pemberhentian</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListVW_AparaturDesa)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+
+                                                <form asp-action="DeleteAparaturDesa" asp-route-id="@item.ID" id="DelAparaturDesa" method="post">
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur-"+item.ID)" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" style="margin-bottom:3px" />
+                                                    @*<input type="button" id="update" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur")" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" />*@
+                                                    @*<input type="button" class="btn btn-sm  cur-p btn-outline-info" onclick="updateAparaturDesa(@item.ID)" value="Update" />*@
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" data-toggle="modal" data-target="@("#inactiveAparatur-"+item.ID)" data-url="@Url.Action($"InactiveAparaturDesa/{item.ID}")" value="Inactive" />
+
+                                                </form>
+                                            </div>
+                                            @await Html.PartialAsync("_UpdateAparaturDesa",item)
+                                            @await Html.PartialAsync("_InactiveAparaturDesa",item)
+                                        </td>
+                                        @*<td style="display:none">@item.KODE_JABATAN</td>*@
+                                        <td>@item.NAMA</td>
+                                        <td>
+                                            @{
+                                                var JENIS_KELAMIN = "";
+                                                if (item.JENIS_KELAMIN)
+                                                {
+                                                    JENIS_KELAMIN= "Perempuan";
+                                                    @JENIS_KELAMIN;
+
+                                                }
+                                                else
+                                                {
+                                                    JENIS_KELAMIN= "Laki - laki";
+                                                    @JENIS_KELAMIN;
+                                                }
+                                            }
+                                        </td>
+                                        <td>@item.JABATAN</td>
+                                        <td>@item.NO_TELP</td>
+                                        <td>@item.ALAMAT</td>
+                                        <td>@item.TGL_MASUK.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            @{
+                                                var TGL_BERHENTI = item.TGL_BERHENTI;
+                                                string TEXT = "-";
+
+                                                if (TGL_BERHENTI != null)
+                                                {
+                                                    @string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(TGL_BERHENTI))
+                                                    ;
+                                                }
+                                                else
+                                                {
+                                                    @TEXT
+                                                    ;
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- model popup -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="mdl_new modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @*<div class="login_form">*@
+                    <form asp-action="AddAparaturDesa" method="POST">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="field_form">
+                                        <label class="label_field">Jabatan</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJabatan" asp-for="@Model.AparaturDesa.KODE_JABATAN"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">No. SK</label>
+                                        <input id="SK" asp-for="@Model.AparaturDesa.SK" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Nama</label>
+                                        <input id="NAMA" asp-for="@Model.AparaturDesa.NAMA" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Jenis Kelamin</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJK" asp-for="@Model.AparaturDesa.JENIS_KELAMIN"></select>
+                                        @*@Html.DropDownListFor(model => model.AparaturDesa.KODE_JABATAN, new SelectList(Model.ddlRFJabatan, "KODE_JABATAN", "JABATAN"), new { @class = "form-control form-control-user" })*@
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">NIK</label>
+                                        <input id="NIK" asp-for="@Model.AparaturDesa.NIK" type="number" class="form-control form-control-user" />
+                                    </div>
+
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="field_form">
+                                        <label class="label_field">No Telp</label>
+                                        <input id="NO_TELP" asp-for="@Model.AparaturDesa.NO_TELP" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Alamat</label>
+                                        <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-user" asp-for="@Model.AparaturDesa.ALAMAT"></textarea>
+                                    </div>
+                                    
+
+                                    <div class="field_form">
+                                        <label class="label_field">Tanggal Masuk</label>
+                                        <input type="date" asp-for="@Model.AparaturDesa.TGL_MASUK" class="form-control form-control-user" />
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                    @*</div>*@
+                    <!-- Modal footer -->
+                </div>
+            </div>
+        </div>
+        <!-- end model popup -->
+    </div>
+
+    
+
+</div>
+
+
+<script type="text/javascript">
+    //function updateAparaturDesa(ID){
+    //    //$('#updateAparatur').modal('show');
+    //    $.ajax({
+    //        type:"POST",
+    //        url:"/Administrasi/getData",
+    //        data:{ID:ID},
+    //        success:function(aparaturDesa){
+    //            $("#updateAparatur").modal('show');
+    //            //$("#SK").val(aparaturDesa.SK);
+    //            //alert(aparaturDesa);
+    //        }
+    //    })
+    //}
+</script>
+

@@ -1,0 +1,46 @@
+﻿@using KADES.Models.Administrasi;
+@model VW_KarangTaruna
+
+
+<div class="modal fade" id="InactiveTaruna-@Model.ID">
+    <div class="mdl modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="login_form">*@
+                <form asp-action="InactiveBPD" method="POST">
+                    <fieldset>
+                        <input id="ID" asp-for="ID" type="hidden" />
+                        <input id="KODE_JABATAN" asp-for="KODE_JABATAN" type="hidden" />
+                        <input id="NAMA" asp-for="NAMA" type="hidden" />
+                        <input id="NIK" asp-for="NIK" type="hidden" />
+                        <input id="NO_TELP" asp-for="NO_TELP" type="hidden" />
+                        <input id="ALAMAT" asp-for="ALAMAT" type="hidden" />
+                        <input id="TGL_MASUK" asp-for="TGL_PENGANGKATAN" type="hidden" />
+                        <input id="CREATED_BY" asp-for="CREATED_BY" type="hidden" />
+                        <input id="CREATED_DATE" asp-for="CREATED_DATE" type="hidden" />
+
+                        <div class="field_form">
+                            <label class="label_field">Tanggal Berhenti</label>
+                            <input type="date" asp-for="TGL_PEMBERHENTIAN" class="form-control form-control-user" />
+
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+                @*</div>*@
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end model popup -->
+</div>

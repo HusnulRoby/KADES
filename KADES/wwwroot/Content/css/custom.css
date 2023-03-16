@@ -1,0 +1,11 @@
+/*------------------------------------------------------------------
+    File Name: custom.css
+-------------------------------------------------------------------*/
+
+/** ADD YOUR AWESOME CODES HERE **/
+
+.alert-custom{
+    margin-left:150px;
+    text-align:center;
+    display:block;
+}

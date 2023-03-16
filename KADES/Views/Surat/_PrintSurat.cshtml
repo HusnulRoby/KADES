@@ -1,0 +1,89 @@
+﻿@*@using KADES.Models.Pelayanan;
+@model TemplateSurat
+@{
+    var LogSurat = new LogSurat();
+}
+
+<div class="modal fade" id="printSurat-@Model.ID">
+    <div class="mdl_new modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            @if (ViewBag.ID != null)
+            {
+                <div class="field">
+                    <div class="alert-custom alert alert-danger ">test</div>
+                </div>
+            }
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="login_form">*
+                <form asp-action="PrintSurat" method="POST">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input id="ID" asp-for="ID" type="hidden" />
+                                <input id="FILE_NAME" asp-for="FILE_NAME" type="hidden" />
+                                <input id="PATH_FILE" asp-for="PATH_FILE" type="hidden" />
+                                <div class="field_form">
+                                    <label class="label_field">Nama Surat</label>
+                                    <input id="NAMA_SURAT" asp-for="NAMA_SURAT" type="text" class="form-control form-control-user" readonly />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">Nomor Surat</label>
+                                    <input id="NO_SURAT" asp-for="NO_SURAT" type="text" class="form-control form-control-user" readonly />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">Nama Pemohon</label>
+                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NAMA_PEMOHON" type="text" class="form-control form-control-user" />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">NIK</label>
+                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NIK" type="number" class="form-control form-control-user" />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">No_Telp</label>
+                                    <input id="NO_TELP" asp-for="@LogSurat.NO_TELP" type="number" class="form-control form-control-user" />
+                                </div>
+                               
+
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="field_form">
+                                    <label class="label_field">Alamat</label>
+                                    <textarea id="ALAMAT" class="form-control form-control-user" style="height:110px;margin-bottom:10px" asp-for="@LogSurat.ALAMAT"></textarea>
+                                </div>
+                               
+                                <div class="field_form">
+                                    <label class="label_field">Alasan Permohonan</label>
+                                    <textarea id="ALASAN" class="form-control form-control-user" style="height:110px" asp-for="@LogSurat.ALASAN"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="submit" onclick="test();" class="btn btn-success" >Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+                @*</div>*
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end model popup -->
+</div>
+
+<script type="text/javascript">
+    function test(){
+        alert(@Model.ID)
+        $("#printSurat-"+@Model.ID).modal('hide')
+    }
+</script>
+*@

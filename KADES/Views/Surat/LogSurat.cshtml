@@ -1,0 +1,65 @@
+﻿@using KADES.Models.Pelayanan;
+
+@{
+    ViewData["Title"] = "Pelayanan Surat";
+}
+
+@model List<VW_LogSurat>?
+
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- table section -->
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Log Surat Keluar</h2>
+                        <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal" class="fa fa-download" style="font-size:15px"></a></span>
+
+                    </div>
+
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table id="dataTable" class="table" style="width:100%">
+                            <thead class="thead-light" >
+                                <tr>
+                                    <th>Nama Surat</th>
+                                    <th>Nomor Surat</th>
+                                    <th>Generate By</th>
+                                    <th>Tanggal Generate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>@item.NAMA_SURAT</td>
+                                        <td>@item.NO_SURAT</td>
+                                        <td>@item.GENERATE_BY</td>
+                                        <td>@item.GENERATE_DATE.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
