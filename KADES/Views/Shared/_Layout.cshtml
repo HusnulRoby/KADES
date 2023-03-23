@@ -114,7 +114,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                    
+
                                 </li>
                                 <li>
                                     <a href="#lembaga" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -138,7 +138,7 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        
+
                                         <li>
                                             <a href="#KTR" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                                                 <span>Lembaga Karang Taruna</span>
@@ -176,11 +176,44 @@
                                         </li>
                                     </ul>
                                 </li>
-                               
+
                                 <li><a asp-area="" asp-controller="Administrasi" asp-action="DataPenduduk"> <span>Buku Data Penduduk</span></a></li>
+
                             </ul>
                         </li>
 
+                        <li>
+                            <a href="#Maintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                               <i class="fa fa-book purple_color"></i>
+                               <span>Maintenance</span>
+                            </a>
+                            <ul class="collapse list-unstyled" id="Maintenance" style="padding:0px 10px">
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="UserMaintenance">
+                                        <span>User Maintenance</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="GroupMaintenance">
+                                        <span>Group Maintenance</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#ParameterMaintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fa fa-book purple_color"></i>
+                                <span>Parameter Maintenance</span>
+                            </a>
+                            <ul class="collapse list-unstyled" id="ParameterMaintenance" style="padding:0px 10px">
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="Jabatan">
+                                        <span>Jabatan</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -275,11 +308,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
-@*
+    @*
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <!-- BS JavaScript -->
     <script type="text/javascript" src="~/content/js/bootstrap.js"></script>*@
-    
+
 </body>
 </html>

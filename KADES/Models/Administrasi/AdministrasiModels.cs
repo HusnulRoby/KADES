@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using KADES.Models.Maintenance;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace KADES.Models.Administrasi
@@ -35,6 +36,13 @@ namespace KADES.Models.Administrasi
         public KegiatanTaruna KegiatanTaruna { get; set; }
         public List<KegiatanTaruna> ListKegiatanTaruna { get; set; }
         #endregion
+
+        #region PKK
+        public PKK PKK { get; set; }
+        public List<VW_PKK>? ListVW_PKK { get; set; }
+        public KegiatanPKK KegiatanPKK { get; set; }
+        public List<KegiatanPKK> ListKegiatanPKK { get; set; }
+        #endregion
     }
 
     #region APARATUR DESA
@@ -67,14 +75,14 @@ namespace KADES.Models.Administrasi
         public bool ACTIVE { get; set; }
     }
 
-    public class RFJabatan
-    {
-        [Key]
-        public string KODE_JABATAN { get; set; }
-        public string JABATAN { get; set; }
-        public string KODE_TYPE { get; set; }
-        public bool ACTIVE { get; set; }
-    }
+    //public class RFJabatan
+    //{
+    //    [Key]
+    //    public string KODE_JABATAN { get; set; }
+    //    public string JABATAN { get; set; }
+    //    public string KODE_TYPE { get; set; }
+    //    public bool ACTIVE { get; set; }
+    //}
 
     public class JK
     {
@@ -223,6 +231,64 @@ namespace KADES.Models.Administrasi
     }
 
     public class KegiatanTaruna
+    {
+        [Key] public int ID { get; set; }
+        public string KEGIATAN { get; set; }
+        public string KOORDINATOR { get; set; }
+        public int DURASI { get; set; }
+        public DateTime TGL_MULAI { get; set; }
+        public DateTime TGL_BERAKHIR { get; set; }
+        //public string STATUS { get; set; }
+    }
+    #endregion
+
+    #region PKK
+    public class PKK
+    {
+        [Key]
+        public int ID { get; set; }
+        public string KODE_JABATAN { get; set; }
+        public string NAMA { get; set; }
+        [Required(ErrorMessage = "Nama harus diisi!")]
+        public bool JENIS_KELAMIN { get; set; }
+        [Required(ErrorMessage = "Nama harus diisi!")]
+        public string NIK { get; set; }
+        [Required(ErrorMessage = "NIK harus diisi!")]
+        public string NO_TELP { get; set; }
+        [Required(ErrorMessage = "No telp harus diisi!")]
+        public string ALAMAT { get; set; }
+        [Required(ErrorMessage = "Alamat harus diisi!")]
+        public DateTime TGL_PENGANGKATAN { get; set; }
+        [Required(ErrorMessage = "Tanggal masuk harus diisi!")]
+
+        public DateTime? TGL_PEMBERHENTIAN { get; set; }
+
+        public string CREATED_BY { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public bool ACTIVE { get; set; }
+    }
+
+    public class VW_PKK
+    {
+        [Key]
+        public int ID { get; set; }
+        public string KODE_JABATAN { get; set; }
+        public string JABATAN { get; set; }
+        public string NAMA { get; set; }
+        public bool JENIS_KELAMIN { get; set; }
+        public string NIK { get; set; }
+        public string NO_TELP { get; set; }
+        public string ALAMAT { get; set; }
+        public DateTime TGL_PENGANGKATAN { get; set; }
+
+        public string TGL_PEMBERHENTIAN { get; set; }
+        public string CREATED_BY { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+        public bool ACTIVE { get; set; }
+
+    }
+
+    public class KegiatanPKK
     {
         [Key] public int ID { get; set; }
         public string KEGIATAN { get; set; }

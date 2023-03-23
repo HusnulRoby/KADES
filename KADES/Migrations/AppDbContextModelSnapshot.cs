@@ -244,6 +244,34 @@ namespace KADES.Migrations
                     b.ToTable("KegiatanBPD");
                 });
 
+            modelBuilder.Entity("KADES.Models.Administrasi.KegiatanPKK", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("DURASI")
+                        .HasColumnType("int");
+
+                    b.Property<string>("KEGIATAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("KOORDINATOR")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("TGL_BERAKHIR")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("TGL_MULAI")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("KegiatanPKK");
+                });
+
             modelBuilder.Entity("KADES.Models.Administrasi.KegiatanTaruna", b =>
                 {
                     b.Property<int>("ID")
@@ -270,6 +298,57 @@ namespace KADES.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("KegiatanTaruna");
+                });
+
+            modelBuilder.Entity("KADES.Models.Administrasi.PKK", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ACTIVE")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ALAMAT")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("CREATED_BY")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("CREATED_DATE")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("JENIS_KELAMIN")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("KODE_JABATAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NAMA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NIK")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NO_TELP")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("TGL_PEMBERHENTIAN")
+                        .IsRequired()
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("TGL_PENGANGKATAN")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PKK");
                 });
 
             modelBuilder.Entity("KADES.Models.Administrasi.RAB_DESA", b =>

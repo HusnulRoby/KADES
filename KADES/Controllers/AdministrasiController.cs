@@ -505,7 +505,7 @@ namespace KADES.Controllers
         #endregion
 
         #region Taruna Karuna
-        public IActionResult KarangTaruna()
+        public IActionResult KarangTaruna() 
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
@@ -688,12 +688,191 @@ namespace KADES.Controllers
         }
         #endregion
 
+        #region PKK
         public IActionResult PKK()
         {
-            return View();
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            var model = from A in _context.PKK
+                        join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        select new VW_PKK()
+                        {
+                            ID = A.ID,
+                            NAMA = A.NAMA,
+                            JENIS_KELAMIN = A.JENIS_KELAMIN,
+                            KODE_JABATAN = A.KODE_JABATAN,
+                            JABATAN = B.JABATAN,
+                            NIK = A.NIK,
+                            NO_TELP = A.NO_TELP,
+                            ALAMAT = A.ALAMAT,
+                            TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
+                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                        };
+
+            List<SelectListItem> JK = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "1", Text = "Perempuan" },
+                new SelectListItem { Value = "0", Text = "laki - laki" }
+            };
+
+            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+            {
+                //TemplateSurat = new TemplateSurat(),
+                ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).ToList(),
+                ddlJK = JK,
+                ListVW_PKK = model.ToList()
+            };
+
+            var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).Select(x => new SelectListItem
+            {
+                Value = x.KODE_JABATAN,
+                Text = x.JABATAN.ToString(),
+            });
+
+            ViewBag.ddlJabatan = getRoles;
+            ViewBag.ddlJK = JK;
+
+            return View(AdministrasiModels);
         }
 
-        
+        [HttpPost]
+        public IActionResult AddPKK(PKK PKK)
+        {
+
+            try
+            {
+                var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var getData = new PKK
+                {
+                    KODE_JABATAN = PKK.KODE_JABATAN,
+                    NAMA = PKK.NAMA,
+                    JENIS_KELAMIN = PKK.JENIS_KELAMIN,
+                    NIK = PKK.NIK,
+                    NO_TELP = PKK.NO_TELP,
+                    ALAMAT = PKK.ALAMAT,
+                    TGL_PENGANGKATAN = PKK.TGL_PENGANGKATAN,
+                    CREATED_BY = USERID,
+                    CREATED_DATE = DateTime.Now,
+                    ACTIVE = true,
+                };
+
+
+
+                _context.Add(getData);
+                _context.SaveChanges();
+                _notyf.Success("Tambah Data Sukses");
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+                throw ex;
+            }
+            return RedirectToAction("PKK");
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePKK(PKK model)
+        {
+
+            _context.PKK.Update(model);
+            _context.SaveChanges();
+            _notyf.Success("Update Data Sukses");
+
+            return RedirectToAction("PKK");
+        }
+
+        [HttpPost]
+        public IActionResult InactivePKK(PKK model)
+        {
+            model.ACTIVE = false;
+            _context.PKK.Update(model);
+            _context.SaveChanges();
+            _notyf.Success("Inactive Data Sukses");
+
+            return RedirectToAction("PKK");
+        }
+
+        public IActionResult KegiatanPKK()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+            {
+                ListKegiatanPKK = _context.KegiatanPKK.ToList(),
+            };
+
+            return View(AdministrasiModels);
+        }
+
+        [HttpPost]
+        public IActionResult AddKegPKK(KegiatanPKK KegiatanPKK)
+        {
+
+            try
+            {
+                var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var getData = new KegiatanTaruna
+                {
+                    KEGIATAN = KegiatanPKK.KEGIATAN,
+                    KOORDINATOR = KegiatanPKK.KOORDINATOR,
+                    DURASI = KegiatanPKK.DURASI,
+                    TGL_MULAI = KegiatanPKK.TGL_MULAI,
+                    TGL_BERAKHIR = KegiatanPKK.TGL_BERAKHIR
+                };
+
+
+
+                _context.Add(getData);
+                _context.SaveChanges();
+                _notyf.Success("Tambah Data Sukses");
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+                throw ex;
+            }
+            return RedirectToAction("KegiatanPKK");
+        }
+
+        [HttpPost]
+        public IActionResult UpKegPKK(KegiatanPKK model)
+        {
+
+            _context.KegiatanPKK.Update(model);
+            _context.SaveChanges();
+            _notyf.Success("Update Data Sukses");
+
+            return RedirectToAction("KegiatanPKK");
+        }
+
+        [HttpPost]
+        public IActionResult DelKegPKK(int ID)
+        {
+            try
+            {
+                var getAcc = _context.KegiatanPKK.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("KegiatanPKK");
+
+        }
+
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

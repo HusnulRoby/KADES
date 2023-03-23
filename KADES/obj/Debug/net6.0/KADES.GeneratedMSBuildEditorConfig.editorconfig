@@ -48,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXEtlZ2lhdGFuS2FyYW5nVGFydW5hLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/KegiatanPKK.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXEtlZ2lhdGFuUEtLLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/PKK.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXFBLSy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -64,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9JbmFjdGl2ZUJQRC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_InactivePKK.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9JbmFjdGl2ZVBLSy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_InactiveTaruna.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9JbmFjdGl2ZVRhcnVuYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,6 +84,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9VcGRhdGVCUEQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_UpdatePKK.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9VcGRhdGVQS0suY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_UpdateRAB.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9VcGRhdGVSQUIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -86,6 +98,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_UpKegiatanBPD.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9VcEtlZ2lhdGFuQlBELmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_UpKegiatanPKK.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5pc3RyYXNpXF9VcEtlZ2lhdGFuUEtLLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Administrasi/_UpKegiatanTaruna.cshtml]
@@ -106,6 +122,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/Jabatan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcSmFiYXRhbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Shared/Error.cshtml]

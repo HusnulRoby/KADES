@@ -1,0 +1,82 @@
+﻿@using KADES.Models.Administrasi;
+@model VW_PKK
+
+
+<div class="modal fade" id="updatePKK-@Model.ID">
+    <div class="mdl_new modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="login_form">*@
+                <form asp-action="UpdatePKK" method="POST">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="field_form">
+                                    <label class="label_field">Nama</label>
+                                    <select class="form-control form-control-user" asp-items="@ViewBag.ddlJabatan" asp-for="KODE_JABATAN"></select>
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">Nama</label>
+                                    <input id="NAMA" asp-for="NAMA" type="text" class="form-control form-control-user" />
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field">Jenis Kelamin</label>
+                                    @if (Model.JENIS_KELAMIN)
+                                    {
+                                        <select class="form-control form-control-user" asp-for="JENIS_KELAMIN">
+                                            <option value="1" selected>Perempuan</option>
+                                            <option value="0">Laki - laki</option>
+                                        </select>
+                                        @*<select class="form-control form-control-user" asp-items="@ViewBag.ddlJK" asp-for="JENIS_KELAMIN">Perempuan</select>*@
+
+                                    }
+                                    else
+                                    {
+                                        <select class="form-control form-control-user" asp-for="JENIS_KELAMIN">
+                                            <option value="1">Perempuan</option>
+                                            <option value="0" selected>Laki - laki</option>
+                                        </select>
+                                    }
+                                    @*@Html.DropDownListFor(model => model.AparaturDesa.KODE_JABATAN, new SelectList(Model.ddlRFJabatan, "KODE_JABATAN", "JABATAN"), new { @class = "form-control form-control-user" })*@
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">NIK</label>
+                                    <input id="NIK" asp-for="NIK" type="number" class="form-control form-control-user" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="field_form">
+                                    <label class="label_field">No Telp</label>
+                                    <input id="NO_TELP" asp-for="NO_TELP" type="text" class="form-control form-control-user" />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">Alamat</label>
+                                    <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-user" asp-for="ALAMAT"></textarea>
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field">Tanggal Masuk</label>
+                                    <input type="date" asp-for="TGL_PENGANGKATAN" class="form-control form-control-user" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+                @*</div>*@
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end model popup -->
+</div>

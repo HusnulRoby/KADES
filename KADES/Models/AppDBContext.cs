@@ -6,8 +6,10 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using KADES.Models.Account;
 using KADES.Models.Administrasi;
+using KADES.Models.Maintenance;
 using KADES.Models.Pelayanan;
 using Microsoft.EntityFrameworkCore;
+using static KADES.Models.Maintenance.MaintenanceModels;
 
 namespace KADES.Models
 {
@@ -28,6 +30,8 @@ namespace KADES.Models
         public virtual DbSet<KegiatanBPD>? KegiatanBPD { get; set; }
         public virtual DbSet<KarangTaruna>? KarangTaruna { get; set; }
         public virtual DbSet<KegiatanTaruna>? KegiatanTaruna { get; set; }
+        public virtual DbSet<PKK>? PKK { get; set; }
+        public virtual DbSet<KegiatanPKK>? KegiatanPKK { get; set; }
 
 
     }
