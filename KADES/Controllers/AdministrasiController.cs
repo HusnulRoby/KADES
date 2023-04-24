@@ -49,6 +49,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_MASUK = DateTime.Parse(A.TGL_MASUK.ToString("dd/MM/yyyy")),
                             TGL_BERHENTI = A.TGL_BERHENTI.ToString(),
+                            CREATED_BY=A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -95,6 +96,7 @@ namespace KADES.Controllers
                     NO_TELP = AparaturDesa.NO_TELP,
                     ALAMAT = AparaturDesa.ALAMAT,
                     TGL_MASUK = AparaturDesa.TGL_MASUK,
+                    TGL_BERHENTI=null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -338,6 +340,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                            CREATED_BY=A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -382,6 +385,7 @@ namespace KADES.Controllers
                     NO_TELP = BPD.NO_TELP,
                     ALAMAT = BPD.ALAMAT,
                     TGL_PENGANGKATAN = BPD.TGL_PENGANGKATAN,
+                    TGL_PEMBERHENTIAN=null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -426,6 +430,7 @@ namespace KADES.Controllers
 
         public IActionResult KegiatanBPD()
         {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListKegiatanBPD = _context.KegiatanBPD.ToList(),
@@ -445,7 +450,6 @@ namespace KADES.Controllers
                 {
                     KEGIATAN = KegiatanBPD.KEGIATAN,
                     KOORDINATOR = KegiatanBPD.KOORDINATOR,
-                    DURASI = KegiatanBPD.DURASI,
                     TGL_MULAI = KegiatanBPD.TGL_MULAI,
                     TGL_BERAKHIR = KegiatanBPD.TGL_BERAKHIR
                 };
@@ -523,6 +527,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                            CREATED_BY=A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -630,7 +635,6 @@ namespace KADES.Controllers
                 {
                     KEGIATAN = KegiatanTaruna.KEGIATAN,
                     KOORDINATOR = KegiatanTaruna.KOORDINATOR,
-                    DURASI = KegiatanTaruna.DURASI,
                     TGL_MULAI = KegiatanTaruna.TGL_MULAI,
                     TGL_BERAKHIR = KegiatanTaruna.TGL_BERAKHIR
                 };
@@ -707,6 +711,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                            CREATED_BY=A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -751,6 +756,7 @@ namespace KADES.Controllers
                     NO_TELP = PKK.NO_TELP,
                     ALAMAT = PKK.ALAMAT,
                     TGL_PENGANGKATAN = PKK.TGL_PENGANGKATAN,
+                    TGL_PEMBERHENTIAN=null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -810,12 +816,11 @@ namespace KADES.Controllers
 
             try
             {
-                var USERID = HttpContext.Session.GetString("UserId").ToString();
-                var getData = new KegiatanTaruna
+                var USERID = !string.IsNullOrEmpty(HttpContext.Session.GetString("UserId"))? HttpContext.Session.GetString("UserId").ToString():"";
+                var getData = new KegiatanPKK
                 {
                     KEGIATAN = KegiatanPKK.KEGIATAN,
                     KOORDINATOR = KegiatanPKK.KOORDINATOR,
-                    DURASI = KegiatanPKK.DURASI,
                     TGL_MULAI = KegiatanPKK.TGL_MULAI,
                     TGL_BERAKHIR = KegiatanPKK.TGL_BERAKHIR
                 };

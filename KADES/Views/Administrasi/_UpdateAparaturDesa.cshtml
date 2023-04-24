@@ -18,6 +18,9 @@
                 @*<div class="login_form">*@
                 <form asp-action="UpdateAparaturDesa" method="POST">
                     <fieldset>
+                        <input id="ID" asp-for="ID" hidden />
+                        <input id="CREATED_BY" asp-for="CREATED_BY" hidden />
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="field_form">

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ewn11Xv24/6YtXCVqX/faENxs+5NxZJx2hSpt2sikDo=",
+  "Hash": "46syw+WPrVlW6soPLjNF/zn+1Qata2wjNIUNRiDXjmY=",
   "Source": "KADES",
   "BasePath": "_content/KADES",
   "Mode": "Default",
@@ -7597,6 +7597,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\RAB\\Lampiran\\17012023235517\\jawabanUAP_Nomor_2.docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RAB\\Lampiran\\23042023\\CV_Husnul_Roby_Gunawan.docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/RAB/Lampiran/23042023/CV_Husnul_Roby_Gunawan.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\RAB\\Lampiran\\23042023\\CV_Husnul_Roby_Gunawan.docx"
     },
     {
       "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RAB\\Lampiran\\jawaban1_UAP.docx",

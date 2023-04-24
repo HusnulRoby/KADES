@@ -51,16 +51,22 @@
                                         <td>
                                             <div class="btn-group">
 
-                                                <form asp-action="DelKegTaruna" asp-route-id="@item.ID" id="DelKegTaruna" method="post">
+                                                <form asp-action="DelKegTaruna" asp-route-id="@item.ID" id="DelKegTaruna-@item.ID" method="post">
                                                     <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upKegTaruna-"+item.ID)" data-url="@Url.Action($"upKegTaruna/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteKegiatan()" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteKegiatan(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpKegiatanTaruna",item)
                                         </td>
                                         <td>@item.KEGIATAN</td>
                                         <td>@item.KOORDINATOR</td>
-                                        <td>@item.DURASI</td>
+                                        <td>
+                                            @{
+                                                var duration = (@item.TGL_BERAKHIR - @item.TGL_MULAI).TotalDays;
+                                                @duration
+                                                ;
+                                            }
+                                        </td>
                                         <td>@item.TGL_MULAI.ToString("dd/MM/yyyy")</td>
                                         <td>@item.TGL_BERAKHIR.ToString("dd/MM/yyyy")</td>
                                         <td>
@@ -123,10 +129,6 @@
                             </div>
 
                             <div class="field_form">
-                                <label class="label_field">Durasi</label>
-                                <input id="DURASI" asp-for="@Model.KegiatanTaruna.DURASI" type="number" class="form-control form-control-user" />
-                            </div>
-                            <div class="field_form">
                                 <label class="label_field">Tanggal Mulai</label>
                                 <input type="date" asp-for="@Model.KegiatanTaruna.TGL_MULAI" class="form-control form-control-user" />
                             </div>
@@ -155,9 +157,9 @@
 
 <script type="text/javascript">
 
-    function DeleteKegiatan() {
+    function DeleteKegiatan(ID) {
         if (window.confirm("Delete This Data?")) {
-            $('#DelKegTaruna').submit();
+            $('#DelKegTaruna-'+ID).submit();
         }
 
     }

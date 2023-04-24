@@ -48,10 +48,10 @@
                                         <td>
                                             <div class="btn-group" >
 
-                                                <form asp-action="DeleteTempSurat" asp-route-id="@item.ID" id="DelTempSurat" method="post">
+                                                <form asp-action="DeleteTempSurat" asp-route-id="@item.ID" id="DelTempSurat-@item.ID" method="post">
                                                     @*<input type="button" class="btn btn-sm  cur-p btn-outline-success" value="Print" data-toggle="modal" data-target="@("#printSurat-"+item.ID)" data-url="@Url.Action($"PrintSurat/{item.ID}")" />*@
                                                     <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateTempSurat-"+item.ID)" data-url="@Url.Action($"UpdateTempSurat/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteTempsurat()" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteTempsurat(@item.ID)" />
 
                                                 </form>
                                                 <form asp-action="PrintSurat" asp-route-id="@item.ID" id="PrintSurat" method="post" style="margin-left:3px">
@@ -124,9 +124,9 @@
 
 <script type="text/javascript">
 
-    function DeleteTempsurat() {
+    function DeleteTempsurat(ID) {
         if (window.confirm("Delete This Data?")) {
-            $('#DelTempSurat').submit();
+            $('#DelTempSurat-'+ID).submit();
         }
         
     }

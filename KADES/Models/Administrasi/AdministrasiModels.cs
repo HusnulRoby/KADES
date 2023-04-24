@@ -177,7 +177,6 @@ namespace KADES.Models.Administrasi
         [Key] public int ID { get; set; }
         public string KEGIATAN { get; set; }
         public string KOORDINATOR { get; set; }
-        public int DURASI { get; set; }
         public DateTime TGL_MULAI { get; set; }
         public DateTime TGL_BERAKHIR { get; set; }
         //public string STATUS { get; set; }
@@ -235,7 +234,6 @@ namespace KADES.Models.Administrasi
         [Key] public int ID { get; set; }
         public string KEGIATAN { get; set; }
         public string KOORDINATOR { get; set; }
-        public int DURASI { get; set; }
         public DateTime TGL_MULAI { get; set; }
         public DateTime TGL_BERAKHIR { get; set; }
         //public string STATUS { get; set; }
@@ -293,7 +291,6 @@ namespace KADES.Models.Administrasi
         [Key] public int ID { get; set; }
         public string KEGIATAN { get; set; }
         public string KOORDINATOR { get; set; }
-        public int DURASI { get; set; }
         public DateTime TGL_MULAI { get; set; }
         public DateTime TGL_BERAKHIR { get; set; }
         //public string STATUS { get; set; }

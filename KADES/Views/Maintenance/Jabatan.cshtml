@@ -1,6 +1,6 @@
 ﻿@using KADES.Models.Maintenance;
 @{
-    ViewData["Title"] = "Maintenance Paramter";
+    ViewData["Title"] = "Parameter Maintenance";
 
 }
 
@@ -22,7 +22,7 @@
             <div class="white_shd full margin_bottom_30">
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
-                        <h2>Maintenance Jabatan</h2>
+                        <h2>Buku Kegiatan Karang Taruna</h2>
                         <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
 
                     </div>
@@ -37,7 +37,6 @@
                                     <th>Jabatan</th>
                                     <th>Tipe Jabatan</th>
                                     <th>Status</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,33 +44,33 @@
                                 {
                                     <tr>
                                         <td>
-                                           <div class="btn-group">
+                                            <div class="btn-group">
 
-                                                <form asp-action="DelRFJabatan" asp-route-id="@item.KODE_JABATAN" id="DelRFJabatan" method="post">
-                                                    @*<input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upKegPKK-"+item.ID)" data-url="@Url.Action($"upKegPKK/{item.ID}")" value="Update" />*@
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="Delete()" />
+                                                <form asp-action="DelRFJabatan" asp-route-id="@item.ID" id="DelRFJabatan-@item.ID" method="post">
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upJabatan-"+item.ID)" data-url="@Url.Action($"upJabatan/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteJabatan(@item.ID)" />
                                                 </form>
                                             </div>
-                                            @*@await Html.PartialAsync("_UpRFJabatan",item)*@
+                                            @await Html.PartialAsync("_UpRFJabatan",item)
                                         </td>
-                                        @*<td style="display:none">@item.KODE_JABATAN</td>*@
                                         <td>@item.JABATAN</td>
-                                        
                                         <td>@item.KODE_TYPE</td>
                                         <td>
                                             @{
-                                                var STATUS = "";
+                                                var ISACTIVE = "";
+                                                
                                                 if (item.ACTIVE)
                                                 {
-                                                    STATUS = "Active";
-
+                                                    ISACTIVE = "Active";
+                                                    @ISACTIVE
+                                                    ;
                                                 }
                                                 else
                                                 {
-                                                    STATUS = "Non Active";
+                                                    ISACTIVE = "Non Active";
+                                                    @ISACTIVE
+                                                    ;
                                                 }
-                                                @STATUS
-                                                ;
                                             }
                                         </td>
                                         
@@ -87,7 +86,7 @@
     <!-- model popup -->
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
-        <div class="mdl_new modal-dialog">
+        <div class="mdl modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -99,24 +98,20 @@
                     @*<div class="login_form">*@
                     <form asp-action="AddJabatan" method="POST">
                         <fieldset>
-                           @* <div class="row">
-                                <div class="col-sm-6">*@
-                                    <div class="field_form">
-                                        <label class="label_field">Kode Jabatan</label>
-                                        <input id="KODE_JABATAN" asp-for="@Model.RFJabatan.KODE_JABATAN" type="text" class="form-control form-control-user" />
-                                    </div>
-                                    <div class="field_form">
-                                        <label class="label_field">Jabatan</label>
-                                        <input id="JABATAN" asp-for="@Model.RFJabatan.JABATAN" type="text" class="form-control form-control-user" />
-                                    </div>
-                                    <div class="field_form">
-                                        <label class="label_field">Jabatan</label>
-                                <input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-user" />
-                                    </div>
-                                @*</div>
-                                
+                            <div class="field_form">
+                                <label class="label_field">Kode Jabatan</label>
+                                <input id="KODE_JABATAN" asp-for="@Model.RFJabatan.KODE_JABATAN" type="text" class="form-control form-control-user" />
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field">Jabatan</label>
+                                <input id="JABATAN" asp-for="@Model.RFJabatan.JABATAN" type="text" class="form-control form-control-user" />
+                            </div>
 
-                            </div>*@
+                            <div class="field_form">
+                                <label class="label_field">Tipe Jabatan</label>
+                                <input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-user" />
+                            </div>
+                            
                         </fieldset>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Save</button>
@@ -136,9 +131,9 @@
 
 <script type="text/javascript">
 
-    function Delete() {
+    function DeleteJabatan(ID) {
         if (window.confirm("Delete This Data?")) {
-            $('#DelRFJabatan').submit();
+            $('#DelRFJabatan-'+ID).submit();
         }
 
     }

@@ -17,6 +17,7 @@ using System.IO;
 using System.Web;
 using System.Text;
 using KADES.Models.Maintenance;
+using KADES.Models.Account;
 
 namespace KADES.Controllers
 {
@@ -38,10 +39,10 @@ namespace KADES.Controllers
         public IActionResult Jabatan()
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
-
+            
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
-                ListRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true)).ToList()
+                ListRFJabatan = _context.RFJabatan.ToList()
             };
 
             return View(maintenanceModel);
@@ -54,17 +55,25 @@ namespace KADES.Controllers
 
             try
             {
-
-                var getData = new RFJabatan
+                var cekData = _context.RFJabatan.Where(x => x.KODE_JABATAN.Equals(RFJabatan.KODE_JABATAN)).Count();
+                if (cekData>0)
                 {
-                    KODE_JABATAN = RFJabatan.KODE_JABATAN,
-                    JABATAN = RFJabatan.JABATAN,
-                    KODE_TYPE = RFJabatan.KODE_TYPE,
-                    ACTIVE = true
-                };
-                _context.Add(getData);
-                _context.SaveChanges();
-                _notyf.Success("Tambah Data Sukses");
+                    _notyf.Error("Kode Jabatan Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RFJabatan
+                    {
+                        KODE_JABATAN = RFJabatan.KODE_JABATAN,
+                        JABATAN = RFJabatan.JABATAN,
+                        KODE_TYPE = RFJabatan.KODE_TYPE,
+                        ACTIVE = true
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+                
 
             }
             catch (Exception ex)
@@ -77,149 +86,28 @@ namespace KADES.Controllers
             return RedirectToAction("Jabatan");
         }
 
-        //[HttpPost]
-        //public IActionResult PrintSurat(TemplateSurat TemplateSurat, LogSurat LogSurat)
-        //{
-
-
-        //    var USERID = HttpContext.Session.GetString("UserId").ToString();
-        //    var PATH_FILE = TemplateSurat.PATH_FILE;
-        //    var FILENAME = TemplateSurat.FILE_NAME;
-
-        //    try
-        //    {
-        //        var getData = new LogSurat
-        //        {
-        //            ID_SURAT = TemplateSurat.ID,
-        //            NAMA_PEMOHON = LogSurat.NAMA_PEMOHON,
-        //            NIK = LogSurat.NIK,
-        //            NO_TELP = LogSurat.NO_TELP,
-        //            ALASAN = LogSurat.ALASAN,
-        //            ALAMAT=LogSurat.ALAMAT,
-        //            GENERATE_BY = USERID,
-        //            GENERATE_DATE = DateTime.Now
-        //        };
-        //        _context.Add(getData);
-        //        _context.SaveChanges();
-        //        _notyf.Success("Tambah Data Log Sukses");
-
-        //        var net = new System.Net.WebClient();
-        //        var data = net.DownloadData(PATH_FILE);
-
-        //        var content = new System.IO.MemoryStream(data);
-
-        //        return File(content, "application/octet-stream", FILENAME);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _notyf.Error("Tambah Data Log Gagal");
-        //        throw ex;
-        //    }
-        //    //return RedirectToAction("TemplateSurat");
-        //}
-
         [HttpPost]
-        public IActionResult PrintSurat(string ID)
+        public IActionResult UpJabatan(RFJabatan model)
         {
 
+            _context.RFJabatan.Update(model);
+            _context.SaveChanges();
+            _notyf.Success("Update Data Sukses");
 
-            var USERID = HttpContext.Session.GetString("UserId").ToString();
-            var FILENAME = "";
-            var PATH_FILE = "";
-
-            try
-            {
-                var getAcc = _context.TemplateSurat.Find(ID);
-                if (getAcc == null)
-                {
-                    return NotFound();
-                }
-
-                var getData = new LogSurat
-                {
-                    ID_SURAT = getAcc.ID,
-                    GENERATE_BY = USERID,
-                    GENERATE_DATE = DateTime.Now
-                };
-
-                FILENAME = getAcc.FILE_NAME;
-                PATH_FILE = getAcc.PATH_FILE;
-
-                _context.Add(getData);
-                _context.SaveChanges();
-                //_notyf.Success("Tambah Data Log Sukses");
-
-                var net = new System.Net.WebClient();
-                var data = net.DownloadData(PATH_FILE);
-
-                var content = new System.IO.MemoryStream(data);
-
-                return File(content, "application/octet-stream", FILENAME);
-
-            }
-            catch (Exception ex)
-            {
-                _notyf.Error("Tambah Data Log Gagal");
-                throw ex;
-            }
-            //return RedirectToAction("TemplateSurat");
+            return RedirectToAction("Jabatan");
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateTempSuratAsync(TemplateSurat model, IFormFile FILE_UPLOAD)
-        {
-
-            try
-            {
-                if (FILE_UPLOAD != null)
-                {
-                    var fileNama = FILE_UPLOAD.FileName;
-                    var pathFolder = Path.Combine(_env.WebRootPath, "Upload/Document/" + DateTime.Now.ToString("ddMMyyyy"));
-                    var fullPath = Path.Combine(pathFolder, fileNama);
-
-                    if (!Directory.Exists(pathFolder))
-                    {
-                        Directory.CreateDirectory(pathFolder);
-                    }
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await FILE_UPLOAD.CopyToAsync(stream);
-                    }
-
-                    model.FILE_NAME = fileNama;
-                    model.PATH_FILE = fullPath;
-                }
-
-                model.UPDATED_BY = HttpContext.Session.GetString("UserId").ToString();
-                model.UPDATED_DATE = DateTime.Now;
-                _context.TemplateSurat.Update(model);
-                _context.SaveChanges();
-                _notyf.Success("Update Data Sukses");
-
-            }
-            catch (Exception ex)
-            {
-                _notyf.Error("Update Data Gagal");
-                throw ex;
-            }
-
-            return RedirectToAction("TemplateSurat");
-        }
-
-        [HttpPost]
-        public IActionResult DeleteTempSurat(string ID)
+        public IActionResult DelRFJabatan(int ID)
         {
             try
             {
-                var getAcc = _context.TemplateSurat.Find(ID);
+                var getAcc = _context.RFJabatan.Find(ID);
                 if (getAcc == null)
                 {
+                    _notyf.Error("Delete Data Gagal");
                     return NotFound();
                 }
-                // getAcc.ACTIVE = false;
-
                 _context.Remove(getAcc);
                 _context.SaveChanges();
                 _notyf.Success("Delete Data Sukses");
@@ -231,45 +119,112 @@ namespace KADES.Controllers
                 throw ex;
             }
 
-            return RedirectToAction("TemplateSurat");
+            return RedirectToAction("Jabatan");
 
         }
         #endregion
 
-
-        #region LOG SURAT
-        public IActionResult LogSurat()
+        #region USER MAINTENANCE
+        public IActionResult UserMaintenance()
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
-            IQueryable<VW_LogSurat>? Query;
+            var model = from A in _context.RFUsers
+                        join B in _context.RFGroup on A.GROUPID equals B.GROUPID
+                        select new VW_Users()
+                        {
+                            USERID = A.USERID,
+                            USERNAME = A.USERNAME,
+                            GROUPID = A.GROUPID,
+                            GROUP_NAME = B.GROUP_NAME,
+                            EMAIL = A.EMAIL,
+                        };
+
+            AccountModels AccountModels = new AccountModels()
+            {
+                //TemplateSurat = new TemplateSurat(),
+                ListVW_Users = model.ToList()
+            };
+
+            var getGroup = _context.RFGroup.Select(x => new SelectListItem
+            {
+                Value = x.GROUPID,
+                Text = x.GROUP_NAME.ToString(),
+            });
+
+            ViewBag.ddlGroup = getGroup;
+
+            return View(AccountModels);
+        }
+
+        [HttpPost]
+        public IActionResult AddUsers(RFUsers RFUsers)
+        {
+
             try
             {
-                Query = from a in _context.TemplateSurat
-                        join b in _context.LogSurat on a.ID equals b.ID_SURAT
-                        select new VW_LogSurat()
-                        {
-                            ID = b.ID,
-                            ID_SURAT = a.ID,
-                            NO_SURAT = a.NO_SURAT,
-                            NAMA_SURAT = a.NAMA_SURAT,
-                            ACTIVE = a.ACTIVE,
-                            GENERATE_BY = b.GENERATE_BY,
-                            GENERATE_DATE = b.GENERATE_DATE,
+                var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var getData = new RFUsers
+                {
+                    USERID= RFUsers.USERID,
+                    USERNAME= RFUsers.USERNAME,
+                    GROUPID= RFUsers.GROUPID,
+                    PASSWORD= RFUsers.PASSWORD,
+                    EMAIL= RFUsers.EMAIL,
+                };
 
-                        };
+
+
+                _context.Add(getData);
+                _context.SaveChanges();
+                _notyf.Success("Tambah Data Sukses");
+
             }
             catch (Exception ex)
             {
+                _notyf.Error("Tambah Data Gagal");
+                throw ex;
+            }
+            return RedirectToAction("UserMaintenance");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUsers(RFUsers model)
+        {
+
+            _context.RFUsers.Update(model);
+            _context.SaveChanges();
+            _notyf.Success("Update Data Sukses");
+
+            return RedirectToAction("UserMaintenance");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteUsers(string USERID)
+        {
+            try
+            {
+                var getAcc = _context.RFUsers.Find(USERID);
+                if (getAcc == null)
+                {
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
 
                 throw ex;
             }
 
+            return RedirectToAction("UserMaintenance");
 
-            return View(Query.ToList());
         }
-        #endregion
 
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

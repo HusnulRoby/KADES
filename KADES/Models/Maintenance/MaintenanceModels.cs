@@ -15,7 +15,8 @@ namespace KADES.Models.Maintenance
 
     public class RFJabatan
     {
-        [Key]
+
+        [Key] public int ID { get; set; }
         public string KODE_JABATAN { get; set; }
         public string JABATAN { get; set; }
         public string KODE_TYPE { get; set; }
