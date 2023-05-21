@@ -16,12 +16,11 @@
                 <form asp-action="UpdateTaruna" method="POST">
                     <fieldset>
                         <input id="ID" asp-for="ID" hidden />
-                        <input id="CREATED_BY" asp-for="CREATED_BY" hidden />
 
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="field_form">
-                                    <label class="label_field">Nama</label>
+                                    <label class="label_field">Jabatan</label>
                                     <select class="form-control form-control-user" asp-items="@ViewBag.ddlJabatan" asp-for="KODE_JABATAN"></select>
                                 </div>
                                 <div class="field_form">

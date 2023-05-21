@@ -81,7 +81,6 @@ E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\staticwebassets.pack.json
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\staticwebassets.build.json
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\staticwebassets.development.json
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout1.cshtml.rz.scp.css
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\bundle\KADES.styles.css
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\projectbundle\KADES.bundle.scp.css
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\KADES.csproj.CopyComplete
@@ -90,3 +89,4 @@ E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\refint\KADES.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\KADES.pdb
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\KADES.genruntimeconfig.cache
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\ref\KADES.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\Views\Shared\_LayoutLogin.cshtml.rz.scp.css

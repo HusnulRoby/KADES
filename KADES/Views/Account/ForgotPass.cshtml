@@ -1,0 +1,37 @@
+﻿@*@using KADES.Models.Account;
+@model AccountModels;*@
+@{
+    Layout = "_LayoutLogin";
+}
+
+<form asp-action="ForgotPass" method="post">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <div class="field">
+            <label class="label_field">User ID</label>
+            <input type="text" id="userid" name="userid" placeholder="User ID" />
+        </div>
+        <div class="field">
+            <label class="label_field">New Password</label>
+            <input type="text" name="new_password" placeholder="New Password"/>
+        </div>
+         <div class="field">
+            <label class="label_field">Confirm Password</label>
+            <input type="text" name="confirm_password" placeholder="Confirm Password"/>
+        </div>
+        @{
+            if (ViewBag.LoginStat == 0)
+            {
+                <div class="field">
+                    <div class="alert-custom alert alert-danger ">ViewBag.MsgError</div>
+                </div>
+            }
+        }
+
+        <div class="field margin_0">
+            <label class="label_field hidden">hidden label</label>
+            <button type="submit" class="main_bt">Change Password</button>
+        </div>
+    </fieldset>
+</form>

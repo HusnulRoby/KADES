@@ -4,16 +4,18 @@
 // Write your JavaScript code.
 
 
-//$(function () {
-//    var PlaceHolderElement = $('#PlaceHolderHere');
+$(function () {
+    //var PlaceHolderElement = $('#PlaceHolderHere');
 
-//    $('#update').click(function (event) {
-//        var url = $(this).data('url');
-//        var decodeUrl = decodeURIComponent(url);
-//        $.get(decodeUrl).done(function (data) {
-//            alert("masuk");
-//            //PlaceHolderElement.html(data);
-//            //PlaceHolderElement.find('.modal').modal('show');
-//        })
-//    })  
-//})
+    //$('#update').click(function (event) {
+    //    var url = $(this).data('url');
+    //    var decodeUrl = decodeURIComponent(url);
+    //    $.get(decodeUrl).done(function (data) {
+    //        alert("masuk");
+    //        //PlaceHolderElement.html(data);
+    //        //PlaceHolderElement.find('.modal').modal('show');
+    //    })
+    //})  
+    console.log("testsite");
+
+})

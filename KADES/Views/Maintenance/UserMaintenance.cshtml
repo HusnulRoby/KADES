@@ -47,9 +47,9 @@
                                     <tr>
                                         <td>
                                             <div class="btn-group">
-                                                <form asp-action="DeleteUsers" asp-route-id="@item.USERID" id="DelUsers-@item.USERID" method="post">
+                                                <form asp-action="DeleteUsers" asp-route-id="@item.ID" id="DelUsers-@item.ID" method="post">
                                                     <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upUsers-"+item.USERID)" data-url="@Url.Action($"upUsers/{item.USERID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteUsers(@item.USERID)" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteUsers(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpdateUsers",item)

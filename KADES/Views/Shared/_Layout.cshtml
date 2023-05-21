@@ -33,7 +33,6 @@
     @*<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>*@
     <![endif]-->
-
     <link href="~/content/css/datatables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 <body class="dashboard dashboard_1">
@@ -270,7 +269,25 @@
         </div>
     </div>
 
-
+    <div class="modal fade" id="modalTimeoutWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true"
+             data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel1">Session Timeout Warning</h5>
+                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                    </div>
+                    <div class="modal-body">
+                        <h7>Your session will expired in few minutes, Please klik OK to continue session.</h7>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="ResetTimers()">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -294,8 +311,10 @@
     <script>
         var ps = new PerfectScrollbar('#sidebar');
     </script>
+    <script src="~/js/Custom.js?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")" asp-append-version="true"></script>
+
     <!-- custom js -->
-    <script src="~/Content/js/custom.js"></script>
+    @*<script src="~/Content/js/custom.js"></script>*@
     <script src="~/Content/js/chart_custom_style1.js"></script>
 
     <!--- Data Table -->

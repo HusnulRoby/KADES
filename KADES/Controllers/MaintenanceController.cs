@@ -89,10 +89,18 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpJabatan(RFJabatan model)
         {
+            try
+            {
+                _context.RFJabatan.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
 
-            _context.RFJabatan.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+            }
+
 
             return RedirectToAction("Jabatan");
         }
@@ -133,6 +141,7 @@ namespace KADES.Controllers
                         join B in _context.RFGroup on A.GROUPID equals B.GROUPID
                         select new VW_Users()
                         {
+                            ID=A.ID,
                             USERID = A.USERID,
                             USERNAME = A.USERNAME,
                             GROUPID = A.GROUPID,
@@ -191,20 +200,28 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpdateUsers(RFUsers model)
         {
+            try
+            {
+                _context.RFUsers.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Sukses");
 
-            _context.RFUsers.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+            }
+
 
             return RedirectToAction("UserMaintenance");
         }
 
         [HttpPost]
-        public IActionResult DeleteUsers(string USERID)
+        public IActionResult DeleteUsers(int ID)
         {
             try
             {
-                var getAcc = _context.RFUsers.Find(USERID);
+                var getAcc = _context.RFUsers.Find(ID);
                 if (getAcc == null)
                 {
                     return NotFound();
@@ -217,7 +234,6 @@ namespace KADES.Controllers
             {
                 _notyf.Error("Delete Data Gagal");
 
-                throw ex;
             }
 
             return RedirectToAction("UserMaintenance");

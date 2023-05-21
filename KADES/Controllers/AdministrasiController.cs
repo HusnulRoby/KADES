@@ -120,10 +120,32 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpdateAparaturDesa(AparaturDesa model)
         {
+            try
+            {
+                var data = _context.AparaturDesa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.NAMA=model.NAMA;
+                    data.KODE_JABATAN=model.KODE_JABATAN;
+                    data.SK=model.SK;
+                    data.JENIS_KELAMIN=model.JENIS_KELAMIN;
+                    data.NIK=model.NIK;
+                    data.NO_TELP=model.NO_TELP;
+                    data.ALAMAT=model.ALAMAT;
+                    data.TGL_MASUK=model.TGL_MASUK;
 
-            _context.AparaturDesa.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                    _context.AparaturDesa.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Update Data Sukses");
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update data gagal.");
+                //throw ex;
+            }
+            
 
             return RedirectToAction("AparaturDesa");
         }
@@ -131,10 +153,24 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult InactIveAparaturDesa(AparaturDesa model)
         {
-            model.ACTIVE = false;
-            _context.AparaturDesa.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Inactive Data Sukses");
+            try
+            {
+                var data = _context.AparaturDesa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.ACTIVE = false;
+                    data.TGL_BERHENTI=model.TGL_BERHENTI;
+
+                    _context.AparaturDesa.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Inactive Data Sukses");
+                }
+            }
+            catch (Exception ex)
+            {
+                _notyf.Success("Inactive Data Gagal");
+            }
+            
 
             return RedirectToAction("AparaturDesa");
         }
@@ -223,30 +259,33 @@ namespace KADES.Controllers
             try
             {
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var data = _context.RAB_Desa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+
                 if (FILE_UPLOAD != null)
                 {
-                    var fileNama = FILE_UPLOAD.FileName;
+
+                    data.JENIS_RAB = model.JENIS_RAB;
+                    data.TGL_RAB= model.TGL_RAB;
+                    data.KETERANGAN= model.KETERANGAN;
+                    data.CREATED_BY = USERID;
+                    data.CREATED_DATE = DateTime.Now;
+                    data.FILENAME= FILE_UPLOAD.FileName;
                     var pathFolder = Path.Combine(_env.WebRootPath, "Upload/RAB/Lampiran/" + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-                    var fullPath = Path.Combine(pathFolder, fileNama);
+                    data.PATH_FILE= Path.Combine(pathFolder, data.FILENAME);
 
                     if (!Directory.Exists(pathFolder))
                     {
                         Directory.CreateDirectory(pathFolder);
                     }
 
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    using (var stream = new FileStream(data.PATH_FILE, FileMode.Create))
                     {
                         await FILE_UPLOAD.CopyToAsync(stream);
                     }
 
-                    model.FILENAME = fileNama;
-                    model.PATH_FILE = fullPath;
-
                 }
-                model.CREATED_BY = USERID;
-                model.CREATED_DATE = DateTime.Now;
 
-                _context.RAB_Desa.Update(model);
+                _context.RAB_Desa.Update(data);
                 _context.SaveChanges();
                 _notyf.Success("Update Data Sukses");
 
@@ -409,10 +448,29 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpdateBPD(BPD model)
         {
+            try
+            {
+                var data = _context.BPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.KODE_JABATAN=model.KODE_JABATAN;
+                    data.NAMA=model.NAMA;
+                    data.JENIS_KELAMIN=model.JENIS_KELAMIN;
+                    data.NIK=model.NIK;
+                    data.NO_TELP=model.NO_TELP;
+                    data.ALAMAT=model.ALAMAT;
+                    data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
 
-            _context.BPD.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                    _context.BPD.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Update Data Sukses");
+                }
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Gagal");
+            }
+            
 
             return RedirectToAction("BPD");
         }
@@ -420,10 +478,24 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult InactiveBPD(BPD model)
         {
-            model.ACTIVE = false;
-            _context.BPD.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Inactive Data Sukses");
+            try
+            {
+                var data = _context.BPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.ACTIVE = false;
+                    data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
+
+                    _context.BPD.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Inactive Data Sukses");
+                }
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Inactive Data Sukses");
+            }
+            
 
             return RedirectToAction("BPD");
         }
@@ -472,10 +544,28 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpKegBPD(KegiatanBPD model)
         {
+            try
+            {
+                var data = _context.KegiatanBPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data!=null)
+                {
+                    data.KEGIATAN= model.KEGIATAN;
+                    data.KOORDINATOR= model.KOORDINATOR;
+                    data.TGL_MULAI= model.TGL_MULAI;
+                    data.TGL_BERAKHIR= model.TGL_BERAKHIR;
 
-            _context.KegiatanBPD.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                    _context.KegiatanBPD.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Update Data Sukses");
+                }
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
 
             return RedirectToAction("KegiatanBPD");
         }
@@ -595,10 +685,28 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpdateTaruna(KarangTaruna model)
         {
+            try
+            {
+                var data = _context.KarangTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-            _context.KarangTaruna.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                data.KODE_JABATAN = model.KODE_JABATAN;
+                data.NAMA=model.NAMA;
+                data.JENIS_KELAMIN=model.JENIS_KELAMIN;
+                data.NIK=model.NIK;
+                data.NO_TELP=model.NO_TELP;
+                data.ALAMAT=model.ALAMAT;
+                data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
+
+                _context.KarangTaruna.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
 
             return RedirectToAction("KarangTaruna");
         }
@@ -606,10 +714,23 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult InactiveTaruna(KarangTaruna model)
         {
-            model.ACTIVE = false;
-            _context.KarangTaruna.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Inactive Data Sukses");
+            try
+            {
+                var data = _context.KarangTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+
+                data.ACTIVE = false;
+                data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
+
+                _context.KarangTaruna.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Inactive Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Inactive Data Gagal");
+
+            }
+
 
             return RedirectToAction("KarangTaruna");
         }
@@ -649,7 +770,6 @@ namespace KADES.Controllers
             catch (Exception ex)
             {
                 _notyf.Error("Tambah Data Gagal");
-                throw ex;
             }
             return RedirectToAction("KegiatanKarangTaruna");
         }
@@ -657,10 +777,25 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpKegTaruna(KegiatanTaruna model)
         {
+            try
+            {
+                var data = _context.KegiatanTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-            _context.KegiatanTaruna.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                data.KEGIATAN = model.KEGIATAN;
+                data.KOORDINATOR= model.KOORDINATOR;
+                data.TGL_MULAI= model.TGL_MULAI;
+                data.TGL_BERAKHIR= model.TGL_BERAKHIR;
+
+                _context.KegiatanTaruna.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Sukses");
+
+            }
+
 
             return RedirectToAction("KegiatanKarangTaruna");
         }
@@ -780,10 +915,28 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpdatePKK(PKK model)
         {
+            try
+            {
+                var data = _context.PKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-            _context.PKK.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                data.KODE_JABATAN = model.KODE_JABATAN;
+                data.NAMA=model.NAMA;
+                data.JENIS_KELAMIN=model.JENIS_KELAMIN;
+                data.NIK=model.NIK;
+                data.NO_TELP=model.NO_TELP;
+                data.ALAMAT=model.ALAMAT;
+                data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
+
+                _context.PKK.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
 
             return RedirectToAction("PKK");
         }
@@ -791,10 +944,23 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult InactivePKK(PKK model)
         {
-            model.ACTIVE = false;
-            _context.PKK.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Inactive Data Sukses");
+            try
+            {
+                var data = _context.PKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+
+                data.ACTIVE = false;
+                data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
+
+                _context.PKK.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Inactive Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Inactive Data Sukses");
+
+            }
+
 
             return RedirectToAction("PKK");
         }
@@ -843,10 +1009,25 @@ namespace KADES.Controllers
         [HttpPost]
         public IActionResult UpKegPKK(KegiatanPKK model)
         {
+            try
+            {
+                var data = _context.KegiatanPKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-            _context.KegiatanPKK.Update(model);
-            _context.SaveChanges();
-            _notyf.Success("Update Data Sukses");
+                data.KEGIATAN= model.KEGIATAN;
+                data.KOORDINATOR= model.KOORDINATOR;
+                data.TGL_MULAI= model.TGL_MULAI;
+                data.TGL_BERAKHIR=  model.TGL_BERAKHIR;
+
+                _context.KegiatanPKK.Update(data);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Sukses");
+
+            }
+
 
             return RedirectToAction("KegiatanPKK");
         }

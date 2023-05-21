@@ -187,7 +187,8 @@ namespace KADES.Controllers
             catch (Exception ex)
             {
                 _notyf.Error("Tambah Data Log Gagal");
-                throw ex;
+                return RedirectToAction("TemplateSurat");
+
             }
             //return RedirectToAction("TemplateSurat");
         }
@@ -198,29 +199,28 @@ namespace KADES.Controllers
 
             try
             {
+                var data = _context.TemplateSurat.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
                 if (FILE_UPLOAD != null)
                 {
-                    var fileNama = FILE_UPLOAD.FileName;
+                    data.NO_SURAT = model.NO_SURAT;
+                    data.NAMA_SURAT=model.NAMA_SURAT;
+
+                    data.FILE_NAME = FILE_UPLOAD.FileName;
                     var pathFolder = Path.Combine(_env.WebRootPath, "Upload/Document/" + DateTime.Now.ToString("ddMMyyyy"));
-                    var fullPath = Path.Combine(pathFolder, fileNama);
+                    data.PATH_FILE = Path.Combine(pathFolder, FILE_UPLOAD.FileName);
 
                     if (!Directory.Exists(pathFolder))
                     {
                         Directory.CreateDirectory(pathFolder);
                     }
 
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    using (var stream = new FileStream(data.PATH_FILE, FileMode.Create))
                     {
                         await FILE_UPLOAD.CopyToAsync(stream);
                     }
 
-                    model.FILE_NAME = fileNama;
-                    model.PATH_FILE = fullPath;
                 }
-
-                model.UPDATED_BY = HttpContext.Session.GetString("UserId").ToString();
-                model.UPDATED_DATE = DateTime.Now;
-                _context.TemplateSurat.Update(model);
+                _context.TemplateSurat.Update(data);
                 _context.SaveChanges();
                 _notyf.Success("Update Data Sukses");
 
@@ -228,7 +228,6 @@ namespace KADES.Controllers
             catch (Exception ex)
             {
                 _notyf.Error("Update Data Gagal");
-                throw ex;
             }
 
             return RedirectToAction("TemplateSurat");
@@ -254,7 +253,6 @@ namespace KADES.Controllers
             {
                 _notyf.Error("Delete Data Gagal");
 
-                throw ex;
             }
 
             return RedirectToAction("TemplateSurat");

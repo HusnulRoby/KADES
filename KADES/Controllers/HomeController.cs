@@ -1,5 +1,6 @@
 ﻿using KADES.Models;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using System.Diagnostics;
 
 namespace KADES.Controllers
@@ -25,5 +26,20 @@ namespace KADES.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public JsonResult CheckSession()
+        {
+            if (HttpContext.Session.IsAvailable)
+            {
+
+            }
+            string userID = Convert.ToString(HttpContext.Session.GetString("UserId"));
+            int check = 0;
+            if (!string.IsNullOrEmpty(userID))
+                check = 1;
+            return Json(new { check });
+        }
+
+        
     }
 }

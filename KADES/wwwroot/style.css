@@ -3549,7 +3549,7 @@ table.projects tr td:first-child {
 }
 
 .forgot {
-    float: right;
+    float: none;
     margin: 11px 0;
     position: relative;
     left: 0;
