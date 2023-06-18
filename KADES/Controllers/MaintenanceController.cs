@@ -132,6 +132,393 @@ namespace KADES.Controllers
         }
         #endregion
 
+        #region Maintenance Dusun
+        public IActionResult Dusun()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListRfDusun = _context.RfDusun.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDusun(RfDusun RfDusun)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfDusun.Where(x => x.DUSUN.Equals(RfDusun.DUSUN)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("Dusun Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfDusun
+                    {
+                        DUSUN = RfDusun.DUSUN,
+                        ACTIVE = RfDusun.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("Dusun");
+        }
+
+        [HttpPost]
+        public IActionResult UpDusun(RfDusun model)
+        {
+            try
+            {
+                _context.RfDusun.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("Dusun");
+        }
+
+        [HttpPost]
+        public IActionResult DelRfDusun(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfDusun.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("Dusun");
+
+        }
+
+        #endregion
+
+        #region Maitenance Agama
+
+        public IActionResult Agama()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListRfAgama = _context.RfAgama.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAgama(RfAgama RfAgama)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfAgama.Where(x => x.AGAMA.Equals(RfAgama.AGAMA)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("Dusun Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfAgama
+                    {
+                        AGAMA = RfAgama.AGAMA,
+                        ACTIVE = RfAgama.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("Agama");
+        }
+
+        [HttpPost]
+        public IActionResult UpAgama(RfAgama model)
+        {
+            try
+            {
+                _context.RfAgama.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("Agama");
+        }
+
+        [HttpPost]
+        public IActionResult DelRfAgama(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfAgama.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("Agama");
+
+        }
+
+        #endregion
+
+        #region Maitenance Pendidikan
+
+        public IActionResult Pendidikan()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListRfPendidikan = _context.RfPendidikan.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPendidikan(RfPendidikan RfPendidikan)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfPendidikan.Where(x => x.PENDIDIKAN.Equals(RfPendidikan.PENDIDIKAN)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("Jenis Pendidikan Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfPendidikan
+                    {
+                        PENDIDIKAN = RfPendidikan.PENDIDIKAN,
+                        ACTIVE = RfPendidikan.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("Pendidikan");
+        }
+
+        [HttpPost]
+        public IActionResult UpPendidikan(RfPendidikan model)
+        {
+            try
+            {
+                _context.RfPendidikan.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("Pendidikan");
+        }
+
+        [HttpPost]
+        public IActionResult DelRfPendidikan(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfPendidikan.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("Pendidikan");
+
+        }
+
+        #endregion
+
+        #region Maitenance Pekerjaan
+
+        public IActionResult Pekerjaan()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListRfPekerjaan = _context.RfPekerjaan.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPekerjaan(RfPekerjaan RfPekerjaan)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfPekerjaan.Where(x => x.PEKERJAAN.Equals(RfPekerjaan.PEKERJAAN)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("jenis Pekerjaan Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfPekerjaan
+                    {
+                        PEKERJAAN = RfPekerjaan.PEKERJAAN,
+                        ACTIVE = RfPekerjaan.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("Pekerjaan");
+        }
+
+        [HttpPost]
+        public IActionResult UpPekerjaan(RfPekerjaan model)
+        {
+            try
+            {
+                _context.RfPekerjaan.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("Pekerjaan");
+        }
+
+        [HttpPost]
+        public IActionResult DelRfPekerjaan(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfPekerjaan.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("Pekerjaan");
+
+        }
+
+        #endregion
+
         #region USER MAINTENANCE
         public IActionResult UserMaintenance()
         {

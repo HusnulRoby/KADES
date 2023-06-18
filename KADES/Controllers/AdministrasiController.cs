@@ -177,10 +177,218 @@ namespace KADES.Controllers
 
         #endregion
 
+        #region PENDUDUK
         public IActionResult DataPenduduk()
         {
-            return View();
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            var model = from A in _context.Penduduk
+                        join B in _context.RfAgama on A.ID_AGAMA equals B.ID
+                        join D in _context.RfDusun on A.ID_DUSUN equals D.ID
+                        join E in _context.RfPendidikan on A.ID_PENDIDIKAN equals E.ID
+                        join F in _context.RfPekerjaan on A.ID_PEKERJAAN equals F.ID
+                        select new VW_Penduduk()
+                        {
+                            ID = A.ID,
+                            NIK = A.NIK,
+                            NAMA = A.NAMA,
+                            NO_AKTA= A.NO_AKTA,
+                            KK= A.KK,
+                            POB=A.POB,
+                            DOB= DateTime.Parse(A.DOB.ToString("dd/MM/yyyy")),
+                            JENIS_KELAMIN = A.JENIS_KELAMIN,
+                            ID_DLMKELUARGA = A.ID_DLMKELUARGA,
+                            ID_AGAMA = A.ID_AGAMA,
+                            AGAMA = B.AGAMA,
+                            NIK_AYAH=A.NIK_AYAH,
+                            NAMA_AYAH=A.NAMA_AYAH,
+                            NIK_IBU=A.NIK_IBU,
+                            NAMA_IBU=A.NAMA_IBU,
+                            ALAMAT = A.ALAMAT,
+                            NO_TELP = A.NO_TELP,
+                            ID_DUSUN = A.ID_DUSUN,
+                            DUSUN=D.DUSUN,
+                            RW = A.RW,
+                            RT = A.RT,
+                            ID_PENDIDIKAN= A.ID_PENDIDIKAN,
+                            PENDIDIKAN = E.PENDIDIKAN,
+                            ID_PEKERJAAN = A.ID_PEKERJAAN,
+                            PEKERJAAN = F.PEKERJAAN,
+                            ID_KAWIN=A.ID_KAWIN,
+                            ID_STATUS= A.ID_STATUS,
+
+                        };
+
+            List<SelectListItem> JK = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "1", Text = "Perempuan" },
+                new SelectListItem { Value = "0", Text = "laki - laki" }
+            };
+
+            List<SelectListItem> DlmKeluarga = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "0", Text = "Ayah" },
+                new SelectListItem { Value = "1", Text = "Ibu" },
+                new SelectListItem { Value = "2", Text = "Anak" }
+            };
+
+            List<SelectListItem> StatusHidup = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "0", Text = "Hidup" },
+                new SelectListItem { Value = "1", Text = "Mati" }
+            };
+
+            List<SelectListItem> StatusKawin = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "0", Text = "Kawin" },
+                new SelectListItem { Value = "1", Text = "Belum Kawin" }
+            };
+
+            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+            {
+                //TemplateSurat = new TemplateSurat(),
+                ddlRfAgama = _context.RfAgama.Where(x => x.ACTIVE.Equals(true)).ToList(),
+                ddlDlmKeluarga = DlmKeluarga,
+                ddlRfDusun = _context.RfDusun.Where(x => x.ACTIVE.Equals(true)).ToList(),
+                ddlStatusHidup = StatusHidup,
+                ddlStatusKawin = StatusKawin,
+                ddlJK = JK,
+                ddlRfPendidikan = _context.RfPendidikan.Where(x => x.ACTIVE.Equals(true)).ToList(),
+                ddlRfPekerjaan = _context.RfPekerjaan.Where(x => x.ACTIVE.Equals(true)).ToList(),
+                ListVW_Penduduk = model.ToList()
+            };
+
+            var getAgama = _context.RfAgama.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.ID.ToString(),
+                Text = x.AGAMA.ToString(),
+            });
+
+            var getDusun = _context.RfDusun.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.ID.ToString(),
+                Text = x.DUSUN.ToString(),
+            });
+
+            var getPendidikan = _context.RfPendidikan.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.ID.ToString(),
+                Text = x.PENDIDIKAN.ToString(),
+            });
+
+            var getPekerjaan = _context.RfPekerjaan.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.ID.ToString(),
+                Text = x.PEKERJAAN.ToString(),
+            });
+
+            ViewBag.ddlAgama = getAgama;
+            ViewBag.ddlDlmKeluarga = DlmKeluarga;
+            ViewBag.ddlDusun = getDusun;
+            ViewBag.ddlStatusHidup = StatusHidup;
+            ViewBag.ddlStatusKawin = StatusKawin;
+            ViewBag.ddlRfPendidikan = getPendidikan;
+            ViewBag.ddlRfPekerjaan = getPekerjaan;
+            ViewBag.ddlJK = JK;
+
+            return View(AdministrasiModels);
         }
+
+        [HttpPost]
+        public IActionResult AddPenduduk(Penduduk Penduduk)
+        {
+
+            try
+            {
+                var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var getData = new Penduduk
+                {
+                    NIK= Penduduk.NIK,
+                    NAMA= Penduduk.NAMA,
+                    KK= Penduduk.KK,
+                    NO_AKTA= Penduduk.NO_AKTA,
+                    POB= Penduduk.POB,
+                    DOB= Penduduk.DOB,
+                    JENIS_KELAMIN=Penduduk.JENIS_KELAMIN,
+                    ID_DLMKELUARGA= Penduduk.ID_DLMKELUARGA,
+                    ID_AGAMA=Penduduk.ID_AGAMA,
+                    NIK_AYAH=Penduduk.NIK_AYAH,
+                    NAMA_AYAH= Penduduk.NAMA_AYAH,
+                    NIK_IBU= Penduduk.NIK_IBU,
+                    NAMA_IBU= Penduduk.NAMA_IBU,
+                    ALAMAT = Penduduk.ALAMAT,
+                    NO_TELP = Penduduk.NO_TELP,
+                    ID_DUSUN = Penduduk.ID_DUSUN,
+                    RT = Penduduk.RT,
+                    RW = Penduduk.RW,
+                    ID_PENDIDIKAN = Penduduk.ID_PENDIDIKAN,
+                    ID_PEKERJAAN = Penduduk.ID_PEKERJAAN,
+                    ID_KAWIN = Penduduk.ID_KAWIN,
+                    ID_STATUS = Penduduk.ID_STATUS,
+                };
+
+
+
+                _context.Add(getData);
+                _context.SaveChanges();
+                _notyf.Success("Tambah Data Sukses");
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+                throw ex;
+            }
+            return RedirectToAction("Penduduk");
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePenduduk(Penduduk model)
+        {
+            try
+            {
+                var data = _context.Penduduk.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                if (data != null)
+                {
+                    data.ID = model.ID;
+                    data.NIK= model.NIK;
+                    data.NAMA= model.NAMA;
+                    data.KK= model.KK;
+                    data.NO_AKTA= model.NO_AKTA;
+                    data.POB= model.POB;
+                    data.DOB= model.DOB;
+                    data.JENIS_KELAMIN= model.JENIS_KELAMIN;
+                    data.ID_DLMKELUARGA = model.ID_DLMKELUARGA;
+                    data.ID_AGAMA= model.ID_AGAMA;
+                    data.NIK_AYAH= model.NIK_AYAH;
+                    data.NAMA_AYAH = model.NAMA_AYAH;
+                    data.NIK_IBU= model.NIK_IBU;
+                    data.NAMA_IBU= model.NAMA_IBU;
+                    data.ALAMAT= model.ALAMAT;
+                    data.NO_TELP= model.NO_TELP;
+                    data.ID_DUSUN= model.ID_DUSUN;
+                    data.RW= model.RW;
+                    data.RT= model.RT;
+                    data.ID_PENDIDIKAN= model.ID_PENDIDIKAN;
+                    data.ID_PEKERJAAN= model.ID_PEKERJAAN;
+                    data.ID_KAWIN= model.ID_KAWIN;
+                    data.ID_STATUS= model.ID_STATUS;
+
+                    _context.Penduduk.Update(data);
+                    _context.SaveChanges();
+                    _notyf.Success("Update Data Sukses");
+                }
+            }
+            catch (Exception)
+            {
+                _notyf.Error("Update Data Gagal");
+            }
+
+
+            return RedirectToAction("Penduduk");
+        }
+
+        #endregion
 
         #region RAB DESA
 
@@ -1060,6 +1268,7 @@ namespace KADES.Controllers
 
         #endregion
 
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

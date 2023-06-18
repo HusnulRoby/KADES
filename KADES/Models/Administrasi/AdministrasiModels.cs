@@ -12,9 +12,14 @@ namespace KADES.Models.Administrasi
         public VW_AparaturDesa VW_AparaturDesa { get; set; } 
         public List<VW_AparaturDesa>? ListVW_AparaturDesa { get; set; }
         public List<RFJabatan> ddlRFJabatan { get; set; }
+        
 
         public JK JK { get; set; }
         public List<SelectListItem> ddlJK { get; set; }
+        public List<SelectListItem> ddlDlmKeluarga { get; set; }
+        public List<SelectListItem> ddlStatusHidup { get; set; }
+        public List<SelectListItem> ddlStatusKawin { get; set; }
+        
         #endregion
 
         #region RAB DESA
@@ -42,6 +47,15 @@ namespace KADES.Models.Administrasi
         public List<VW_PKK>? ListVW_PKK { get; set; }
         public KegiatanPKK KegiatanPKK { get; set; }
         public List<KegiatanPKK> ListKegiatanPKK { get; set; }
+        #endregion
+
+        #region Penduduk
+        public Penduduk Penduduk { get; set; }
+        public List<VW_Penduduk>? ListVW_Penduduk { get; set; }
+        public List<RfDusun> ddlRfDusun { get; set; }
+        public List<RfAgama> ddlRfAgama { get; set; }
+        public List<RfPendidikan> ddlRfPendidikan { get; set; }
+        public List<RfPekerjaan> ddlRfPekerjaan { get; set; }
         #endregion
     }
 
@@ -294,6 +308,72 @@ namespace KADES.Models.Administrasi
         public DateTime TGL_MULAI { get; set; }
         public DateTime TGL_BERAKHIR { get; set; }
         //public string STATUS { get; set; }
+    }
+    #endregion
+
+    #region Penduduk
+
+    public class Penduduk
+    {
+        [Key]
+        public int ID { get; set; }
+        public string NIK { get; set; }
+        public string? NO_AKTA { get; set; }
+        public string NAMA { get; set; }
+        public string KK { get; set; }
+        public string POB { get; set; }
+        public DateTime DOB { get; set; }
+        public bool JENIS_KELAMIN { get; set; }
+        public int ID_DLMKELUARGA { get; set; }
+        public int ID_AGAMA { get; set; }
+        public string? NIK_AYAH { get; set; }
+        public string? NAMA_AYAH { get; set; }
+        public string? NIK_IBU { get; set; }
+        public string? NAMA_IBU { get; set; }
+        public string? ALAMAT { get; set; }
+        public string? NO_TELP { get; set; }
+        public int ID_DUSUN { get; set; }
+        public string? RW { get; set; }
+        public string? RT { get; set; }
+        public int ID_PENDIDIKAN { get; set; }
+        public int ID_PEKERJAAN { get; set; }
+        public int ID_KAWIN { get; set; }
+        public int ID_STATUS { get; set; }
+    }
+
+    public class VW_Penduduk
+    {
+        [Key]
+        public int ID { get; set; }
+        public string NIK { get; set; }
+        public string NAMA { get; set; }
+        public string KK { get; set; }
+        public string? NO_AKTA { get; set; }
+        public string POB { get; set; }
+        public DateTime DOB { get; set; }
+        public bool JENIS_KELAMIN { get; set; }
+        public int ID_DLMKELUARGA { get; set; }
+        public string DLMKELUARGA { get; set; }
+        public int ID_AGAMA { get; set; }
+        public string AGAMA { get; set; }
+        public string? NIK_AYAH { get; set; }
+        public string? NAMA_AYAH { get; set; }
+        public string? NIK_IBU { get; set; }
+        public string? NAMA_IBU { get; set; }
+        public string? ALAMAT { get; set; }
+        public string? NO_TELP { get; set; }
+        public int ID_DUSUN { get; set; }
+        public string DUSUN { get; set; }
+        public string? RW { get; set; }
+        public string? RT { get; set; }
+        public int ID_PENDIDIKAN { get; set; }
+        public int ID_PEKERJAAN { get; set; }
+        public string PENDIDIKAN { get; set; }
+        public string PEKERJAAN { get; set; }
+        public int ID_KAWIN { get; set; }
+        public string KAWIN { get; set; }
+        public int ID_STATUS { get; set; }
+        public string STATUS_HIDUP { get; set; }
     }
     #endregion
 }

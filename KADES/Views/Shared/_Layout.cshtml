@@ -22,7 +22,7 @@
     <!-- responsive css -->
     <link rel="stylesheet" href="~/Content/css/responsive.css" />
     <!-- color css -->
-    <link rel="stylesheet" href="~/Content/css/colors.css" />
+    @*<link rel="stylesheet" href="~/Content/css/color_2.css" />*@
     <!-- select bootstrap -->
     <link rel="stylesheet" href="~/Content/css/bootstrap-select.css" />
     <!-- scrollbar css -->
@@ -211,6 +211,31 @@
                                         <span>Jabatan</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="Dusun">
+                                        <span>Dusun</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="Agama">
+                                        <span>Agama</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="Pendidikan">
+                                        <span>Pendidikan</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="Pekerjaan">
+                                        <span>Pekerjaan</span>
+                                    </a>
+                                </li>
+
+
+                                
                             </ul>
                         </li>
                     </ul>
@@ -314,7 +339,7 @@
     <script src="~/js/Custom.js?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")" asp-append-version="true"></script>
 
     <!-- custom js -->
-    @*<script src="~/Content/js/custom.js"></script>*@
+    <script src="~/Content/js/custom.js"></script>
     <script src="~/Content/js/chart_custom_style1.js"></script>
 
     <!--- Data Table -->
@@ -324,7 +349,12 @@
 
     <!-- Page level custom scripts -->
     <script src="~/content/js/datatables-demo.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> 
+    @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>*@
+    @*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>*@
     @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
     @*

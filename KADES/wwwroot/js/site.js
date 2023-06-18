@@ -16,6 +16,6 @@ $(function () {
     //        //PlaceHolderElement.find('.modal').modal('show');
     //    })
     //})  
-    console.log("testsite");
+   /* console.log("testsite");*/
 
 })

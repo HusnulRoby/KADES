@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Rf2/PzsuJWNqsMENtch/o3ARp1xVxCxbhXtTnNW3K4NWI9D7svXlaVSGTNtt8CkxVFQNU++c7w8C+vgG4SM0rw==",
+  "dgSpecHash": "1qvtYWQAiKCj8wpyIiY/V9aIGQGgj+i950cpmoFlLRkNauyCiNpLz3lEELoPfVyRFesLnnywI0ZrjASZNLiiOg==",
   "success": true,
   "projectFilePath": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\KADES.csproj",
   "expectedPackageFiles": [
@@ -85,19 +85,7 @@
     "C:\\Users\\Husnul Roby Gunawan\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\Husnul Roby Gunawan\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
     "C:\\Users\\Husnul Roby Gunawan\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\Husnul Roby Gunawan\\.nuget\\packages\\web.ui.webcontrols\\1.0.2.226\\web.ui.webcontrols.1.0.2.226.nupkg.sha512",
     "C:\\Users\\Husnul Roby Gunawan\\.nuget\\packages\\westwind.aspnetcore.livereload\\0.3.7\\westwind.aspnetcore.livereload.0.3.7.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Web.UI.WebControls 1.0.2.226' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Web.UI.WebControls",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  "logs": []
 }

@@ -52,6 +52,7 @@ namespace KADES.Controllers
                 else
                 {
                     ViewBag.LoginStat = 0;
+                    ViewBag.MsgError = "User Id/Password Salah";
                 }
             }
             catch (Exception ex)

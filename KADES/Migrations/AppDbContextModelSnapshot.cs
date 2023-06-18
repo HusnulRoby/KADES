@@ -35,8 +35,9 @@ namespace KADES.Migrations
 
             modelBuilder.Entity("KADES.Models.Account.RFUsers", b =>
                 {
-                    b.Property<string>("USERID")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<string>("EMAIL")
                         .IsRequired()
@@ -50,11 +51,15 @@ namespace KADES.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("USERID")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("USERNAME")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("USERID");
+                    b.HasKey("ID");
 
                     b.ToTable("RFUsers");
                 });
@@ -222,9 +227,6 @@ namespace KADES.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("DURASI")
-                        .HasColumnType("int");
-
                     b.Property<string>("KEGIATAN")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -248,9 +250,6 @@ namespace KADES.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("DURASI")
                         .HasColumnType("int");
 
                     b.Property<string>("KEGIATAN")
@@ -278,9 +277,6 @@ namespace KADES.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("DURASI")
-                        .HasColumnType("int");
-
                     b.Property<string>("KEGIATAN")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -298,6 +294,96 @@ namespace KADES.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("KegiatanTaruna");
+                });
+
+            modelBuilder.Entity("KADES.Models.Administrasi.Penduduk", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ALAMAT")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DOB")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ID_AGAMA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ID_DLMKELUARGA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ID_DUSUN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("JENIS_KELAMIN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("KAWIN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("KK")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NAMA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NAMA_AYAH")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NAMA_IBU")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NIK")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NIK_AYAH")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NIK_IBU")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NO_TELP")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PEKERJAAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PENDIDIKAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("POB")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RT")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RW")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Penduduk");
                 });
 
             modelBuilder.Entity("KADES.Models.Administrasi.PKK", b =>
@@ -387,10 +473,65 @@ namespace KADES.Migrations
                     b.ToTable("RAB_Desa");
                 });
 
-            modelBuilder.Entity("KADES.Models.Administrasi.RFJabatan", b =>
+            modelBuilder.Entity("KADES.Models.Maintenance.RfAgama", b =>
                 {
-                    b.Property<string>("KODE_JABATAN")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ACTIVE")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("AGAMA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RfAgama");
+                });
+
+            modelBuilder.Entity("KADES.Models.Maintenance.RfDlmKeluarga", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ACTIVE")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("DLMKELUARGA")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RfDlmKeluarga");
+                });
+
+            modelBuilder.Entity("KADES.Models.Maintenance.RfDusun", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ACTIVE")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("DUSUN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("RfDusun");
+                });
+
+            modelBuilder.Entity("KADES.Models.Maintenance.RFJabatan", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<bool>("ACTIVE")
                         .HasColumnType("tinyint(1)");
@@ -399,11 +540,15 @@ namespace KADES.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("KODE_JABATAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("KODE_TYPE")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("KODE_JABATAN");
+                    b.HasKey("ID");
 
                     b.ToTable("RFJabatan");
                 });

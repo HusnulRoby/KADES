@@ -21,7 +21,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.25.10" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.7" />
-    <PackageReference Include="Web.UI.WebControls" Version="1.0.2.226" />
     <PackageReference Include="Westwind.AspNetCore.LiveReload" Version="0.3.7" />
   </ItemGroup>
 

@@ -1366,15 +1366,6 @@
           }
         }
       },
-      "Web.UI.WebControls/1.0.2.226": {
-        "type": "package",
-        "compile": {
-          "lib/Microsoft.Web.UI.WebControls.dll": {}
-        },
-        "runtime": {
-          "lib/Microsoft.Web.UI.WebControls.dll": {}
-        }
-      },
       "Westwind.AspNetCore.LiveReload/0.3.7": {
         "type": "package",
         "compile": {
@@ -3493,18 +3484,6 @@
         "version.txt"
       ]
     },
-    "Web.UI.WebControls/1.0.2.226": {
-      "sha512": "OtqE1o+Xfuv3VJyu8PEOPAqI3oRg2gGppik39074IBXyRqGaTmzbek804RYk2wTpV7h0zQo8lypzyucw44pu+w==",
-      "type": "package",
-      "path": "web.ui.webcontrols/1.0.2.226",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/Microsoft.Web.UI.WebControls.dll",
-        "web.ui.webcontrols.1.0.2.226.nupkg.sha512",
-        "web.ui.webcontrols.nuspec"
-      ]
-    },
     "Westwind.AspNetCore.LiveReload/0.3.7": {
       "sha512": "CVUBMkp153EcQRJQiacl49EFJ3jTZEJWi7MQXbazzAhGGc4uF6oCZPDO0MxRPf1YXTx5ZUD2drepTlDxEcV7ZA==",
       "type": "package",
@@ -3533,7 +3512,6 @@
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.11",
       "Microsoft.Identity.Web.UI >= 1.25.10",
       "MySql.EntityFrameworkCore >= 6.0.7",
-      "Web.UI.WebControls >= 1.0.2.226",
       "Westwind.AspNetCore.LiveReload >= 0.3.7",
       "jQuery >= 3.6.3"
     ]
@@ -3609,10 +3587,6 @@
             "target": "Package",
             "version": "[6.0.7, )"
           },
-          "Web.UI.WebControls": {
-            "target": "Package",
-            "version": "[1.0.2.226, )"
-          },
           "Westwind.AspNetCore.LiveReload": {
             "target": "Package",
             "version": "[0.3.7, )"
@@ -3644,17 +3618,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Web.UI.WebControls 1.0.2.226' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net6.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Web.UI.WebControls",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  }
 }

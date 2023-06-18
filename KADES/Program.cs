@@ -6,7 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MySql.EntityFrameworkCore.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+
+var builder = WebApplication.CreateBuilder(args); 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -18,6 +19,9 @@ builder.Services.AddSession(options => {
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+builder.Services.AddMvc();
+
 
 
 //string connectionString = builder.Configuration.GetConnectionString("Mysql");
@@ -56,5 +60,11 @@ app.MapControllerRoute(
     pattern: "{controller=Account}/{action=Login}/{id?}"
     );
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Account}/{action=Login}/{id?}");
+});
 
 app.Run();

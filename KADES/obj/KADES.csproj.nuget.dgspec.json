@@ -71,10 +71,6 @@
               "target": "Package",
               "version": "[6.0.7, )"
             },
-            "Web.UI.WebControls": {
-              "target": "Package",
-              "version": "[1.0.2.226, )"
-            },
             "Westwind.AspNetCore.LiveReload": {
               "target": "Package",
               "version": "[0.3.7, )"

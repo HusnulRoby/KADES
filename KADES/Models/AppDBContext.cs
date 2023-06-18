@@ -32,6 +32,12 @@ namespace KADES.Models
         public virtual DbSet<KegiatanTaruna>? KegiatanTaruna { get; set; }
         public virtual DbSet<PKK>? PKK { get; set; }
         public virtual DbSet<KegiatanPKK>? KegiatanPKK { get; set; }
+        public virtual DbSet<Penduduk>? Penduduk{ get; set; }
+        public virtual DbSet<RfAgama>? RfAgama{ get; set; }
+        public virtual DbSet<RfDusun>? RfDusun{ get; set; }
+        public virtual DbSet<RfPendidikan>? RfPendidikan { get; set; }
+        public virtual DbSet<RfPekerjaan>? RfPekerjaan { get; set; }
+
 
 
     }
