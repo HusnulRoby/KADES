@@ -144,6 +144,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcSmFiYXRhbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/JenisAset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcSmVuaXNBc2V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/Pekerjaan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcUGVrZXJqYWFuLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -158,6 +162,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/_UpdateUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcX1VwZGF0ZVVzZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/_UpJnsAset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcX1VwSm5zQXNldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/_UpRfAgama.cshtml]

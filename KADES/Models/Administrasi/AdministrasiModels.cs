@@ -57,6 +57,8 @@ namespace KADES.Models.Administrasi
         public List<RfPendidikan> ddlRfPendidikan { get; set; }
         public List<RfPekerjaan> ddlRfPekerjaan { get; set; }
         #endregion
+
+        
     }
 
     #region APARATUR DESA

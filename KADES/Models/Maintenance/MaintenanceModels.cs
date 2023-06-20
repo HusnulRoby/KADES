@@ -20,7 +20,12 @@ namespace KADES.Models.Maintenance
         public RfPekerjaan RfPekerjaan { get; set; }
         public List<RfPekerjaan> ListRfPekerjaan { get; set; }
 
+        public RfJenisAset JenisAset { get; set; }
+        public List<RfJenisAset> ListJenisAset { get; set; }
+
+
         #endregion
+
 
 
     }
@@ -67,7 +72,13 @@ namespace KADES.Models.Maintenance
         public bool ACTIVE { get; set; }
     }
 
-
+    public class RfJenisAset
+    {
+        public int ID { get; set; }
+        public string KODE_JNSASET { get; set; }
+        public string JENIS_ASET { get; set; }
+        public bool ACTIVE { get; set; }
+    }
     #endregion
 }
     

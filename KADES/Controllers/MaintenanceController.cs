@@ -629,6 +629,104 @@ namespace KADES.Controllers
 
         #endregion
 
+        #region Maitenance Agama
+
+        public IActionResult JenisAset()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListJenisAset = _context.RfJenisAset.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddJnsAset(RfJenisAset JenisAset)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfJenisAset.Where(x => x.KODE_JNSASET.Equals(JenisAset.KODE_JNSASET)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("Kode Jenis Aset Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfJenisAset
+                    {
+                        KODE_JNSASET = JenisAset.KODE_JNSASET,
+                        JENIS_ASET = JenisAset.JENIS_ASET,
+                        ACTIVE = JenisAset.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("JenisAset");
+        }
+
+        [HttpPost]
+        public IActionResult UpJnsAset(RfJenisAset model)
+        {
+            try
+            {
+                _context.RfJenisAset.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("JenisAset");
+        }
+
+        [HttpPost]
+        public IActionResult DelJnsAset(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfJenisAset.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("JenisAset");
+
+        }
+
+        #endregion
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
