@@ -1,0 +1,270 @@
+﻿@using KADES.Models.Administrasi;
+@{
+    ViewData["Title"] = "Administrasi";
+
+}
+
+@model AdministrasiModels;
+
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- table section -->
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Buku Anggota Karang Taruna</h2>
+                        <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
+
+                    </div>
+
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table id="dataTable" class="table" style="width:100%">
+                            <thead class="thead-light" style="text-align:center">
+                                <tr>
+                                    <th>#</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>No.KK</th>
+                                    <th>Dusun</th>
+                                    <th>RW</th>
+                                    <th>RT</th>
+                                    <th>Pendidikan</th>
+                                    <th>Umur</th>
+                                    <th>Pekerjaan</th>
+                                    <th>Status Kawin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListVW_Penduduk)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+
+                                                <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updatePenduduk-"+item.ID)" data-url="@Url.Action($"UpdatePenduduk/{item.ID}")" value="Update" />
+                                            </div>
+                                            @await Html.PartialAsync("_UpdatePenduduk",item)
+                                        </td>
+                                        <td>@item.NIK</td>
+                                        <td>@item.NAMA</td>
+                                        <td>@item.KK</td>
+                                        <td>@item.DUSUN</td>
+                                        <td>@item.RW</td>
+                                        <td>@item.RT</td>
+                                        <td>@item.PENDIDIKAN</td>
+                                        <td>
+                                            @{
+                                                var UMUR = DateTime.Now.Year - item.DOB.Year;
+                                                @UMUR
+                                                ;
+                                            }
+                                        </td>
+                                        <td>@item.PEKERJAAN</td>
+                                        <td>
+                                            @{
+                                                var StatusKawin = "";
+                                                if (item.ID_KAWIN.Equals(0))
+                                                {
+                                                    StatusKawin = "Kawin";
+                                                    @StatusKawin
+                                                    ;
+
+                                                }
+                                                else
+                                                {
+                                                    StatusKawin = "Belum Kawin";
+                                                    @StatusKawin
+                                                    ;
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- model popup -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="mdl_new modal-dialog" style="max-width:80%">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @*<div class="login_form">*@
+                    <form asp-action="AddPenduduk" method="POST">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">NIK</label>
+                                        <input id="NIK" asp-for="@Model.Penduduk.NIK" type="number" maxlength="16" class="form-control form-control-user" />
+                                    </div>
+
+                                    <div class="field_form">
+                                        <label class="label_field">No. KK</label>
+                                        <input id="KK" asp-for="@Model.Penduduk.KK" type="number" maxlength="16" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Agama</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlAgama" asp-for="@Model.Penduduk.ID_AGAMA"></select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Nama</label>
+                                        <input id="NAMA" asp-for="@Model.Penduduk.NAMA" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Hubungan Dalam Keluarga</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlDlmKeluarga" asp-for="@Model.Penduduk.ID_DLMKELUARGA"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Status Perkawinan</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlStatusKawin" asp-for="@Model.Penduduk.ID_KAWIN"></select>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Status Hidup</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlStatusHidup" asp-for="@Model.Penduduk.ID_STATUS"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Jenis Kelamin</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJK" asp-for="@Model.Penduduk.JENIS_KELAMIN"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">No. Akta Kelahiran</label>
+                                        <input id="AKTA" asp-for="@Model.Penduduk.NO_AKTA" type="number" maxlength="16" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Tempat Lahir</label>
+                                        <input id="POB" asp-for="@Model.Penduduk.POB" type="text" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Tanggal Lahir</label>
+                                        <input type="date" asp-for="@Model.Penduduk.DOB" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Pendidikan</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlRfPendidikan" asp-for="@Model.Penduduk.ID_PENDIDIKAN"></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Pekerjaan</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlRfPekerjaan" asp-for="@Model.Penduduk.ID_PEKERJAAN"></select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">NIK Ayah</label>
+                                        <input id="NIKA" asp-for="@Model.Penduduk.NIK_AYAH" type="number" maxlength="16" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">NIK Ibu</label>
+                                        <input id="NIKI" asp-for="@Model.Penduduk.NIK_IBU" type="number" maxlength="16" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Nama Ayah</label>
+                                        <input id="AYAH" asp-for="@Model.Penduduk.NAMA_AYAH" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Nama Ibu</label>
+                                        <input id="IBU" asp-for="@Model.Penduduk.NAMA_IBU" type="text" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Dusun</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlDusun" asp-for="@Model.Penduduk.ID_DUSUN"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">RT</label>
+                                        <input id="RT" asp-for="@Model.Penduduk.RT" type="number" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">No Telp</label>
+                                        <input id="NO_TELP" asp-for="@Model.Penduduk.NO_TELP" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">RW</label>
+                                        <input id="RW" asp-for="@Model.Penduduk.RW" type="number" class="form-control form-control-user" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="field_form">
+                                        <label class="label_field">Alamat</label>
+                                        <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-user" asp-for="@Model.Penduduk.ALAMAT"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                    @*</div>*@
+                    <!-- Modal footer -->
+                </div>
+            </div>
+        </div>
+        <!-- end model popup -->
+    </div>
+
+
+</div>
+

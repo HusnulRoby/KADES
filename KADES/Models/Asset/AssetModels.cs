@@ -1,8 +1,10 @@
-﻿namespace KADES.Models.Asset
+﻿using KADES.Models.Maintenance;
+
+namespace KADES.Models.Asset
 {
     public class AssetModels
     {
-        public DataAset Aset { get; set; }
+        public DataAset DataAset { get; set; }
         public List<DataAset> ListAset { get; set; }
 
         public VW_DataAset VW_Aset { get; set; }
@@ -18,7 +20,6 @@
         public string LOKASI { get;set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
-        public string REMARKS { get;set; }
     }
 
     public class VW_DataAset
@@ -31,6 +32,5 @@
         public string LOKASI { get; set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
-        public string REMARKS { get; set; }
     }
 }

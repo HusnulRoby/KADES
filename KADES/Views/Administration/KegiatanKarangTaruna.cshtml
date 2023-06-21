@@ -1,0 +1,167 @@
+﻿@using KADES.Models.Administrasi;
+@{
+    ViewData["Title"] = "Administrasi";
+
+}
+
+@model AdministrasiModels;
+
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- table section -->
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Buku Kegiatan Karang Taruna</h2>
+                        <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
+
+                    </div>
+
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table id="dataTable" class="table" style="width:100%">
+                            <thead class="thead-light" style="text-align:center">
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Kegiatan</th>
+                                    <th>Koordinator</th>
+                                    <th>Lama Kegiatan (hari)</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tanggal Berakhir</th>
+                                    <th>Status</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListKegiatanTaruna)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="btn-group">
+
+                                                <form asp-action="DelKegTaruna" asp-route-id="@item.ID" id="DelKegTaruna-@item.ID" method="post">
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upKegTaruna-"+item.ID)" data-url="@Url.Action($"upKegTaruna/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteKegiatan(@item.ID)" />
+                                                </form>
+                                            </div>
+                                            @await Html.PartialAsync("_UpKegiatanTaruna",item)
+                                        </td>
+                                        <td>@item.KEGIATAN</td>
+                                        <td>@item.KOORDINATOR</td>
+                                        <td>
+                                            @{
+                                                var duration = (@item.TGL_BERAKHIR - @item.TGL_MULAI).TotalDays;
+                                                @duration
+                                                ;
+                                            }
+                                        </td>
+                                        <td>@item.TGL_MULAI.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.TGL_BERAKHIR.ToString("dd/MM/yyyy")</td>
+                                        <td>
+                                            @{
+                                                var TGL_MULAI = item.TGL_MULAI;
+                                                var TGL_BERAKHIR = item.TGL_BERAKHIR;
+
+                                                string text = "";
+                                                if (DateTime.Now < TGL_MULAI)
+                                                {
+                                                    text = "Belum mulai";
+                                                    @text
+                                                    ;
+                                                }
+                                                else if (DateTime.Now > TGL_BERAKHIR)
+                                                {
+                                                    text = "Sudah berakhir";
+                                                    @text
+                                                    ;
+                                                }
+                                                else
+                                                {
+                                                    text = "berlangsung";
+                                                    @text
+                                                    ;
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- model popup -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="mdl modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @*<div class="login_form">*@
+                    <form asp-action="AddKegTaruna" method="POST">
+                        <fieldset>
+                            <div class="field_form">
+                                <label class="label_field">Kegiatan</label>
+                                <input id="KEGIATAN" asp-for="@Model.KegiatanTaruna.KEGIATAN" type="text" class="form-control form-control-user" />
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field">Penanggung Jawab</label>
+                                <input id="KOORDINATOR" asp-for="@Model.KegiatanTaruna.KOORDINATOR" type="text" class="form-control form-control-user" />
+                            </div>
+
+                            <div class="field_form">
+                                <label class="label_field">Tanggal Mulai</label>
+                                <input type="date" asp-for="@Model.KegiatanTaruna.TGL_MULAI" class="form-control form-control-user" />
+                            </div>
+
+                            <div class="field_form">
+                                <label class="label_field">Tanggal berakhir</label>
+                                <input type="date" asp-for="@Model.KegiatanTaruna.TGL_BERAKHIR" class="form-control form-control-user" />
+                            </div>
+
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                    @*</div>*@
+                    <!-- Modal footer -->
+                </div>
+            </div>
+        </div>
+        <!-- end model popup -->
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function DeleteKegiatan(ID) {
+        if (window.confirm("Delete This Data?")) {
+            $('#DelKegTaruna-'+ID).submit();
+        }
+
+    }
+
+</script>

@@ -1,0 +1,143 @@
+﻿@using KADES.Models.Asset;
+@{
+    ViewData["Title"] = "Data Aset";
+
+}
+
+@model AssetModels;
+
+
+<div class="container-fluid">
+    <div class="row column_title">
+        <div class="col-md-12">
+            <div class="page_title">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- table section -->
+        <div class="col-md-12">
+            <div class="white_shd full margin_bottom_30">
+                <div class="full graph_head">
+                    <div class="heading1 margin_0">
+                        <h2>Buku Aset Desa</h2>
+                        <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
+
+                    </div>
+
+                </div>
+                <div class="table_section padding_infor_info">
+                    <div class="table-responsive-sm">
+                        <table id="dataTable" class="table" style="width:100%">
+                            <thead class="thead-light" style="text-align:center">
+                                <tr>
+                                    <th width="150px">#</th>
+                                    <th>Nama Aset</th>
+                                    <th>Jenis Aset</th>
+                                    <th>Lokasi</th>
+                                    <th>Nilai Aset</th>
+                                    <th>Tanggal Masuk</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ListVW_Aset)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div>
+
+                                                <form asp-action="DelAsset" asp-route-id="@item.ID" id="DelAsset-@item.ID" method="post">
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAsset-"+item.ID)" data-url="@Url.Action($"UpdateAsset/{item.ID}")" value="Update" style="margin-bottom:3px" />
+                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteAsset(@item.ID)" />
+
+                                                </form>
+                                            </div>
+                                            @await Html.PartialAsync("_UpdateAsset",item)
+                                        </td>
+                                        <td>@item.NAMA_ASET</td>
+                                        <td>@item.JENIS_ASET</td>
+                                        <td>@item.LOKASI</td>
+                                        <td>@item.NILAI_ASET</td>
+                                        <td>@item.TGL_INPUT.ToString("dd/MM/yyyy")</td>
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- model popup -->
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="mdl_new modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    @*<div class="login_form">*@
+                    <form asp-action="AddAsset" method="POST">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="field_form">
+                                        <label class="label_field">Name Aset</label>
+                                        <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Jenis Aset</label>
+                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="@Model.DataAset.ID_JNSASET"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Lokasi</label>
+                                        <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Nilai Aset</label>
+                                        <input id="NILAI_ASET" asp-for="@Model.DataAset.NILAI_ASET" type="number" class="form-control form-control-user" />
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field">Tanggal Masuk</label>
+                                        <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-user" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+
+                    @*</div>*@
+                    <!-- Modal footer -->
+                </div>
+            </div>
+        </div>
+        <!-- end model popup -->
+    </div>
+
+
+
+</div>
+
+
+<script type="text/javascript">
+    function DeleteAsset(ID) {
+        if (window.confirm("Delete This Data?")) {
+            $('#DelAsset-' + ID).submit();
+        }
+
+    }
+</script>
+
