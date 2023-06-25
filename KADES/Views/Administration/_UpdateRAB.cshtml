@@ -19,26 +19,26 @@
                         <input id="ID" asp-for="ID" type="hidden" />
 
                         <div class="field_form">
-                            <label class="label_field">Jenis RAB</label>
-                            <input id="JENIS_RAB" asp-for="JENIS_RAB" type="text" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Jenis RAB</label>
+                            <input id="JENIS_RAB" asp-for="JENIS_RAB" type="text" class="form-control form-control-sm form-control-user" />
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Tanggal RAB</label>
-                            <input type="date" asp-for="TGL_RAB" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Tanggal RAB</label>
+                            <input type="date" asp-for="TGL_RAB" class="form-control form-control-sm form-control-user" />
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Lampiran</label>
-                            <input id="FILE_UPLOAD" type="file" asp-for="PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-user" multiple />
+                            <label class="label_field  control-label">Lampiran</label>
+                            <input id="FILE_UPLOAD" type="file" asp-for="PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-sm form-control-user" multiple />
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Keterangan</label>
-                            <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-user" asp-for="KETERANGAN"></textarea>
+                            <label class="label_field  control-label">Keterangan</label>
+                            <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-sm form-control-user" asp-for="KETERANGAN"></textarea>
                         </div>
 
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

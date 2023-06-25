@@ -103,7 +103,14 @@
     .counter_no p.total_no {
         text-align: center;
     }
+    .couter_custom_no p.total_no_cs {
+        text-align: center;
+    }
     .counter_no .head_couter {
+        text-align: center;
+        font-size: 16px;
+    }
+    .couter_custom_no .head_couter1 {
         text-align: center;
         font-size: 16px;
     }
@@ -123,7 +130,14 @@
     .counter_no p.total_no {
         text-align: center;
     }
+    .couter_custom_no p.total_no_cs {
+        text-align: center;
+    }
     .counter_no .head_couter {
+        text-align: center;
+        font-size: 16px;
+    }
+    .couter_custom_no .head_couter1 {
         text-align: center;
         font-size: 16px;
     }
@@ -278,6 +292,11 @@
     .counter_no .head_couter {
         font-size: 16px;
     }
+
+    .couter_custom_no .head_couter1 {
+        font-size: 16px;
+    }
+
     #testimonial_slider.carousel .carousel-control {
         top: -35px;
     }

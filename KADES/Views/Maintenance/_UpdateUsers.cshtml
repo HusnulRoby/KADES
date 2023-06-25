@@ -17,25 +17,25 @@
                     <fieldset>
                         <input id="PASSWORD" asp-for="PASSWORD" hidden />
                         <div class="field_form">
-                            <label class="label_field">Group</label>
-                            <select class="form-control form-control-user" asp-items="@ViewBag.ddlGroup" asp-for="GROUPID"></select>
+                            <label class="label_field  control-label">Group</label>
+                            <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlGroup" asp-for="GROUPID"></select>
                         </div>
                         <div class="field_form">
-                            <label class="label_field">User Id</label>
-                            <input id="USERID" asp-for="USERID" type="text" class="form-control form-control-user"  readonly/>
+                            <label class="label_field  control-label">User Id</label>
+                            <input id="USERID" asp-for="USERID" type="text" class="form-control form-control-sm form-control-user"  readonly/>
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Username</label>
-                            <input id="USERNAME" asp-for="USERNAME" type="text" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Username</label>
+                            <input id="USERNAME" asp-for="USERNAME" type="text" class="form-control form-control-sm form-control-user" />
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Email</label>
-                            <input id="EMAIL" asp-for="EMAIL" type="email" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Email</label>
+                            <input id="EMAIL" asp-for="EMAIL" type="email" class="form-control form-control-sm form-control-user" />
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

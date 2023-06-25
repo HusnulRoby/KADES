@@ -9,3 +9,88 @@
     text-align:center;
     display:block;
 }
+
+.divRectangle {
+    border-radius: 15px;
+    border: 2px solid #b39232;
+    padding: 5px;
+    width: 40%;
+    height: auto;
+    margin: 0 auto;
+    min-width: 220px;
+}
+
+.control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+
+/*Home*/
+.couter_custom_no {
+    float: left;
+    text-align: center;
+    width: 100%;
+}
+
+.couter_custom_no ul li {
+    float: left;
+    width: 33%;
+    font-size: 18px;
+    color: #455a64;
+    line-height: 24px;
+}
+
+.couter_custom_no span {
+    float: left;
+    width: 100%;
+    color: #99abb4;
+    font-size: 17px;
+    font-weight: 300;
+}
+/*
+    .couter_custom_no p {
+        margin: 0;
+        font-size: 45px;
+        float: left;
+        width: 100%;
+        line-height: normal;
+        font-weight: 600;
+        color: #455a64;
+        text-align: right;
+        font-size: 24px;
+        font-weight: 400;
+    }*/
+
+.counter_custom_Pbtm {
+    float: left;
+    width: 100%;
+    color: #99abb4;
+    font-weight: 300;
+    margin: 0px 0 0 0;
+    font-size: 20px;
+    text-align: right;
+}
+
+.head_couter1 {
+    float: left;
+    width: 100%;
+    color: #99abb4;
+    font-weight: 300;
+    margin: 0px 0 0 0;
+    font-size: 20px;
+    text-align: right;
+}
+
+p.total_no_cs {
+    margin: 0;
+    font-size: 45px;
+    float: left;
+    width: 100%;
+    line-height: normal;
+    font-weight: 600;
+    color: #455a64;
+    text-align: right;
+    font-size: 24px;
+    font-weight: 400;
+}

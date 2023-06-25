@@ -52,10 +52,10 @@
                                             <div>
 
                                                 <form asp-action="DeleteAparaturDesa" asp-route-id="@item.ID" id="DelAparaturDesa" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur-"+item.ID)" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" style="margin-bottom:3px" />
-                                                    @*<input type="button" id="update" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur")" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" />*@
-                                                    @*<input type="button" class="btn btn-sm  cur-p btn-outline-info" onclick="updateAparaturDesa(@item.ID)" value="Update" />*@
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" data-toggle="modal" data-target="@("#inactiveAparatur-"+item.ID)" data-url="@Url.Action($"InactiveAparaturDesa/{item.ID}")" value="Inactive" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur-"+item.ID)" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" style="margin-bottom:3px" />
+                                                    @*<input type="button" id="update" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAparatur")" data-url="@Url.Action($"UpdateAparaturDesa/{item.ID}")" value="Update" />*@
+                                                    @*<input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" onclick="updateAparaturDesa(@item.ID)" value="Update" />*@
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" data-toggle="modal" data-target="@("#inactiveAparatur-"+item.ID)" data-url="@Url.Action($"InactiveAparaturDesa/{item.ID}")" value="Inactive" />
 
                                                 </form>
                                             </div>
@@ -128,43 +128,43 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="field_form">
-                                        <label class="label_field">Jabatan</label>
-                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJabatan" asp-for="@Model.AparaturDesa.KODE_JABATAN"></select>
+                                        <label class="label_field  control-label">Jabatan</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJabatan" asp-for="@Model.AparaturDesa.KODE_JABATAN"></select>
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">No. SK</label>
-                                        <input id="SK" asp-for="@Model.AparaturDesa.SK" type="text" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">No. SK</label>
+                                        <input id="SK" asp-for="@Model.AparaturDesa.SK" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Nama</label>
-                                        <input id="NAMA" asp-for="@Model.AparaturDesa.NAMA" type="text" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Nama</label>
+                                        <input id="NAMA" asp-for="@Model.AparaturDesa.NAMA" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Jenis Kelamin</label>
-                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJK" asp-for="@Model.AparaturDesa.JENIS_KELAMIN"></select>
+                                        <label class="label_field  control-label">Jenis Kelamin</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJK" asp-for="@Model.AparaturDesa.JENIS_KELAMIN"></select>
                                         @*@Html.DropDownListFor(model => model.AparaturDesa.KODE_JABATAN, new SelectList(Model.ddlRFJabatan, "KODE_JABATAN", "JABATAN"), new { @class = "form-control form-control-user" })*@
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">NIK</label>
-                                        <input id="NIK" asp-for="@Model.AparaturDesa.NIK" type="number" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">NIK</label>
+                                        <input id="NIK" asp-for="@Model.AparaturDesa.NIK" type="number" class="form-control form-control-sm form-control-user" />
                                     </div>
 
                                     
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="field_form">
-                                        <label class="label_field">No Telp</label>
-                                        <input id="NO_TELP" asp-for="@Model.AparaturDesa.NO_TELP" type="text" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">No Telp</label>
+                                        <input id="NO_TELP" asp-for="@Model.AparaturDesa.NO_TELP" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Alamat</label>
-                                        <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-user" asp-for="@Model.AparaturDesa.ALAMAT"></textarea>
+                                        <label class="label_field  control-label">Alamat</label>
+                                        <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-sm form-control-user" asp-for="@Model.AparaturDesa.ALAMAT"></textarea>
                                     </div>
                                     
 
                                     <div class="field_form">
-                                        <label class="label_field">Tanggal Masuk</label>
-                                        <input type="date" asp-for="@Model.AparaturDesa.TGL_MASUK" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Tanggal Masuk</label>
+                                        <input type="date" asp-for="@Model.AparaturDesa.TGL_MASUK" class="form-control form-control-sm form-control-user" />
                                     </div>
 
                                 </div>
@@ -172,8 +172,8 @@
                             </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

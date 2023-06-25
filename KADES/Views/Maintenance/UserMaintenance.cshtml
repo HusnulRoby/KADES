@@ -48,8 +48,8 @@
                                         <td>
                                             <div class="btn-group">
                                                 <form asp-action="DeleteUsers" asp-route-id="@item.ID" id="DelUsers-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upUsers-"+item.USERID)" data-url="@Url.Action($"upUsers/{item.USERID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteUsers(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upUsers-"+item.USERID)" data-url="@Url.Action($"upUsers/{item.USERID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteUsers(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpdateUsers",item)
@@ -102,29 +102,29 @@
                     <form asp-action="AddUsers" method="POST">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Group</label>
-                                <select class="form-control form-control-user" asp-items="@ViewBag.ddlGroup" asp-for="@Model.RFUsers.GROUPID"></select>
+                                <label class="label_field  control-label">Group</label>
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlGroup" asp-for="@Model.RFUsers.GROUPID"></select>
                             </div>
                             <div class="field_form">
-                                <label class="label_field">User Id</label>
-                                <input id="USERID" asp-for="@Model.RFUsers.USERID" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">User Id</label>
+                                <input id="USERID" asp-for="@Model.RFUsers.USERID" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Username</label>
-                                <input id="USERNAME" asp-for="@Model.RFUsers.USERNAME" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Username</label>
+                                <input id="USERNAME" asp-for="@Model.RFUsers.USERNAME" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Password</label>
-                                <input id="PASSWORD" asp-for="@Model.RFUsers.PASSWORD" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Password</label>
+                                <input id="PASSWORD" asp-for="@Model.RFUsers.PASSWORD" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Email</label>
-                                <input id="EMAIL" asp-for="@Model.RFUsers.EMAIL" type="email" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Email</label>
+                                <input id="EMAIL" asp-for="@Model.RFUsers.EMAIL" type="email" class="form-control form-control-sm form-control-user" />
                             </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

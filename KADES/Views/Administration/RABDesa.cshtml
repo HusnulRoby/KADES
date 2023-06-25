@@ -48,8 +48,8 @@
                                             <div>
 
                                                 <form asp-action="DeleteRAB" asp-route-id="@item.ID" id="DelRAB" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateRAB-"+item.ID)" data-url="@Url.Action($"UpdateRAB/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB()" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateRAB-"+item.ID)" data-url="@Url.Action($"UpdateRAB/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB()" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpdateRAB",item) 
@@ -58,7 +58,7 @@
                                         <td>@item.TGL_RAB.ToString("dd/MM/yyyy")</td>
                                         <td>
                                             <form asp-action="DownloadRAB" asp-route-id="@item.ID" id="DownloadRAB" method="post">
-                                                <input type="submit" class="btn btn-sm  cur-p btn-outline-success" value="Download" />
+                                                <input type="submit" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Download" />
                                             </form>
                                         </td>
                                         <td>@item.KETERANGAN</td>
@@ -86,25 +86,25 @@
                     <form asp-action="AddRABDesa" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Jenis RAB</label>
-                                <input id="JENIS_RAB" asp-for="@Model.RAB_DESA.JENIS_RAB" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Jenis RAB</label>
+                                <input id="JENIS_RAB" asp-for="@Model.RAB_DESA.JENIS_RAB" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Tanggal RAB</label>
-                                <input type="date" asp-for="@Model.RAB_DESA.TGL_RAB" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Tanggal RAB</label>
+                                <input type="date" asp-for="@Model.RAB_DESA.TGL_RAB" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Lampiran</label>
-                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.RAB_DESA.PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-user" multiple />
+                                <label class="label_field  control-label">Lampiran</label>
+                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.RAB_DESA.PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-sm form-control-user" multiple />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Keterangan</label>
-                                <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-user" asp-for="@Model.RAB_DESA.KETERANGAN"></textarea>
+                                <label class="label_field  control-label">Keterangan</label>
+                                <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-sm form-control-user" asp-for="@Model.RAB_DESA.KETERANGAN"></textarea>
                             </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

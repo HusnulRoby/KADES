@@ -19,22 +19,22 @@
                     <fieldset>
                         <input id="ID" asp-for="@Model.ID" hidden />
                         <div class="field_form">
-                            <label class="label_field">Kode Jabatan</label>
-                            <input id="KODE_JABATAN" asp-for="@Model.KODE_JABATAN" type="text" class="form-control form-control-user"  readonly/>
+                            <label class="label_field  control-label">Kode Jabatan</label>
+                            <input id="KODE_JABATAN" asp-for="@Model.KODE_JABATAN" type="text" class="form-control form-control-sm form-control-user"  readonly/>
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Jabatan</label>
-                            <input id="JABATAN" asp-for="@Model.JABATAN" type="text" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Jabatan</label>
+                            <input id="JABATAN" asp-for="@Model.JABATAN" type="text" class="form-control form-control-sm form-control-user" />
                         </div>
                         <div class="field_form">
-                            <label class="label_field">Tipe Jabatan</label>
-                            <input id="KODE_TYPE" asp-for="@Model.KODE_TYPE" type="text" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Tipe Jabatan</label>
+                            <input id="KODE_TYPE" asp-for="@Model.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />
                         </div>
                         <input id="ACTIVE" asp-for="@Model.ACTIVE" hidden />
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

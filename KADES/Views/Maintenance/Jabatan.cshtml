@@ -47,8 +47,8 @@
                                             <div class="btn-group">
 
                                                 <form asp-action="DelRFJabatan" asp-route-id="@item.ID" id="DelRFJabatan-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upJabatan-"+item.ID)" data-url="@Url.Action($"upJabatan/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteJabatan(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upJabatan-"+item.ID)" data-url="@Url.Action($"upJabatan/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteJabatan(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpRFJabatan",item)
@@ -99,23 +99,23 @@
                     <form asp-action="AddJabatan" method="POST">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Kode Jabatan</label>
-                                <input id="KODE_JABATAN" asp-for="@Model.RFJabatan.KODE_JABATAN" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Kode Jabatan</label>
+                                <input id="KODE_JABATAN" asp-for="@Model.RFJabatan.KODE_JABATAN" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Jabatan</label>
-                                <input id="JABATAN" asp-for="@Model.RFJabatan.JABATAN" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Jabatan</label>
+                                <input id="JABATAN" asp-for="@Model.RFJabatan.JABATAN" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
 
                             <div class="field_form">
-                                <label class="label_field">Tipe Jabatan</label>
-                                <input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Tipe Jabatan</label>
+                                <input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

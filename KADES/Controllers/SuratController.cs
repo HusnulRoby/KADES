@@ -16,7 +16,9 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using System.IO;
 using System.Web;
 using System.Text;
-
+using System.Data;
+using OfficeOpenXml;
+using System.Threading;
 
 namespace KADES.Controllers
 {
@@ -262,15 +264,26 @@ namespace KADES.Controllers
 
 
         #region LOG SURAT
-        public IActionResult LogSurat()
+        public IActionResult LogSurat(searchBydate searchBydate)
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
             IQueryable<VW_LogSurat>? Query;
             try
             {
+                if (string.IsNullOrEmpty(searchBydate.PERIODFROM))
+                {
+                    searchBydate.PERIODFROM = DateTime.Now.ToString();
+                }
+
+                if (string.IsNullOrEmpty(searchBydate.PERIODTO))
+                {
+                    searchBydate.PERIODTO = DateTime.Now.ToString();
+                }
+
                 Query = from a in _context.TemplateSurat
                         join b in _context.LogSurat on a.ID equals b.ID_SURAT
+                        where b.GENERATE_DATE.Date >= DateTime.Parse(searchBydate.PERIODFROM).Date && b.GENERATE_DATE.Date <= DateTime.Parse(searchBydate.PERIODTO).Date
                         select new VW_LogSurat()
                         {
                             ID = b.ID,
@@ -289,9 +302,98 @@ namespace KADES.Controllers
                 throw ex;
             }
 
+            PelayananModels PelayananModels = new PelayananModels()
+            {
+                ListVW_LogSurat = Query.ToList(),
+                searchBydate= searchBydate
+            };
 
-            return View(Query.ToList());
+            return View(PelayananModels);
         }
+
+        public ActionResult DownloadExcel(string PERIODFROM, string PERIODTO )
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_LogSurat>? Query;
+
+            if (string.IsNullOrEmpty(PERIODFROM))
+            {
+                PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(PERIODTO))
+            {
+                PERIODTO = DateTime.Now.ToString();
+            }
+
+            string[] listHeaders = new string[]
+            {
+                "NO SURAT",
+                "NAMA SURAT",
+                "NAMA FILE",
+                "TANGGAL GENERATE"
+            };
+
+            Query = from a in _context.TemplateSurat
+                    join b in _context.LogSurat on a.ID equals b.ID_SURAT
+                    where b.GENERATE_DATE.Date >= DateTime.Parse(PERIODFROM).Date && b.GENERATE_DATE.Date <= DateTime.Parse(PERIODTO).Date
+                    select new VW_LogSurat()
+                    {
+                        ID = b.ID,
+                        ID_SURAT = a.ID,
+                        NO_SURAT = a.NO_SURAT,
+                        NAMA_SURAT = a.NAMA_SURAT,
+                        ACTIVE = a.ACTIVE,
+                        GENERATE_BY = b.GENERATE_BY,
+                        GENERATE_DATE = b.GENERATE_DATE,
+
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                foreach (var item in Query)
+                {
+                    dt.Rows.Add(item.NO_SURAT,item.NAMA_SURAT,item.FILE_NAME,item.GENERATE_DATE);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LogSurat"+DateTime.Now.ToString("ddMMyyyy")+".xlsx");
+            }
+
+            
+        }
+
         #endregion
 
 

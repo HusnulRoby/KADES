@@ -52,8 +52,8 @@
                                             <div class="btn-group">
 
                                                 <form asp-action="DelKegBPD" asp-route-id="@item.ID" id="DelKegBPD-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upKegBPD-"+item.ID)" data-url="@Url.Action($"upKegBPD/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteKegiatan(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upKegBPD-"+item.ID)" data-url="@Url.Action($"upKegBPD/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteKegiatan(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpKegiatanBPD",item)
@@ -119,28 +119,28 @@
                     <form asp-action="AddKegBPD" method="POST">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Kegiatan</label>
-                                <input id="KEGIATAN" asp-for="@Model.KegiatanBPD.KEGIATAN" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Kegiatan</label>
+                                <input id="KEGIATAN" asp-for="@Model.KegiatanBPD.KEGIATAN" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Penanggung Jawab</label>
-                                <input id="KOORDINATOR" asp-for="@Model.KegiatanBPD.KOORDINATOR" type="text" class="form-control form-control-user" />
-                            </div>
-
-                            <div class="field_form">
-                                <label class="label_field">Tanggal Mulai</label>
-                                <input type="date" asp-for="@Model.KegiatanBPD.TGL_MULAI" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Penanggung Jawab</label>
+                                <input id="KOORDINATOR" asp-for="@Model.KegiatanBPD.KOORDINATOR" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
 
                             <div class="field_form">
-                                <label class="label_field">Tanggal berakhir</label>
-                                <input type="date" asp-for="@Model.KegiatanBPD.TGL_BERAKHIR" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Tanggal Mulai</label>
+                                <input type="date" asp-for="@Model.KegiatanBPD.TGL_MULAI" class="form-control form-control-sm form-control-user" />
+                            </div>
+
+                            <div class="field_form">
+                                <label class="label_field  control-label">Tanggal berakhir</label>
+                                <input type="date" asp-for="@Model.KegiatanBPD.TGL_BERAKHIR" class="form-control form-control-sm form-control-user" />
                             </div>
 
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

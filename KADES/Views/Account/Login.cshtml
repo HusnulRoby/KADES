@@ -9,15 +9,15 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <div class="field">
-            <label class="label_field">User ID</label>
+            <label class="label_field  control-label">User ID</label>
             <input type="text" id="userid" name="userid" placeholder="User ID" />
         </div>
         <div class="field">
-            <label class="label_field">Password</label>
+            <label class="label_field  control-label">Password</label>
             <input type="password" name="password" placeholder="Password" value="password" />
         </div>
         <div class="field">
-            <label class="label_field hidden">hidden label</label>
+            <label class="label_field  control-label hidden">hidden label</label>
             <a class="forgot" asp-area="" asp-controller="Account" asp-action="ForgotPass">Forgot Password?</a>
         </div>
         @{
@@ -31,7 +31,7 @@
         }
 
         <div class="field margin_0">
-            <label class="label_field hidden">hidden label</label>
+            <label class="label_field  control-label hidden">hidden label</label>
             <button type="submit" class="main_bt">Sing In</button>
         </div>
     </fieldset>

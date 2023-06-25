@@ -19,35 +19,35 @@
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input id="ID" asp-for="ID" type="text" class="form-control form-control-user" hidden />
+                                <input id="ID" asp-for="ID" type="text" class="form-control form-control-sm form-control-user" hidden />
 
                                 <div class="field_form">
-                                    <label class="label_field">Name Aset</label>
-                                    <input id="NAMA_ASET" asp-for="NAMA_ASET" type="text" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">Name Aset</label>
+                                    <input id="NAMA_ASET" asp-for="NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Jenis Aset</label>
-                                    <select class="form-control form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="ID_JNSASET"></select>
+                                    <label class="label_field  control-label">Jenis Aset</label>
+                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="ID_JNSASET"></select>
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Lokasi</label>
-                                    <input id="LOKASI" asp-for="LOKASI" type="text" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">Lokasi</label>
+                                    <input id="LOKASI" asp-for="LOKASI" type="text" class="form-control form-control-sm form-control-user" />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Nilai Aset</label>
-                                    <input id="NILAI_ASET" asp-for="NILAI_ASET" type="number" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">Nilai Aset</label>
+                                    <input id="NILAI_ASET" asp-for="NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Tanggal Masuk</label>
-                                    <input type="date" asp-for="TGL_INPUT" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">Tanggal Masuk</label>
+                                    <input type="date" asp-for="TGL_INPUT" class="form-control form-control-sm form-control-user" />
                                 </div>
 
                             </div>
                         </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

@@ -47,8 +47,8 @@
                                             <div class="btn-group">
 
                                                 <form asp-action="DelJnsAset" asp-route-id="@item.ID" id="DelJnsAset-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upJnsAset-"+item.ID)" data-url="@Url.Action($"upJnsAset/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteJnsAset(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upJnsAset-"+item.ID)" data-url="@Url.Action($"upJnsAset/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteJnsAset(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpJnsAset",item)
@@ -99,23 +99,23 @@
                     <form asp-action="AddJnsAset" method="POST">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Kode Jenis Aset</label>
-                                <input id="KODE_JNSASET" asp-for="@Model.JenisAset.KODE_JNSASET" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Kode Jenis Aset</label>
+                                <input id="KODE_JNSASET" asp-for="@Model.JenisAset.KODE_JNSASET" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Jenis Aset</label>
-                                <input id="JENIS_ASET" asp-for="@Model.JenisAset.JENIS_ASET" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Jenis Aset</label>
+                                <input id="JENIS_ASET" asp-for="@Model.JenisAset.JENIS_ASET" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
 
                             <div class="field_form">
-                                <label class="label_field">Active</label>
+                                <label class="label_field  control-label">Active</label>
                                 <input id="ACTIVE" asp-for="@Model.JenisAset.ACTIVE" type="checkbox" class="form-control-user" />
                             </div>
                             
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

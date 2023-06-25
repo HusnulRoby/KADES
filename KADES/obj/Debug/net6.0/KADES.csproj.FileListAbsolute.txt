@@ -66,9 +66,6 @@ E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\System.Security.Cryptography
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\System.Security.Permissions.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\System.Windows.Extensions.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\Westwind.AspNetCore.LiveReload.dll
-E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
-E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
-E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
@@ -89,3 +86,10 @@ E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\KADES.pdb
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\KADES.genruntimeconfig.cache
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\ref\KADES.dll
 E:\Kuliah\Skripsi\Apps\KADES\KADES\obj\Debug\net6.0\scopedcss\Views\Shared\_LayoutLogin.cshtml.rz.scp.css
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\EPPlus.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\EPPlus.Interfaces.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\EPPlus.System.Drawing.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+E:\Kuliah\Skripsi\Apps\KADES\KADES\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll

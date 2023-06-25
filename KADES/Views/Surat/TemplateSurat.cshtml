@@ -49,13 +49,13 @@
                                             <div class="btn-group" >
 
                                                 <form asp-action="DeleteTempSurat" asp-route-id="@item.ID" id="DelTempSurat-@item.ID" method="post">
-                                                    @*<input type="button" class="btn btn-sm  cur-p btn-outline-success" value="Print" data-toggle="modal" data-target="@("#printSurat-"+item.ID)" data-url="@Url.Action($"PrintSurat/{item.ID}")" />*@
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateTempSurat-"+item.ID)" data-url="@Url.Action($"UpdateTempSurat/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteTempsurat(@item.ID)" />
+                                                    @*<input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Print" data-toggle="modal" data-target="@("#printSurat-"+item.ID)" data-url="@Url.Action($"PrintSurat/{item.ID}")" />*@
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateTempSurat-"+item.ID)" data-url="@Url.Action($"UpdateTempSurat/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteTempsurat(@item.ID)" />
 
                                                 </form>
                                                 <form asp-action="PrintSurat" asp-route-id="@item.ID" id="PrintSurat" method="post" style="margin-left:3px">
-                                                    <input type="submit" class="btn btn-sm  cur-p btn-outline-success" value="Print" />
+                                                    <input type="submit" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Print" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpdateTempSurat",item)
@@ -91,24 +91,24 @@
                     <form asp-action="AddTempSurat" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field">Nomor Surat</label>
-                                <input id="NO_SURAT" asp-for="@Model.TemplateSurat.NO_SURAT" type="text" class="form-control form-control-user" required />
+                                <label class="label_field  control-label">Nomor Surat</label>
+                                <input id="NO_SURAT" asp-for="@Model.TemplateSurat.NO_SURAT" type="text" class="form-control form-control-sm form-control-user" required />
                                 <span asp-validation-for="@Model.TemplateSurat.NO_SURAT" class="text-danger"></span>
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Nama Surat</label>
-                                <input id="NAMA_SURAT" asp-for="@Model.TemplateSurat.NAMA_SURAT" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Nama Surat</label>
+                                <input id="NAMA_SURAT" asp-for="@Model.TemplateSurat.NAMA_SURAT" type="text" class="form-control form-control-sm form-control-user" />
                                 <span asp-validation-for="@Model.TemplateSurat.NAMA_SURAT" class="text-danger"></span>
                             </div>
                             <div class="field_form">
-                                <label class="label_field">Upload Surat</label>
-                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.TemplateSurat.PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-user" multiple />
+                                <label class="label_field  control-label">Upload Surat</label>
+                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.TemplateSurat.PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-sm form-control-user" multiple />
                             </div>
 
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

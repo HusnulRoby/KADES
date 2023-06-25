@@ -47,8 +47,8 @@
                                             <div class="btn-group">
 
                                                 <form asp-action="DelRfDusun" asp-route-id="@item.ID" id="DelRfDusun-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upDusun-"+item.ID)" data-url="@Url.Action($"upDusun/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteDusun(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#upDusun-"+item.ID)" data-url="@Url.Action($"upDusun/{item.ID}")" value="Update" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteDusun(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpRfDusun",item)
@@ -100,19 +100,19 @@
                         <fieldset>
                             
                             <div class="field_form">
-                                <label class="label_field">Dusun</label>
-                                <input id="DUSUN" asp-for="@Model.RfDusun.DUSUN" type="text" class="form-control form-control-user" />
+                                <label class="label_field  control-label">Dusun</label>
+                                <input id="DUSUN" asp-for="@Model.RfDusun.DUSUN" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
 
                             <div class="field_form">
-                                <label class="label_field">Active</label>
+                                <label class="label_field  control-label">Active</label>
                                 <input id="ACTIVE" asp-for="@Model.RfDusun.ACTIVE" type="checkbox" class="form-control-user" />
                             </div>
                             
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

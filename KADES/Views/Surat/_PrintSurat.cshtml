@@ -29,24 +29,24 @@
                                 <input id="FILE_NAME" asp-for="FILE_NAME" type="hidden" />
                                 <input id="PATH_FILE" asp-for="PATH_FILE" type="hidden" />
                                 <div class="field_form">
-                                    <label class="label_field">Nama Surat</label>
-                                    <input id="NAMA_SURAT" asp-for="NAMA_SURAT" type="text" class="form-control form-control-user" readonly />
+                                    <label class="label_field  control-label">Nama Surat</label>
+                                    <input id="NAMA_SURAT" asp-for="NAMA_SURAT" type="text" class="form-control form-control-sm form-control-user" readonly />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Nomor Surat</label>
-                                    <input id="NO_SURAT" asp-for="NO_SURAT" type="text" class="form-control form-control-user" readonly />
+                                    <label class="label_field  control-label">Nomor Surat</label>
+                                    <input id="NO_SURAT" asp-for="NO_SURAT" type="text" class="form-control form-control-sm form-control-user" readonly />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">Nama Pemohon</label>
-                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NAMA_PEMOHON" type="text" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">Nama Pemohon</label>
+                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NAMA_PEMOHON" type="text" class="form-control form-control-sm form-control-user" />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">NIK</label>
-                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NIK" type="number" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">NIK</label>
+                                    <input id="NAMA_SURAT" asp-for="@LogSurat.NIK" type="number" class="form-control form-control-sm form-control-user" />
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field">No_Telp</label>
-                                    <input id="NO_TELP" asp-for="@LogSurat.NO_TELP" type="number" class="form-control form-control-user" />
+                                    <label class="label_field  control-label">No_Telp</label>
+                                    <input id="NO_TELP" asp-for="@LogSurat.NO_TELP" type="number" class="form-control form-control-sm form-control-user" />
                                 </div>
                                
 
@@ -54,21 +54,21 @@
                             <div class="col-sm-6">
 
                                 <div class="field_form">
-                                    <label class="label_field">Alamat</label>
-                                    <textarea id="ALAMAT" class="form-control form-control-user" style="height:110px;margin-bottom:10px" asp-for="@LogSurat.ALAMAT"></textarea>
+                                    <label class="label_field  control-label">Alamat</label>
+                                    <textarea id="ALAMAT" class="form-control form-control-sm form-control-user" style="height:110px;margin-bottom:10px" asp-for="@LogSurat.ALAMAT"></textarea>
                                 </div>
                                
                                 <div class="field_form">
-                                    <label class="label_field">Alasan Permohonan</label>
-                                    <textarea id="ALASAN" class="form-control form-control-user" style="height:110px" asp-for="@LogSurat.ALASAN"></textarea>
+                                    <label class="label_field  control-label">Alasan Permohonan</label>
+                                    <textarea id="ALASAN" class="form-control form-control-sm form-control-user" style="height:110px" asp-for="@LogSurat.ALASAN"></textarea>
                                 </div>
                             </div>
                         </div>
 
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" onclick="test();" class="btn btn-success" >Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" onclick="test();" class="btn btn-sm btn-success" >Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

@@ -50,8 +50,8 @@
                                             <div>
 
                                                 <form asp-action="DelAsset" asp-route-id="@item.ID" id="DelAsset-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAsset-"+item.ID)" data-url="@Url.Action($"UpdateAsset/{item.ID}")" value="Update" style="margin-bottom:3px" />
-                                                    <input type="button" class="btn btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteAsset(@item.ID)" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateAsset-"+item.ID)" data-url="@Url.Action($"UpdateAsset/{item.ID}")" value="Update" style="margin-bottom:3px" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteAsset(@item.ID)" />
 
                                                 </form>
                                             </div>
@@ -90,32 +90,32 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="field_form">
-                                        <label class="label_field">Name Aset</label>
-                                        <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Name Aset</label>
+                                        <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Jenis Aset</label>
-                                        <select class="form-control form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="@Model.DataAset.ID_JNSASET"></select>
+                                        <label class="label_field  control-label">Jenis Aset</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="@Model.DataAset.ID_JNSASET"></select>
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Lokasi</label>
-                                        <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Lokasi</label>
+                                        <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Nilai Aset</label>
-                                        <input id="NILAI_ASET" asp-for="@Model.DataAset.NILAI_ASET" type="number" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Nilai Aset</label>
+                                        <input id="NILAI_ASET" asp-for="@Model.DataAset.NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" />
                                     </div>
                                     <div class="field_form">
-                                        <label class="label_field">Tanggal Masuk</label>
-                                        <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-user" />
+                                        <label class="label_field  control-label">Tanggal Masuk</label>
+                                        <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-sm form-control-user" />
                                     </div>
 
                                 </div>
                             </div>
                         </fieldset>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Save</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-sm btn-success">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </form>
 

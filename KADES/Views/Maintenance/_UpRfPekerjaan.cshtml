@@ -19,18 +19,18 @@
                     <fieldset>
                         <input id="ID" asp-for="@Model.ID" hidden />
                         <div class="field_form">
-                            <label class="label_field">Pekerjaan</label>
-                                <input id="PEKERJAAN" asp-for="PEKERJAAN" type="text" class="form-control form-control-user" />
+                            <label class="label_field  control-label">Pekerjaan</label>
+                                <input id="PEKERJAAN" asp-for="PEKERJAAN" type="text" class="form-control form-control-sm form-control-user" />
                              </div>
 
                             <div class="field_form">
-                                <label class="label_field">Active</label>
+                                <label class="label_field  control-label">Active</label>
                                 <input id="ACTIVE" asp-for="ACTIVE" type="checkbox" class="form-control-user" />
                             </div>
                     </fieldset>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </form>
 

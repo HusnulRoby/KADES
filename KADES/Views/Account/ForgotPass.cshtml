@@ -9,15 +9,15 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <div class="field">
-            <label class="label_field">User ID</label>
+            <label class="label_field  control-label">User ID</label>
             <input type="text" id="userid" name="userid" placeholder="User ID" />
         </div>
         <div class="field">
-            <label class="label_field">New Password</label>
+            <label class="label_field  control-label">New Password</label>
             <input type="text" name="new_password" placeholder="New Password"/>
         </div>
          <div class="field">
-            <label class="label_field">Confirm Password</label>
+            <label class="label_field  control-label">Confirm Password</label>
             <input type="text" name="confirm_password" placeholder="Confirm Password"/>
         </div>
         @{
@@ -30,7 +30,7 @@
         }
 
         <div class="field margin_0">
-            <label class="label_field hidden">hidden label</label>
+            <label class="label_field  control-label hidden">hidden label</label>
             <button type="submit" class="main_bt">Change Password</button>
         </div>
     </fieldset>

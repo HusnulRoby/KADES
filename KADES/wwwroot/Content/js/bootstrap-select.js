@@ -514,7 +514,7 @@
       var donebutton = this.multiple && this.options.doneButton ?
       '<div class="bs-donebutton">' +
       '<div class="btn-group btn-block">' +
-      '<button type="button" class="btn btn-sm btn-default">' +
+      '<button type="button" class="btn btn-sm btn-sm btn-default">' +
       this.options.doneButtonText +
       '</button>' +
       '</div>' +
