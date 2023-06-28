@@ -13,7 +13,7 @@
 
     1. import fonts
     2. import files
-    3. basic
+    3. basic 
     4. header
     5. content section
     6. Progressbar
@@ -1701,6 +1701,27 @@ a[data-toggle="collapse"] {
     width: 100%;
     margin-bottom: 15px;
 }
+
+.plus_green_bt_exp {
+    position: absolute;
+    right: 0;
+    /*bottom: 362px;*/
+    right: 110px
+}
+
+    .plus_green_bt_exp a {
+        background: #1ed085;
+        color: #fff;
+        width: 45px;
+        height: 45px;
+        float: right;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 45px;
+        font-size: 28px;
+        font-weight: 500;
+        cursor: pointer;
+    }
 
 .plus_green_bt_add {
     position: absolute;

@@ -329,7 +329,7 @@ namespace KADES.Controllers
             string[] listHeaders = new string[]
             {
                 "NO SURAT",
-                "NAMA SURAT",
+                "NAMA SURAT", 
                 "NAMA FILE",
                 "TANGGAL GENERATE"
             };
@@ -367,7 +367,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.NO_SURAT,item.NAMA_SURAT,item.FILE_NAME,item.GENERATE_DATE);
+                    dt.Rows.Add(item.NO_SURAT,item.NAMA_SURAT,item.FILE_NAME,item.GENERATE_DATE.ToString("dd/MM/yyyy"));
                 }
 
 

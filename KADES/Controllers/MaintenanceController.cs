@@ -252,7 +252,7 @@ namespace KADES.Controllers
                 var cekData = _context.RfAgama.Where(x => x.AGAMA.Equals(RfAgama.AGAMA)).Count();
                 if (cekData > 0)
                 {
-                    _notyf.Error("Dusun Sudah Ada");
+                    _notyf.Error("Data Sudah Ada");
                 }
                 else
                 {
@@ -629,7 +629,7 @@ namespace KADES.Controllers
 
         #endregion
 
-        #region Maitenance Agama
+        #region Maitenance Jenis Asset
 
         public IActionResult JenisAset()
         {

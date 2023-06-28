@@ -1,0 +1,43 @@
+﻿@using KADES.Models.Home;
+@model VW_Note
+
+
+
+
+<div class="modal fade" id="upNote-@Model.ID">
+    <div class="mdl_new modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="login_form">*@
+                <form asp-action="UpNote" method="POST">
+                    <fieldset>
+                        <input id="ID" asp-for="@Model.ID" hidden />
+                        <div class="field_form">
+                            <label class="label_field  control-label">Agama</label>
+                            <input id="JUDUL" asp-for="JUDUL" type="text" class="form-control form-control-sm form-control-user" />
+                        </div>
+                        <div class="field_form">
+                            <label class="label_field  control-label">Note</label>
+                            <textarea id="NOTE" style="height:110px;margin-bottom:10px" class="form-control form-control-sm form-control-user" asp-for="NOTE"></textarea>
+
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+                @*</div>*@
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end model popup -->
+</div>

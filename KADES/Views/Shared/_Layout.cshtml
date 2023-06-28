@@ -17,10 +17,15 @@
     <link rel="icon" href="~/Content/images/fevicon.png" type="image/png" />
     <!-- bootstrap css -->
     <link rel="stylesheet" href="~/Content/css/bootstrap.min.css" />
+    <!-- calendar file css -->
+    @*<link href="~/content/css/semantic.min.css" rel="stylesheet" />*@
     <!-- site css -->
     <link href="~/style.css?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")" rel="stylesheet" />
     <!-- responsive css -->
     <link rel="stylesheet" href="~/Content/css/responsive.css" />
+    <link href="~/content/css/animate.css" rel="stylesheet" />
+
+
     <!-- color css -->
     @*<link rel="stylesheet" href="~/Content/css/color_2.css" />*@
     <!-- select bootstrap -->
@@ -28,7 +33,7 @@
     <!-- scrollbar css -->
     <link rel="stylesheet" href="~/Content/css/perfect-scrollbar.css" />
     <!-- custom css -->
-    <link rel="stylesheet" href="~/Content/css/custom.css?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")"  />
+    <link rel="stylesheet" href="~/Content/css/custom.css?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")" />
     <!--[if lt IE 9]>
     @*<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>*@
@@ -62,7 +67,7 @@
                     <ul class="list-unstyled components">
                         <li class="active">
                             <a asp-controller="Home" asp-action="Dashboard" aria-expanded="false"><i class="fa fa-home blue2_color"></i><span>Home</span></a>
-                            
+
                         </li>
 
                         <li>
@@ -174,24 +179,15 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="#Maintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                               <i class="fa fa-user green_color"></i>
-                               <span>Maintenance</span>
-                            </a>
-                            <ul class="collapse list-unstyled" id="Maintenance" style="padding:0px 10px">
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="UserMaintenance">
-                                        <span>User Maintenance</span>
-                                    </a>
-                                </li>
-                               
-                            </ul>
+                        <li class="active">
+                            <a asp-controller="Maintenance" asp-action="UserMaintenance" aria-expanded="false"><i class="fa fa-user green_color"></i><span>User Maintenance</span></a>
+
+
                         </li>
 
                         <li>
                             <a href="#ParameterMaintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                <i class="fa fa-cog yellow_color"></i>
+                                <i class="fa fa-cog gray_color"></i>
                                 <span>Parameter Maintenance</span>
                             </a>
                             <ul class="collapse list-unstyled" id="ParameterMaintenance" style="padding:0px 10px">
@@ -229,8 +225,14 @@
                                     </a>
                                 </li>
 
-                                
+
                             </ul>
+                        </li>
+
+                        <li class="active">
+                            <a asp-controller="Home" asp-action="Notes" aria-expanded="false"><i class="fa fa-pencil-square-o yellow_color"></i><span>Notes</span></a>
+
+
                         </li>
                     </ul>
                 </div>
@@ -289,28 +291,29 @@
     </div>
 
     <div class="modal fade" id="modalTimeoutWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true"
-             data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel1">Session Timeout Warning</h5>
-                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>*@
-                    </div>
-                    <div class="modal-body">
-                        <h7>Your session will expired in few minutes, Please klik OK to continue session.</h7>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" onclick="ResetTimers()">Ok</button>
-                    </div>
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Session Timeout Warning</h5>
+                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>*@
+                </div>
+                <div class="modal-body">
+                    <h7>Your session will expired in few minutes, Please klik OK to continue session.</h7>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal" onclick="ResetTimers()">Ok</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
 
     <!-- jQuery -->
+
     <script src="~/Content/js/jquery.min.js"></script>
     <script src="~/Content/js/popper.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
@@ -330,10 +333,13 @@
     <script>
         var ps = new PerfectScrollbar('#sidebar');
     </script>
+
     <script src="~/js/Custom.js?nocache=@DateTime.Now.ToString("yyyyMMddHHmmss")" asp-append-version="true"></script>
 
     <!-- custom js -->
     <script src="~/Content/js/custom.js"></script>
+    <!-- calendar file js -->
+    <script src="~/content/js/semantic.min.js"></script>
     <script src="~/Content/js/chart_custom_style1.js"></script>
 
     <!--- Data Table -->
@@ -343,7 +349,8 @@
 
     <!-- Page level custom scripts -->
     <script src="~/content/js/datatables-demo.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script> 
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/content/js/animate.js"></script>
     @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>

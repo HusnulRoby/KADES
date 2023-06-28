@@ -128,8 +128,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Home/Notes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3Rlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Home/_UpNote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfVXBOb3RlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/Agama.cshtml]

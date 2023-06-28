@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using KADES.Models.Account;
 using KADES.Models.Administrasi;
 using KADES.Models.Asset;
+using KADES.Models.Home;
 using KADES.Models.Maintenance;
 using KADES.Models.Pelayanan;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,7 @@ namespace KADES.Models
         public virtual DbSet<RfPekerjaan>? RfPekerjaan { get; set; }
         public virtual DbSet<RfJenisAset>? RfJenisAset { get; set; }
         public virtual DbSet<DataAset>? DataAset { get; set; }
+        public virtual DbSet<Note>? Note { get; set; }
 
 
 

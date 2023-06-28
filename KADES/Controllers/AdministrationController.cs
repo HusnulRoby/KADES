@@ -3,6 +3,8 @@ using KADES.Models;
 using KADES.Models.Administrasi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OfficeOpenXml;
+using System.Data;
 using System.Diagnostics;
 using System.Text;
 
@@ -49,7 +51,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_MASUK = DateTime.Parse(A.TGL_MASUK.ToString("dd/MM/yyyy")),
                             TGL_BERHENTI = A.TGL_BERHENTI.ToString(),
-                            CREATED_BY=A.CREATED_BY,
+                            CREATED_BY = A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -96,7 +98,7 @@ namespace KADES.Controllers
                     NO_TELP = AparaturDesa.NO_TELP,
                     ALAMAT = AparaturDesa.ALAMAT,
                     TGL_MASUK = AparaturDesa.TGL_MASUK,
-                    TGL_BERHENTI=null,
+                    TGL_BERHENTI = null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -124,27 +126,27 @@ namespace KADES.Controllers
                 var data = _context.AparaturDesa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
                 if (data != null)
                 {
-                    data.NAMA=model.NAMA;
-                    data.KODE_JABATAN=model.KODE_JABATAN;
-                    data.SK=model.SK;
-                    data.JENIS_KELAMIN=model.JENIS_KELAMIN;
-                    data.NIK=model.NIK;
-                    data.NO_TELP=model.NO_TELP;
-                    data.ALAMAT=model.ALAMAT;
-                    data.TGL_MASUK=model.TGL_MASUK;
+                    data.NAMA = model.NAMA;
+                    data.KODE_JABATAN = model.KODE_JABATAN;
+                    data.SK = model.SK;
+                    data.JENIS_KELAMIN = model.JENIS_KELAMIN;
+                    data.NIK = model.NIK;
+                    data.NO_TELP = model.NO_TELP;
+                    data.ALAMAT = model.ALAMAT;
+                    data.TGL_MASUK = model.TGL_MASUK;
 
                     _context.AparaturDesa.Update(data);
                     _context.SaveChanges();
                     _notyf.Success("Update Data Sukses");
                 }
-                
+
             }
             catch (Exception ex)
             {
                 _notyf.Error("Update data gagal.");
                 //throw ex;
             }
-            
+
 
             return RedirectToAction("AparaturDesa");
         }
@@ -158,7 +160,7 @@ namespace KADES.Controllers
                 if (data != null)
                 {
                     data.ACTIVE = false;
-                    data.TGL_BERHENTI=model.TGL_BERHENTI;
+                    data.TGL_BERHENTI = model.TGL_BERHENTI;
 
                     _context.AparaturDesa.Update(data);
                     _context.SaveChanges();
@@ -169,9 +171,92 @@ namespace KADES.Controllers
             {
                 _notyf.Success("Inactive Data Gagal");
             }
-            
+
 
             return RedirectToAction("AparaturDesa");
+        }
+
+        public ActionResult DownloadExcelAPR()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_AparaturDesa>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "NAMA",
+                "NOMOR SK",
+                "JENIS KELAMIN",
+                "JABATAN",
+                "ALAMAT",
+                "NOMOR TELP",
+                "TANGGAL PENGANGKATAN",
+                "TANGGAL PEMBERHENTIAN"
+            };
+
+            Query = from A in _context.AparaturDesa
+                    join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                    select new VW_AparaturDesa()
+                    {
+                        ID = A.ID,
+                        NAMA = A.NAMA,
+                        JENIS_KELAMIN = A.JENIS_KELAMIN,
+                        SK = A.SK,
+                        KODE_JABATAN = A.KODE_JABATAN,
+                        JABATAN = B.JABATAN,
+                        NIK = A.NIK,
+                        NO_TELP = A.NO_TELP,
+                        ALAMAT = A.ALAMAT,
+                        TGL_MASUK = A.TGL_MASUK,
+                        TGL_BERHENTI = A.TGL_BERHENTI.ToString(),
+                        CREATED_BY = A.CREATED_BY,
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                var JK = "";
+                var tglBerhenti = "";
+                foreach (var item in Query)
+                {
+                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    tglBerhenti = string.IsNullOrEmpty(item.TGL_BERHENTI) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_BERHENTI));
+                    dt.Rows.Add(item.NAMA, item.SK, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_MASUK.ToString("dd/MM/yyyy"), tglBerhenti);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAparaturDesa" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
         }
 
         #endregion
@@ -191,30 +276,30 @@ namespace KADES.Controllers
                             ID = A.ID,
                             NIK = A.NIK,
                             NAMA = A.NAMA,
-                            NO_AKTA= A.NO_AKTA,
-                            KK= A.KK,
-                            POB=A.POB,
-                            DOB= DateTime.Parse(A.DOB.ToString("dd/MM/yyyy")),
+                            NO_AKTA = A.NO_AKTA,
+                            KK = A.KK,
+                            POB = A.POB,
+                            DOB = DateTime.Parse(A.DOB.ToString("dd/MM/yyyy")),
                             JENIS_KELAMIN = A.JENIS_KELAMIN,
                             ID_DLMKELUARGA = A.ID_DLMKELUARGA,
                             ID_AGAMA = A.ID_AGAMA,
                             AGAMA = B.AGAMA,
-                            NIK_AYAH=A.NIK_AYAH,
-                            NAMA_AYAH=A.NAMA_AYAH,
-                            NIK_IBU=A.NIK_IBU,
-                            NAMA_IBU=A.NAMA_IBU,
+                            NIK_AYAH = A.NIK_AYAH,
+                            NAMA_AYAH = A.NAMA_AYAH,
+                            NIK_IBU = A.NIK_IBU,
+                            NAMA_IBU = A.NAMA_IBU,
                             ALAMAT = A.ALAMAT,
                             NO_TELP = A.NO_TELP,
                             ID_DUSUN = A.ID_DUSUN,
-                            DUSUN=D.DUSUN,
+                            DUSUN = D.DUSUN,
                             RW = A.RW,
                             RT = A.RT,
-                            ID_PENDIDIKAN= A.ID_PENDIDIKAN,
+                            ID_PENDIDIKAN = A.ID_PENDIDIKAN,
                             PENDIDIKAN = E.PENDIDIKAN,
                             ID_PEKERJAAN = A.ID_PEKERJAAN,
                             PEKERJAAN = F.PEKERJAAN,
-                            ID_KAWIN=A.ID_KAWIN,
-                            ID_STATUS= A.ID_STATUS,
+                            ID_KAWIN = A.ID_KAWIN,
+                            ID_STATUS = A.ID_STATUS,
 
                         };
 
@@ -302,19 +387,19 @@ namespace KADES.Controllers
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
                 var getData = new Penduduk
                 {
-                    NIK= Penduduk.NIK,
-                    NAMA= Penduduk.NAMA,
-                    KK= Penduduk.KK,
-                    NO_AKTA= Penduduk.NO_AKTA,
-                    POB= Penduduk.POB,
-                    DOB= Penduduk.DOB,
-                    JENIS_KELAMIN=Penduduk.JENIS_KELAMIN,
-                    ID_DLMKELUARGA= Penduduk.ID_DLMKELUARGA,
-                    ID_AGAMA=Penduduk.ID_AGAMA,
-                    NIK_AYAH=Penduduk.NIK_AYAH,
-                    NAMA_AYAH= Penduduk.NAMA_AYAH,
-                    NIK_IBU= Penduduk.NIK_IBU,
-                    NAMA_IBU= Penduduk.NAMA_IBU,
+                    NIK = Penduduk.NIK,
+                    NAMA = Penduduk.NAMA,
+                    KK = Penduduk.KK,
+                    NO_AKTA = Penduduk.NO_AKTA,
+                    POB = Penduduk.POB,
+                    DOB = Penduduk.DOB,
+                    JENIS_KELAMIN = Penduduk.JENIS_KELAMIN,
+                    ID_DLMKELUARGA = Penduduk.ID_DLMKELUARGA,
+                    ID_AGAMA = Penduduk.ID_AGAMA,
+                    NIK_AYAH = Penduduk.NIK_AYAH,
+                    NAMA_AYAH = Penduduk.NAMA_AYAH,
+                    NIK_IBU = Penduduk.NIK_IBU,
+                    NAMA_IBU = Penduduk.NAMA_IBU,
                     ALAMAT = Penduduk.ALAMAT,
                     NO_TELP = Penduduk.NO_TELP,
                     ID_DUSUN = Penduduk.ID_DUSUN,
@@ -350,28 +435,28 @@ namespace KADES.Controllers
                 if (data != null)
                 {
                     data.ID = model.ID;
-                    data.NIK= model.NIK;
-                    data.NAMA= model.NAMA;
-                    data.KK= model.KK;
-                    data.NO_AKTA= model.NO_AKTA;
-                    data.POB= model.POB;
-                    data.DOB= model.DOB;
-                    data.JENIS_KELAMIN= model.JENIS_KELAMIN;
+                    data.NIK = model.NIK;
+                    data.NAMA = model.NAMA;
+                    data.KK = model.KK;
+                    data.NO_AKTA = model.NO_AKTA;
+                    data.POB = model.POB;
+                    data.DOB = model.DOB;
+                    data.JENIS_KELAMIN = model.JENIS_KELAMIN;
                     data.ID_DLMKELUARGA = model.ID_DLMKELUARGA;
-                    data.ID_AGAMA= model.ID_AGAMA;
-                    data.NIK_AYAH= model.NIK_AYAH;
+                    data.ID_AGAMA = model.ID_AGAMA;
+                    data.NIK_AYAH = model.NIK_AYAH;
                     data.NAMA_AYAH = model.NAMA_AYAH;
-                    data.NIK_IBU= model.NIK_IBU;
-                    data.NAMA_IBU= model.NAMA_IBU;
-                    data.ALAMAT= model.ALAMAT;
-                    data.NO_TELP= model.NO_TELP;
-                    data.ID_DUSUN= model.ID_DUSUN;
-                    data.RW= model.RW;
-                    data.RT= model.RT;
-                    data.ID_PENDIDIKAN= model.ID_PENDIDIKAN;
-                    data.ID_PEKERJAAN= model.ID_PEKERJAAN;
-                    data.ID_KAWIN= model.ID_KAWIN;
-                    data.ID_STATUS= model.ID_STATUS;
+                    data.NIK_IBU = model.NIK_IBU;
+                    data.NAMA_IBU = model.NAMA_IBU;
+                    data.ALAMAT = model.ALAMAT;
+                    data.NO_TELP = model.NO_TELP;
+                    data.ID_DUSUN = model.ID_DUSUN;
+                    data.RW = model.RW;
+                    data.RT = model.RT;
+                    data.ID_PENDIDIKAN = model.ID_PENDIDIKAN;
+                    data.ID_PEKERJAAN = model.ID_PEKERJAAN;
+                    data.ID_KAWIN = model.ID_KAWIN;
+                    data.ID_STATUS = model.ID_STATUS;
 
                     _context.Penduduk.Update(data);
                     _context.SaveChanges();
@@ -385,6 +470,127 @@ namespace KADES.Controllers
 
 
             return RedirectToAction("Penduduk");
+        }
+
+        public ActionResult DownloadExcelSensus()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_Penduduk>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "NIK",
+                "NAMA",
+                "STATUS HIDUP",
+                "NOMOR KK",
+                "HUBUNGAN DALAM KELUARGA",
+                "JENIS KELAMIN",
+                "AGAMA",
+                "STATUS PERKAWINAN",
+                "NO AKTA",
+                "TEMPAT LAHIR",
+                "TANGGAL LAHIR",
+                "PENDIDIKAN",
+                "PEKERJAAN",
+                "NIK AYAH",
+                "NAMA AYAH",
+                "NIK IBU",
+                "NAMA IBU",
+                "NOMOR TELP",
+                "DUSUN",
+                "RT",
+                "RW",
+                "ALAMAT"
+            };
+
+            Query = from A in _context.Penduduk
+                    join B in _context.RfAgama on A.ID_AGAMA equals B.ID
+                    join D in _context.RfDusun on A.ID_DUSUN equals D.ID
+                    join E in _context.RfPendidikan on A.ID_PENDIDIKAN equals E.ID
+                    join F in _context.RfPekerjaan on A.ID_PEKERJAAN equals F.ID
+                    select new VW_Penduduk()
+                    {
+                        ID = A.ID,
+                        NIK = A.NIK,
+                        NAMA = A.NAMA,
+                        NO_AKTA = A.NO_AKTA,
+                        KK = A.KK,
+                        POB = A.POB,
+                        DOB = DateTime.Parse(A.DOB.ToString("dd/MM/yyyy")),
+                        JENIS_KELAMIN = A.JENIS_KELAMIN,
+                        ID_DLMKELUARGA = A.ID_DLMKELUARGA,
+                        ID_AGAMA = A.ID_AGAMA,
+                        AGAMA = B.AGAMA,
+                        NIK_AYAH = A.NIK_AYAH,
+                        NAMA_AYAH = A.NAMA_AYAH,
+                        NIK_IBU = A.NIK_IBU,
+                        NAMA_IBU = A.NAMA_IBU,
+                        ALAMAT = A.ALAMAT,
+                        NO_TELP = A.NO_TELP,
+                        ID_DUSUN = A.ID_DUSUN,
+                        DUSUN = D.DUSUN,
+                        RW = A.RW,
+                        RT = A.RT,
+                        ID_PENDIDIKAN = A.ID_PENDIDIKAN,
+                        PENDIDIKAN = E.PENDIDIKAN,
+                        ID_PEKERJAAN = A.ID_PEKERJAAN,
+                        PEKERJAAN = F.PEKERJAAN,
+                        ID_KAWIN = A.ID_KAWIN,
+                        ID_STATUS = A.ID_STATUS,
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                var JK = "";
+                var dlmKeluarga = "";
+                var kawin = "";
+                var statHidup = "";
+                foreach (var item in Query)
+                {
+                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    dlmKeluarga = item.ID_DLMKELUARGA.Equals(0) ? "Ayah" : item.DLMKELUARGA.Equals(1) ? "Ibu": item.DLMKELUARGA.Equals(2) ? "Anak":"";
+                    kawin = item.ID_KAWIN.Equals(0) ? "Kawin" : "Belum Kawin";
+                    statHidup = item.ID_STATUS.Equals(0) ? "Hidup" : "Mati";
+                    dt.Rows.Add(item.NIK,item.NAMA,statHidup,item.KK,dlmKeluarga, JK, item.AGAMA,kawin,item.NO_AKTA,
+                        item.POB,item.DOB.ToString("dd/MM/yyyy"),item.PENDIDIKAN,item.PEKERJAAN,item.NIK_AYAH,item.NAMA_AYAH,item.NIK_IBU,
+                        item.NAMA_IBU,item.NO_TELP,item.DUSUN,item.RT,item.RW, item.ALAMAT);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataPenduduk" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
         }
 
         #endregion
@@ -472,13 +678,13 @@ namespace KADES.Controllers
                 {
 
                     data.JENIS_RAB = model.JENIS_RAB;
-                    data.TGL_RAB= model.TGL_RAB;
-                    data.KETERANGAN= model.KETERANGAN;
+                    data.TGL_RAB = model.TGL_RAB;
+                    data.KETERANGAN = model.KETERANGAN;
                     data.CREATED_BY = USERID;
                     data.CREATED_DATE = DateTime.Now;
-                    data.FILENAME= FILE_UPLOAD.FileName;
+                    data.FILENAME = FILE_UPLOAD.FileName;
                     var pathFolder = Path.Combine(_env.WebRootPath, "Upload/RAB/Lampiran/" + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-                    data.PATH_FILE= Path.Combine(pathFolder, data.FILENAME);
+                    data.PATH_FILE = Path.Combine(pathFolder, data.FILENAME);
 
                     if (!Directory.Exists(pathFolder))
                     {
@@ -565,6 +771,64 @@ namespace KADES.Controllers
             //return RedirectToAction("RABDesa");
         }
 
+        public ActionResult DownloadExcelRAB()
+        {
+            DataTable dt = new DataTable();
+            //IQueryable<RAB_DESA>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "JENIS RAB",
+                "TANGGAL RAB",
+                "KETERANGAN"
+            };
+
+            var Query = _context.RAB_Desa.ToList();
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                foreach (var item in Query)
+                {
+                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"),item.KETERANGAN);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LaporanRAB" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
+        }
+
         #endregion
 
         #region BPD
@@ -586,7 +850,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY=A.CREATED_BY,
+                            CREATED_BY = A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -631,7 +895,7 @@ namespace KADES.Controllers
                     NO_TELP = BPD.NO_TELP,
                     ALAMAT = BPD.ALAMAT,
                     TGL_PENGANGKATAN = BPD.TGL_PENGANGKATAN,
-                    TGL_PEMBERHENTIAN=null,
+                    TGL_PEMBERHENTIAN = null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -660,12 +924,12 @@ namespace KADES.Controllers
                 var data = _context.BPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
                 if (data != null)
                 {
-                    data.KODE_JABATAN=model.KODE_JABATAN;
-                    data.NAMA=model.NAMA;
-                    data.JENIS_KELAMIN=model.JENIS_KELAMIN;
-                    data.NIK=model.NIK;
-                    data.NO_TELP=model.NO_TELP;
-                    data.ALAMAT=model.ALAMAT;
+                    data.KODE_JABATAN = model.KODE_JABATAN;
+                    data.NAMA = model.NAMA;
+                    data.JENIS_KELAMIN = model.JENIS_KELAMIN;
+                    data.NIK = model.NIK;
+                    data.NO_TELP = model.NO_TELP;
+                    data.ALAMAT = model.ALAMAT;
                     data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
 
                     _context.BPD.Update(data);
@@ -677,7 +941,7 @@ namespace KADES.Controllers
             {
                 _notyf.Error("Update Data Gagal");
             }
-            
+
 
             return RedirectToAction("BPD");
         }
@@ -702,7 +966,7 @@ namespace KADES.Controllers
             {
                 _notyf.Error("Inactive Data Sukses");
             }
-            
+
 
             return RedirectToAction("BPD");
         }
@@ -716,6 +980,87 @@ namespace KADES.Controllers
             };
 
             return View(AdministrasiModels);
+        }
+
+        public ActionResult DownloadExcelBPD()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_BPD>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "NAMA",
+                "JENIS KELAMIN",
+                "JABATAN",
+                "ALAMAT",
+                "NOMOR TELP",
+                "TANGGAL PENGANGKATAN",
+                "TANGGAL PEMBERHENTIAN"
+            };
+
+            Query = from A in _context.BPD
+                    join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                    select new VW_BPD()
+                    {
+                        ID = A.ID,
+                        NAMA = A.NAMA,
+                        JENIS_KELAMIN = A.JENIS_KELAMIN,
+                        KODE_JABATAN = A.KODE_JABATAN,
+                        JABATAN = B.JABATAN,
+                        NIK = A.NIK,
+                        NO_TELP = A.NO_TELP,
+                        ALAMAT = A.ALAMAT,
+                        TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                        CREATED_BY = A.CREATED_BY,
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                var JK = "";
+                var tglBerhenti = "";
+                foreach (var item in Query)
+                {
+                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
+                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAnggotaBPD" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
         }
 
         [HttpPost]
@@ -754,12 +1099,12 @@ namespace KADES.Controllers
             try
             {
                 var data = _context.KegiatanBPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-                if (data!=null)
+                if (data != null)
                 {
-                    data.KEGIATAN= model.KEGIATAN;
-                    data.KOORDINATOR= model.KOORDINATOR;
-                    data.TGL_MULAI= model.TGL_MULAI;
-                    data.TGL_BERAKHIR= model.TGL_BERAKHIR;
+                    data.KEGIATAN = model.KEGIATAN;
+                    data.KOORDINATOR = model.KOORDINATOR;
+                    data.TGL_MULAI = model.TGL_MULAI;
+                    data.TGL_BERAKHIR = model.TGL_BERAKHIR;
 
                     _context.KegiatanBPD.Update(data);
                     _context.SaveChanges();
@@ -806,7 +1151,7 @@ namespace KADES.Controllers
         #endregion
 
         #region Taruna Karuna
-        public IActionResult KarangTaruna() 
+        public IActionResult KarangTaruna()
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
@@ -824,7 +1169,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY=A.CREATED_BY,
+                            CREATED_BY = A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -897,11 +1242,11 @@ namespace KADES.Controllers
                 var data = _context.KarangTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
                 data.KODE_JABATAN = model.KODE_JABATAN;
-                data.NAMA=model.NAMA;
-                data.JENIS_KELAMIN=model.JENIS_KELAMIN;
-                data.NIK=model.NIK;
-                data.NO_TELP=model.NO_TELP;
-                data.ALAMAT=model.ALAMAT;
+                data.NAMA = model.NAMA;
+                data.JENIS_KELAMIN = model.JENIS_KELAMIN;
+                data.NIK = model.NIK;
+                data.NO_TELP = model.NO_TELP;
+                data.ALAMAT = model.ALAMAT;
                 data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
 
                 _context.KarangTaruna.Update(data);
@@ -940,6 +1285,87 @@ namespace KADES.Controllers
 
 
             return RedirectToAction("KarangTaruna");
+        }
+
+        public ActionResult DownloadExcelTaruna()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_KarangTaruna>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "NAMA",
+                "JENIS KELAMIN",
+                "JABATAN",
+                "ALAMAT",
+                "NOMOR TELP",
+                "TANGGAL PENGANGKATAN",
+                "TANGGAL PEMBERHENTIAN"
+            };
+
+            Query = from A in _context.KarangTaruna
+                    join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                    select new VW_KarangTaruna()
+                    {
+                        ID = A.ID,
+                        NAMA = A.NAMA,
+                        JENIS_KELAMIN = A.JENIS_KELAMIN,
+                        KODE_JABATAN = A.KODE_JABATAN,
+                        JABATAN = B.JABATAN,
+                        NIK = A.NIK,
+                        NO_TELP = A.NO_TELP,
+                        ALAMAT = A.ALAMAT,
+                        TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                        CREATED_BY = A.CREATED_BY,
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                var JK = "";
+                var tglBerhenti = "";
+                foreach (var item in Query)
+                {
+                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
+                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAnggotaKarangTaruna" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
         }
         public IActionResult KegiatanKarangTaruna()
         {
@@ -989,9 +1415,9 @@ namespace KADES.Controllers
                 var data = _context.KegiatanTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
                 data.KEGIATAN = model.KEGIATAN;
-                data.KOORDINATOR= model.KOORDINATOR;
-                data.TGL_MULAI= model.TGL_MULAI;
-                data.TGL_BERAKHIR= model.TGL_BERAKHIR;
+                data.KOORDINATOR = model.KOORDINATOR;
+                data.TGL_MULAI = model.TGL_MULAI;
+                data.TGL_BERAKHIR = model.TGL_BERAKHIR;
 
                 _context.KegiatanTaruna.Update(data);
                 _context.SaveChanges();
@@ -1053,7 +1479,7 @@ namespace KADES.Controllers
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
                             TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY=A.CREATED_BY,
+                            CREATED_BY = A.CREATED_BY,
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
@@ -1098,7 +1524,7 @@ namespace KADES.Controllers
                     NO_TELP = PKK.NO_TELP,
                     ALAMAT = PKK.ALAMAT,
                     TGL_PENGANGKATAN = PKK.TGL_PENGANGKATAN,
-                    TGL_PEMBERHENTIAN=null,
+                    TGL_PEMBERHENTIAN = null,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
@@ -1127,11 +1553,11 @@ namespace KADES.Controllers
                 var data = _context.PKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
                 data.KODE_JABATAN = model.KODE_JABATAN;
-                data.NAMA=model.NAMA;
-                data.JENIS_KELAMIN=model.JENIS_KELAMIN;
-                data.NIK=model.NIK;
-                data.NO_TELP=model.NO_TELP;
-                data.ALAMAT=model.ALAMAT;
+                data.NAMA = model.NAMA;
+                data.JENIS_KELAMIN = model.JENIS_KELAMIN;
+                data.NIK = model.NIK;
+                data.NO_TELP = model.NO_TELP;
+                data.ALAMAT = model.ALAMAT;
                 data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
 
                 _context.PKK.Update(data);
@@ -1172,6 +1598,87 @@ namespace KADES.Controllers
             return RedirectToAction("PKK");
         }
 
+        public ActionResult DownloadExcelPKK()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_PKK>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "NAMA",
+                "JENIS KELAMIN",
+                "JABATAN",
+                "ALAMAT",
+                "NOMOR TELP",
+                "TANGGAL PENGANGKATAN",
+                "TANGGAL PEMBERHENTIAN"
+            };
+
+            Query = from A in _context.PKK
+                    join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                    select new VW_PKK()
+                    {
+                        ID = A.ID,
+                        NAMA = A.NAMA,
+                        JENIS_KELAMIN = A.JENIS_KELAMIN,
+                        KODE_JABATAN = A.KODE_JABATAN,
+                        JABATAN = B.JABATAN,
+                        NIK = A.NIK,
+                        NO_TELP = A.NO_TELP,
+                        ALAMAT = A.ALAMAT,
+                        TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
+                        CREATED_BY = A.CREATED_BY,
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                var JK = "";
+                var tglBerhenti = "";
+                foreach (var item in Query)
+                {
+                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
+                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAnggotaPKK" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
+        }
+
         public IActionResult KegiatanPKK()
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
@@ -1189,7 +1696,7 @@ namespace KADES.Controllers
 
             try
             {
-                var USERID = !string.IsNullOrEmpty(HttpContext.Session.GetString("UserId"))? HttpContext.Session.GetString("UserId").ToString():"";
+                var USERID = !string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")) ? HttpContext.Session.GetString("UserId").ToString() : "";
                 var getData = new KegiatanPKK
                 {
                     KEGIATAN = KegiatanPKK.KEGIATAN,
@@ -1220,10 +1727,10 @@ namespace KADES.Controllers
             {
                 var data = _context.KegiatanPKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-                data.KEGIATAN= model.KEGIATAN;
-                data.KOORDINATOR= model.KOORDINATOR;
-                data.TGL_MULAI= model.TGL_MULAI;
-                data.TGL_BERAKHIR=  model.TGL_BERAKHIR;
+                data.KEGIATAN = model.KEGIATAN;
+                data.KOORDINATOR = model.KOORDINATOR;
+                data.TGL_MULAI = model.TGL_MULAI;
+                data.TGL_BERAKHIR = model.TGL_BERAKHIR;
 
                 _context.KegiatanPKK.Update(data);
                 _context.SaveChanges();
@@ -1267,7 +1774,7 @@ namespace KADES.Controllers
 
         #endregion
 
-        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
