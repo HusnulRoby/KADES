@@ -1,0 +1,334 @@
+﻿@using KADES.Models.Home;
+@{
+    ViewData["Title"] = "Home Page";
+    string[] numType = { "K", "M", "B" };
+}
+@model HomeModels;
+
+<div class="row column_title">
+    <div class="col-md-12">
+        <div class="page_title">
+            <h2>Home</h2>
+        </div>
+    </div>
+</div>
+<div class="row column1">
+    <div class="col-md-6 col-lg-3">
+        <div class="full counter_section margin_bottom_30">
+            <div class="counter_no">
+                <div>
+                    <p class="total_no">Penduduk</p>
+                </div>
+            </div>
+            <div class="couter_icon">
+                <div>
+                    <i class="fa fa-users yellow_color"></i>
+                </div>
+            </div>
+            <div class="counter_no">
+                <div>
+                    <p class="total_no">
+                        @{
+                            if (ViewBag.countJiwa > 999)
+                            {
+                                @ViewBag.countJiwa
+                                ;
+
+                                @numType[0]
+                                ;
+                            }
+                            else if (ViewBag.countJiwa > 9999)
+                            {
+                                @ViewBag.countJiwa
+                                ;
+
+                                @numType[1]
+                                ;
+                            }
+                            else if (ViewBag.countJiwa > 99999)
+                            {
+                                @ViewBag.countJiwa
+                                ;
+
+                                @numType[2]
+                                ;
+                            }
+                            else
+                            {
+                                @ViewBag.countJiwa
+                                ;
+                            }
+                        }
+                    </p>
+                    <p class="head_couter">Jiwa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-5">
+        <div class="full counter_section margin_bottom_30">
+            <div class="counter_no">
+                <div>
+                    <p class="total_no">Print Surat</p>
+                </div>
+            </div>
+            <div class="couter_icon">
+                <div>
+                    <i class="fa fa-cloud-download green_color"></i>
+                </div>
+            </div>
+            <div class="couter_custom_no">
+                <ul>
+                    <li>
+                        <span>
+                            <p class="total_no_cs">
+                                @{
+                                    if (ViewBag.logThisDay > 999)
+                                    {
+                                        @ViewBag.logThisDay
+                                        ;
+
+                                        @numType[0]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisDay > 9999)
+                                    {
+                                        @ViewBag.logThisDay
+                                        ;
+
+                                        @numType[1]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisDay > 99999)
+                                    {
+                                        @ViewBag.logThisDay
+                                        ;
+
+                                        @numType[2]
+                                        ;
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.logThisDay
+                                        ;
+                                    }
+                                }
+                            </p>
+                        </span>
+                        <p class="head_couter1">Hari Ini</p>
+                    </li>
+                    <li>
+                        <span>
+                            <p class="total_no_cs">
+                                @{
+                                    if (ViewBag.logThisMonth > 999)
+                                    {
+                                        @ViewBag.logThisMonth
+                                        ;
+
+                                        @numType[0]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisMonth > 9999)
+                                    {
+                                        @ViewBag.logThisMonth
+                                        ;
+
+                                        @numType[1]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisMonth > 99999)
+                                    {
+                                        @ViewBag.logThisMonth
+                                        ;
+
+                                        @numType[2]
+                                        ;
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.logThisMonth
+                                        ;
+                                    }
+                                }
+                            </p>
+                        </span>
+                        <p class="head_couter1">Bulan Ini</p>
+                    </li>
+                    <li>
+                        <span>
+                            <p class="total_no_cs">
+                                @{
+                                    if (ViewBag.logThisYear > 999)
+                                    {
+                                        @ViewBag.logThisYear
+                                        ;
+
+                                        @numType[0]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisYear > 9999)
+                                    {
+                                        @ViewBag.logThisYear
+                                        ;
+
+                                        @numType[1]
+                                        ;
+                                    }
+                                    else if (ViewBag.logThisYear > 99999)
+                                    {
+                                        @ViewBag.logThisYear
+                                        ;
+
+                                        @numType[2]
+                                        ;
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.logThisYear
+                                        ;
+                                    }
+                                }
+                            </p>
+                        </span>
+                        <p class="head_couter1">Tahun Ini</p>
+                    </li>
+
+                </ul>
+                @*<div>
+                <p class="total_no">1,805</p>
+                <p class="head_couter">Hari ini</p>
+                </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="full counter_section margin_bottom_30">
+            <div class="counter_no">
+                <div>
+                    <p class="total_no">Aset Desa</p>
+                </div>
+            </div>
+            <div class="couter_icon">
+                <div>
+                    <i class="fa fa-briefcase blue1_color"></i>
+                </div>
+            </div>
+            <div class="counter_no">
+                <div>
+                    <p class="total_no">
+                        @{
+                            if (ViewBag.countAsset > 999)
+                            {
+                                @ViewBag.countAsset
+                                ;
+
+                                @numType[0]
+                                ;
+                            }
+                            else if (ViewBag.countAsset > 9999)
+                            {
+                                @ViewBag.countAsset
+                                ;
+
+                                @numType[1]
+                                ;
+                            }
+                            else if (ViewBag.countAsset > 99999)
+                            {
+                                @ViewBag.countAsset
+                                ;
+
+                                @numType[2]
+                                ;
+                            }
+                            else
+                            {
+                                @ViewBag.countAsset
+                                ;
+                            }
+                        }
+                    </p>
+                    <p class="head_couter">Aset</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<!-- graph -->
+<div class="row column4 graph">
+    <div class="col-md-6">
+        <div class="dark_bg full margin_bottom_30">
+            <div class="full graph_head">
+                <div class="heading1 margin_0">
+                    <h2>Note</h2>
+                </div>
+            </div>
+            <div class="full graph_revenue">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content testimonial">
+                            <div id="testimonial_slider" class="carousel slide" data-ride="carousel">
+                                <!-- Wrapper for carousel items -->
+                                <div class="carousel-inner">
+                                    @{
+                                        int num = 1;
+                                        var active = "active";
+                                        foreach (var item in Model.listNote)
+                                        {
+                                            if (num>1)
+                                            {
+                                                active = "";
+                                            }
+                                            <div class="item carousel-item @active">
+                                                <p class="overview" style="padding-top:50px;"><b style="font-size:20px">@item.JUDUL</b></p>
+                                                <p class="testimonial" style="text-align:justify">@item.NOTE</p>
+
+                                            </div>
+                                            num++;
+                                        }
+                                    }
+                                </div>
+                                <!-- Carousel controls -->
+                                <a class="carousel-control left carousel-control-prev" href="#testimonial_slider" data-slide="prev">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                                <a class="carousel-control right carousel-control-next" href="#testimonial_slider" data-slide="next">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="white_shd full margin_bottom_30">
+            <div class="full graph_head">
+                <div class="heading1 margin_0">
+                    <h2>
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        Calendar
+                    </h2>
+                </div>
+            </div>
+            <div class="full progress_bar_inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="full">
+                            <div class="ui calendar" id="example14">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

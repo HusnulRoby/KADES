@@ -721,7 +721,7 @@ a:focus {
 .icon_info ul.user_profile_dd>li {
     width: auto;
     border-radius: 0;
-    background: #ff5722;
+    /*background: #ff5722;*/
     margin: 0;
     padding: 12px 0 12px 20px;
     height: auto;
@@ -1002,14 +1002,14 @@ a[data-toggle="collapse"] {
 }
 
 .user_info p {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     color: #1ed085;
     margin: 0;
 }
 
 .user_info h6 {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
     color: #fff;
     letter-spacing: 0;

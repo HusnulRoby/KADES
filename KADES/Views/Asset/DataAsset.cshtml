@@ -1,6 +1,6 @@
 ﻿@using KADES.Models.Asset;
 @{
-    ViewData["Title"] = "Data Aset";
+    ViewData["Title"] = "Buku Aset Desa";
 
 }
 
@@ -22,7 +22,7 @@
             <div class="white_shd full margin_bottom_30">
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
-                        <h2>Buku Aset Desa</h2>
+                        <h2>Data Aset</h2>
                         <span class="plus_green_bt_exp"><a class="fa fa-download" style="font-size:15px" asp-controller="Asset" asp-action="DownloadExcel"></a></span>
 
                         <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
@@ -35,7 +35,7 @@
                         <table id="dataTable" class="table" style="width:100%">
                             <thead class="thead-light" style="text-align:center">
                                 <tr>
-                                    <th width="150px">#</th>
+                                    <th width="150px">Action</th>
                                     <th>Nama Aset</th>
                                     <th>Jenis Aset</th>
                                     <th>Lokasi</th>
@@ -77,11 +77,11 @@
     <!-- model popup -->
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
-        <div class="mdl_new modal-dialog">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">Tambah Data</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -89,8 +89,8 @@
                     @*<div class="login_form">*@
                     <form asp-action="AddAsset" method="POST">
                         <fieldset>
-                            <div class="row">
-                                <div class="col-sm-6">
+                            @*<div class="row">
+                                <div class="col-sm-6">*@
                                     <div class="field_form">
                                         <label class="label_field  control-label">Name Aset</label>
                                         <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
@@ -112,8 +112,8 @@
                                         <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-sm form-control-user" />
                                     </div>
 
-                                </div>
-                            </div>
+                               @* </div>
+                            </div>*@
                         </fieldset>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-sm btn-success">Save</button>

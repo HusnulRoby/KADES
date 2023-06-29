@@ -5,11 +5,11 @@
 
 
 <div class="modal fade" id="updateAsset-@Model.ID">
-    <div class="mdl_new modal-dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title">Update Data</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
@@ -17,8 +17,8 @@
                 @*<div class="login_form">*@
                 <form asp-action="UpAsset" method="POST">
                     <fieldset>
-                        <div class="row">
-                            <div class="col-sm-6">
+                        @*<div class="row">
+                            <div class="col-sm-6">*@
                                 <input id="ID" asp-for="ID" type="text" class="form-control form-control-sm form-control-user" hidden />
 
                                 <div class="field_form">
@@ -41,9 +41,9 @@
                                     <label class="label_field  control-label">Tanggal Masuk</label>
                                     <input type="date" asp-for="TGL_INPUT" class="form-control form-control-sm form-control-user" />
                                 </div>
-
+@*
                             </div>
-                        </div>
+                        </div>*@
                     </fieldset>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Save</button>

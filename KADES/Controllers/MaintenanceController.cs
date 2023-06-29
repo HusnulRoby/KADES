@@ -39,7 +39,17 @@ namespace KADES.Controllers
         public IActionResult Jabatan()
         {
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
-            
+
+            List<SelectListItem> catJabatan = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "APR", Text = "Aparatur Desa" },
+                new SelectListItem { Value = "BPD", Text = "BPD" },
+                new SelectListItem { Value = "KTR", Text = "Karang Taruna" },
+                new SelectListItem { Value = "PKK", Text = "PKK" }
+            };
+
+            ViewBag.ddlCat = catJabatan;
+
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
                 ListRFJabatan = _context.RFJabatan.ToList()

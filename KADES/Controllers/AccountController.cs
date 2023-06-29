@@ -47,7 +47,7 @@ namespace KADES.Controllers
                     HttpContext.Session.SetString("UserId", model.USERID.ToString());
                     //var a= HttpContext.Session.GetString("UserId");
                     //ViewBag.USERID = a;
-                    return Redirect("/Home/Dashboard");
+                    return Redirect("/Home/Home");
                 }
                 else
                 {

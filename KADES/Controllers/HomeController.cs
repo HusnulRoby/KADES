@@ -21,7 +21,7 @@ namespace KADES.Controllers
             _notyf = notyf;
         }
 
-        public IActionResult Dashboard()
+        public IActionResult Home()
         {
             var monthNow = DateTime.Now.Month;
             var yearNow = DateTime.Now.Year;

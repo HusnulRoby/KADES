@@ -22,7 +22,7 @@
             <div class="white_shd full margin_bottom_30">
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
-                        <h2>Buku Kegiatan Karang Taruna</h2>
+                        <h2>Parameter Jabatan</h2>
                         <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
 
                     </div>
@@ -33,7 +33,7 @@
                         <table id="dataTable" class="table" style="width:100%">
                             <thead class="thead-light" style="text-align:center">
                                 <tr>
-                                    <th>#</th>
+                                    <th>Action</th>
                                     <th>Jabatan</th>
                                     <th>Tipe Jabatan</th>
                                     <th>Status</th>
@@ -90,7 +90,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Modal Heading</h4>
+                    <h4 class="modal-title">Tambah Data</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -109,7 +109,9 @@
 
                             <div class="field_form">
                                 <label class="label_field  control-label">Tipe Jabatan</label>
-                                <input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlCat" asp-for="@Model.RFJabatan.KODE_TYPE"></select>
+
+                                @*<input id="KODE_TYPE" asp-for="@Model.RFJabatan.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />*@
                             </div>
                             
                         </fieldset>

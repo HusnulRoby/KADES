@@ -5,11 +5,11 @@
 
 
 <div class="modal fade" id="upJabatan-@Model.ID">
-    <div class="mdl_new modal-dialog">
+    <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
+                <h4 class="modal-title">Update Data</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
@@ -28,7 +28,8 @@
                         </div>
                         <div class="field_form">
                             <label class="label_field  control-label">Tipe Jabatan</label>
-                            <input id="KODE_TYPE" asp-for="@Model.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />
+                            <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlCat" asp-for="@Model.KODE_TYPE"></select>
+                            @*<input id="KODE_TYPE" asp-for="@Model.KODE_TYPE" type="text" class="form-control form-control-sm form-control-user" />*@
                         </div>
                         <input id="ACTIVE" asp-for="@Model.ACTIVE" hidden />
                     </fieldset>
