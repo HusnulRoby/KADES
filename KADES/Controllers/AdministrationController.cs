@@ -44,20 +44,20 @@ namespace KADES.Controllers
                             NAMA = A.NAMA,
                             JENIS_KELAMIN = A.JENIS_KELAMIN,
                             SK = A.SK,
+                            SK_BERHENTI = A.SK_BERHENTI,
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_MASUK = DateTime.Parse(A.TGL_MASUK.ToString("dd/MM/yyyy")),
-                            TGL_BERHENTI = A.TGL_BERHENTI.ToString(),
-                            CREATED_BY = A.CREATED_BY,
+                            TGL_BERHENTI = A.TGL_BERHENTI.ToString()
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "1", Text = "Perempuan" },
-                new SelectListItem { Value = "0", Text = "laki - laki" }
+                new SelectListItem { Value = "P", Text = "Perempuan" },
+                new SelectListItem { Value = "L", Text = "Laki - laki" }
             };
 
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
@@ -92,6 +92,7 @@ namespace KADES.Controllers
                 {
                     KODE_JABATAN = AparaturDesa.KODE_JABATAN,
                     SK = AparaturDesa.SK,
+                    SK_BERHENTI = null,
                     NAMA = AparaturDesa.NAMA,
                     JENIS_KELAMIN = AparaturDesa.JENIS_KELAMIN,
                     NIK = AparaturDesa.NIK,
@@ -99,8 +100,6 @@ namespace KADES.Controllers
                     ALAMAT = AparaturDesa.ALAMAT,
                     TGL_MASUK = AparaturDesa.TGL_MASUK,
                     TGL_BERHENTI = null,
-                    CREATED_BY = USERID,
-                    CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
                 };
 
@@ -123,23 +122,9 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.AparaturDesa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-                if (data != null)
-                {
-                    data.NAMA = model.NAMA;
-                    data.KODE_JABATAN = model.KODE_JABATAN;
-                    data.SK = model.SK;
-                    data.JENIS_KELAMIN = model.JENIS_KELAMIN;
-                    data.NIK = model.NIK;
-                    data.NO_TELP = model.NO_TELP;
-                    data.ALAMAT = model.ALAMAT;
-                    data.TGL_MASUK = model.TGL_MASUK;
-
-                    _context.AparaturDesa.Update(data);
-                    _context.SaveChanges();
-                    _notyf.Success("Update Data Sukses");
-                }
-
+                _context.AparaturDesa.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
             }
             catch (Exception ex)
             {
@@ -156,20 +141,14 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.AparaturDesa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-                if (data != null)
-                {
-                    data.ACTIVE = false;
-                    data.TGL_BERHENTI = model.TGL_BERHENTI;
+                _context.AparaturDesa.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Inactive Data Sukses");
 
-                    _context.AparaturDesa.Update(data);
-                    _context.SaveChanges();
-                    _notyf.Success("Inactive Data Sukses");
-                }
             }
             catch (Exception ex)
             {
-                _notyf.Success("Inactive Data Gagal");
+                _notyf.Error("Inactive Data Gagal");
             }
 
 
@@ -184,13 +163,15 @@ namespace KADES.Controllers
 
             string[] listHeaders = new string[]
             {
+                "NIK",
                 "NAMA",
-                "NOMOR SK",
+                "SK PENGANGKATAN",
                 "JENIS KELAMIN",
                 "JABATAN",
                 "ALAMAT",
                 "NOMOR TELP",
                 "TANGGAL PENGANGKATAN",
+                "SK PEMBERHENTIAN",
                 "TANGGAL PEMBERHENTIAN"
             };
 
@@ -208,8 +189,8 @@ namespace KADES.Controllers
                         NO_TELP = A.NO_TELP,
                         ALAMAT = A.ALAMAT,
                         TGL_MASUK = A.TGL_MASUK,
-                        TGL_BERHENTI = A.TGL_BERHENTI.ToString(),
-                        CREATED_BY = A.CREATED_BY,
+                        SK_BERHENTI=A.SK_BERHENTI,
+                        TGL_BERHENTI = A.TGL_BERHENTI.ToString()
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -229,12 +210,14 @@ namespace KADES.Controllers
                 }
 
                 var JK = "";
+                var skBerhenti = "";
                 var tglBerhenti = "";
                 foreach (var item in Query)
                 {
-                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
+                    skBerhenti = !string.IsNullOrEmpty(item.SK_BERHENTI) ? item.SK_BERHENTI : "";
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_BERHENTI) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_BERHENTI));
-                    dt.Rows.Add(item.NAMA, item.SK, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_MASUK.ToString("dd/MM/yyyy"), tglBerhenti);
+                    dt.Rows.Add(item.NIK, item.NAMA, item.SK, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_MASUK.ToString("dd/MM/yyyy"), skBerhenti,tglBerhenti);
                 }
 
 
@@ -563,12 +546,12 @@ namespace KADES.Controllers
                 foreach (var item in Query)
                 {
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
-                    dlmKeluarga = item.ID_DLMKELUARGA.Equals(0) ? "Ayah" : item.DLMKELUARGA.Equals(1) ? "Ibu": item.DLMKELUARGA.Equals(2) ? "Anak":"";
+                    dlmKeluarga = item.ID_DLMKELUARGA.Equals(0) ? "Ayah" : item.DLMKELUARGA.Equals(1) ? "Ibu" : item.DLMKELUARGA.Equals(2) ? "Anak" : "";
                     kawin = item.ID_KAWIN.Equals(0) ? "Kawin" : "Belum Kawin";
                     statHidup = item.ID_STATUS.Equals(0) ? "Hidup" : "Mati";
-                    dt.Rows.Add(item.NIK,item.NAMA,statHidup,item.KK,dlmKeluarga, JK, item.AGAMA,kawin,item.NO_AKTA,
-                        item.POB,item.DOB.ToString("dd/MM/yyyy"),item.PENDIDIKAN,item.PEKERJAAN,item.NIK_AYAH,item.NAMA_AYAH,item.NIK_IBU,
-                        item.NAMA_IBU,item.NO_TELP,item.DUSUN,item.RT,item.RW, item.ALAMAT);
+                    dt.Rows.Add(item.NIK, item.NAMA, statHidup, item.KK, dlmKeluarga, JK, item.AGAMA, kawin, item.NO_AKTA,
+                        item.POB, item.DOB.ToString("dd/MM/yyyy"), item.PENDIDIKAN, item.PEKERJAAN, item.NIK_AYAH, item.NAMA_AYAH, item.NIK_IBU,
+                        item.NAMA_IBU, item.NO_TELP, item.DUSUN, item.RT, item.RW, item.ALAMAT);
                 }
 
 
@@ -804,7 +787,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"),item.KETERANGAN);
+                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"), item.KETERANGAN);
                 }
 
 
@@ -846,17 +829,18 @@ namespace KADES.Controllers
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
+                            SK = A.SK,
+                            SK_BERHENTI = A.SK_BERHENTI,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
-                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY = A.CREATED_BY,
+                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "1", Text = "Perempuan" },
-                new SelectListItem { Value = "0", Text = "laki - laki" }
+                new SelectListItem { Value = "P", Text = "Perempuan" },
+                new SelectListItem { Value = "L", Text = "Laki - laki" }
             };
 
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
@@ -892,12 +876,12 @@ namespace KADES.Controllers
                     NAMA = BPD.NAMA,
                     JENIS_KELAMIN = BPD.JENIS_KELAMIN,
                     NIK = BPD.NIK,
+                    SK = BPD.SK,
+                    SK_BERHENTI = null,
                     NO_TELP = BPD.NO_TELP,
                     ALAMAT = BPD.ALAMAT,
                     TGL_PENGANGKATAN = BPD.TGL_PENGANGKATAN,
                     TGL_PEMBERHENTIAN = null,
-                    CREATED_BY = USERID,
-                    CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
                 };
 
@@ -921,21 +905,9 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.BPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-                if (data != null)
-                {
-                    data.KODE_JABATAN = model.KODE_JABATAN;
-                    data.NAMA = model.NAMA;
-                    data.JENIS_KELAMIN = model.JENIS_KELAMIN;
-                    data.NIK = model.NIK;
-                    data.NO_TELP = model.NO_TELP;
-                    data.ALAMAT = model.ALAMAT;
-                    data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
-
-                    _context.BPD.Update(data);
-                    _context.SaveChanges();
-                    _notyf.Success("Update Data Sukses");
-                }
+                _context.BPD.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
             }
             catch (Exception)
             {
@@ -951,20 +923,13 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.BPD.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-                if (data != null)
-                {
-                    data.ACTIVE = false;
-                    data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
-
-                    _context.BPD.Update(data);
-                    _context.SaveChanges();
-                    _notyf.Success("Inactive Data Sukses");
-                }
+                _context.BPD.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Inactive Data Sukses");
             }
             catch (Exception)
             {
-                _notyf.Error("Inactive Data Sukses");
+                _notyf.Error("Inactive Data Gagal");
             }
 
 
@@ -990,12 +955,15 @@ namespace KADES.Controllers
 
             string[] listHeaders = new string[]
             {
+                "NIK",
+                "SK PENGANGKATAN",
                 "NAMA",
                 "JENIS KELAMIN",
                 "JABATAN",
                 "ALAMAT",
                 "NOMOR TELP",
                 "TANGGAL PENGANGKATAN",
+                "SK PEMBERHENTIAN",
                 "TANGGAL PEMBERHENTIAN"
             };
 
@@ -1004,6 +972,8 @@ namespace KADES.Controllers
                     select new VW_BPD()
                     {
                         ID = A.ID,
+                        SK=A.SK,
+                        SK_BERHENTI=A.SK_BERHENTI,
                         NAMA = A.NAMA,
                         JENIS_KELAMIN = A.JENIS_KELAMIN,
                         KODE_JABATAN = A.KODE_JABATAN,
@@ -1012,8 +982,7 @@ namespace KADES.Controllers
                         NO_TELP = A.NO_TELP,
                         ALAMAT = A.ALAMAT,
                         TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
-                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                        CREATED_BY = A.CREATED_BY,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -1033,12 +1002,14 @@ namespace KADES.Controllers
                 }
 
                 var JK = "";
+                var skBerhenti = "";
                 var tglBerhenti = "";
                 foreach (var item in Query)
                 {
-                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
+                    skBerhenti = !string.IsNullOrEmpty(item.SK_BERHENTI) ? item.SK_BERHENTI : "";
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
                 }
 
 
@@ -1165,17 +1136,18 @@ namespace KADES.Controllers
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
+                            SK=A.SK,
+                            SK_BERHENTI=A.SK_BERHENTI,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
-                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY = A.CREATED_BY,
+                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "1", Text = "Perempuan" },
-                new SelectListItem { Value = "0", Text = "laki - laki" }
+                new SelectListItem { Value = "P", Text = "Perempuan" },
+                new SelectListItem { Value = "L", Text = "Laki - laki" }
             };
 
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
@@ -1211,11 +1183,11 @@ namespace KADES.Controllers
                     NAMA = KarangTaruna.NAMA,
                     JENIS_KELAMIN = KarangTaruna.JENIS_KELAMIN,
                     NIK = KarangTaruna.NIK,
+                    SK=KarangTaruna.SK,
+                    SK_BERHENTI=null,
                     NO_TELP = KarangTaruna.NO_TELP,
                     ALAMAT = KarangTaruna.ALAMAT,
                     TGL_PENGANGKATAN = KarangTaruna.TGL_PENGANGKATAN,
-                    CREATED_BY = USERID,
-                    CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
                 };
 
@@ -1239,19 +1211,11 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.KarangTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-
-                data.KODE_JABATAN = model.KODE_JABATAN;
-                data.NAMA = model.NAMA;
-                data.JENIS_KELAMIN = model.JENIS_KELAMIN;
-                data.NIK = model.NIK;
-                data.NO_TELP = model.NO_TELP;
-                data.ALAMAT = model.ALAMAT;
-                data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
-
-                _context.KarangTaruna.Update(data);
+                _context.KarangTaruna.Update(model);
                 _context.SaveChanges();
                 _notyf.Success("Update Data Sukses");
+
+
             }
             catch (Exception)
             {
@@ -1268,14 +1232,11 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.KarangTaruna.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-
-                data.ACTIVE = false;
-                data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
-
-                _context.KarangTaruna.Update(data);
+                _context.KarangTaruna.Update(model);
                 _context.SaveChanges();
                 _notyf.Success("Inactive Data Sukses");
+
+
             }
             catch (Exception)
             {
@@ -1295,12 +1256,15 @@ namespace KADES.Controllers
 
             string[] listHeaders = new string[]
             {
+                "NIK",
+                "SK PENGANGKATAN",
                 "NAMA",
                 "JENIS KELAMIN",
                 "JABATAN",
                 "ALAMAT",
                 "NOMOR TELP",
                 "TANGGAL PENGANGKATAN",
+                "SK PEMBERHENTIAN",
                 "TANGGAL PEMBERHENTIAN"
             };
 
@@ -1314,11 +1278,12 @@ namespace KADES.Controllers
                         KODE_JABATAN = A.KODE_JABATAN,
                         JABATAN = B.JABATAN,
                         NIK = A.NIK,
+                        SK = A.SK,
+                        SK_BERHENTI = A.SK_BERHENTI,
                         NO_TELP = A.NO_TELP,
                         ALAMAT = A.ALAMAT,
                         TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
-                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                        CREATED_BY = A.CREATED_BY,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -1338,12 +1303,14 @@ namespace KADES.Controllers
                 }
 
                 var JK = "";
+                var skBerhenti = "";
                 var tglBerhenti = "";
                 foreach (var item in Query)
                 {
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    skBerhenti = string.IsNullOrEmpty(item.SK_BERHENTI) ? "" : item.SK_BERHENTI;
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
                 }
 
 
@@ -1475,17 +1442,18 @@ namespace KADES.Controllers
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
+                            SK=A.SK,
+                            SK_BERHENTI=A.SK_BERHENTI,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
-                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                            CREATED_BY = A.CREATED_BY,
+                            TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "1", Text = "Perempuan" },
-                new SelectListItem { Value = "0", Text = "laki - laki" }
+                new SelectListItem { Value = "P", Text = "Perempuan" },
+                new SelectListItem { Value = "L", Text = "Laki - laki" }
             };
 
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
@@ -1521,12 +1489,12 @@ namespace KADES.Controllers
                     NAMA = PKK.NAMA,
                     JENIS_KELAMIN = PKK.JENIS_KELAMIN,
                     NIK = PKK.NIK,
+                    SK=PKK.SK,
+                    SK_BERHENTI=null,
                     NO_TELP = PKK.NO_TELP,
                     ALAMAT = PKK.ALAMAT,
                     TGL_PENGANGKATAN = PKK.TGL_PENGANGKATAN,
                     TGL_PEMBERHENTIAN = null,
-                    CREATED_BY = USERID,
-                    CREATED_DATE = DateTime.Now,
                     ACTIVE = true,
                 };
 
@@ -1550,17 +1518,7 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.PKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-
-                data.KODE_JABATAN = model.KODE_JABATAN;
-                data.NAMA = model.NAMA;
-                data.JENIS_KELAMIN = model.JENIS_KELAMIN;
-                data.NIK = model.NIK;
-                data.NO_TELP = model.NO_TELP;
-                data.ALAMAT = model.ALAMAT;
-                data.TGL_PENGANGKATAN = model.TGL_PENGANGKATAN;
-
-                _context.PKK.Update(data);
+                _context.PKK.Update(model);
                 _context.SaveChanges();
                 _notyf.Success("Update Data Sukses");
             }
@@ -1579,12 +1537,7 @@ namespace KADES.Controllers
         {
             try
             {
-                var data = _context.PKK.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
-
-                data.ACTIVE = false;
-                data.TGL_PEMBERHENTIAN = model.TGL_PEMBERHENTIAN;
-
-                _context.PKK.Update(data);
+                _context.PKK.Update(model);
                 _context.SaveChanges();
                 _notyf.Success("Inactive Data Sukses");
             }
@@ -1606,12 +1559,15 @@ namespace KADES.Controllers
 
             string[] listHeaders = new string[]
             {
+                "NIK",
+                "SK PENGANGKATAN",
                 "NAMA",
                 "JENIS KELAMIN",
                 "JABATAN",
                 "ALAMAT",
                 "NOMOR TELP",
                 "TANGGAL PENGANGKATAN",
+                "SK PEMBERHENTIAN",
                 "TANGGAL PEMBERHENTIAN"
             };
 
@@ -1625,11 +1581,12 @@ namespace KADES.Controllers
                         KODE_JABATAN = A.KODE_JABATAN,
                         JABATAN = B.JABATAN,
                         NIK = A.NIK,
+                        SK=A.SK,
+                        SK_BERHENTI=A.SK_BERHENTI,
                         NO_TELP = A.NO_TELP,
                         ALAMAT = A.ALAMAT,
                         TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
-                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString(),
-                        CREATED_BY = A.CREATED_BY,
+                        TGL_PEMBERHENTIAN = A.TGL_PEMBERHENTIAN.ToString()
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -1649,12 +1606,14 @@ namespace KADES.Controllers
                 }
 
                 var JK = "";
+                var skBerhenti = "";
                 var tglBerhenti = "";
                 foreach (var item in Query)
                 {
-                    JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
+                    JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
+                    skBerhenti = string.IsNullOrEmpty(item.SK_BERHENTI) ? "" : item.SK_BERHENTI;
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), tglBerhenti);
+                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
                 }
 
 

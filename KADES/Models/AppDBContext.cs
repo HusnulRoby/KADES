@@ -40,6 +40,7 @@ namespace KADES.Models
         public virtual DbSet<RfPendidikan>? RfPendidikan { get; set; }
         public virtual DbSet<RfPekerjaan>? RfPekerjaan { get; set; }
         public virtual DbSet<RfJenisAset>? RfJenisAset { get; set; }
+        public virtual DbSet<RfSumberAset>? RfSumberAset { get; set; }
         public virtual DbSet<DataAset>? DataAset { get; set; }
         public virtual DbSet<Note>? Note { get; set; }
 

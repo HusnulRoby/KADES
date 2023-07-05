@@ -737,6 +737,104 @@ namespace KADES.Controllers
 
         #endregion
 
+        #region Maitenance Sumber Aset
+
+        public IActionResult SumberAset()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            MaintenanceModels maintenanceModel = new MaintenanceModels()
+            {
+                ListSumberAset = _context.RfSumberAset.ToList()
+            };
+
+            return View(maintenanceModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSumberAset(RfSumberAset RfSumberAset)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var cekData = _context.RfSumberAset.Where(x => x.KODE_SUMBER.Equals(RfSumberAset.KODE_SUMBER)).Count();
+                if (cekData > 0)
+                {
+                    _notyf.Error("Data Sudah Ada");
+                }
+                else
+                {
+                    var getData = new RfSumberAset
+                    {
+                        KODE_SUMBER= RfSumberAset.KODE_SUMBER,
+                        SUMBER_ASET= RfSumberAset.SUMBER_ASET,
+                        ACTIVE = RfSumberAset.ACTIVE
+                    };
+                    _context.Add(getData);
+                    _context.SaveChanges();
+                    _notyf.Success("Tambah Data Sukses");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("SumberAset");
+        }
+
+        [HttpPost]
+        public IActionResult UpSumberAset(RfSumberAset model)
+        {
+            try
+            {
+                _context.RfSumberAset.Update(model);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+
+            }
+
+
+            return RedirectToAction("SumberAset");
+        }
+
+        [HttpPost]
+        public IActionResult DelSumberAset(int ID)
+        {
+            try
+            {
+                var getAcc = _context.RfSumberAset.Find(ID);
+                if (getAcc == null)
+                {
+                    _notyf.Error("Delete Data Gagal");
+                    return NotFound();
+                }
+                _context.Remove(getAcc);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Delete Data Gagal");
+
+                throw ex;
+            }
+
+            return RedirectToAction("SumberAset");
+
+        }
+
+        #endregion
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

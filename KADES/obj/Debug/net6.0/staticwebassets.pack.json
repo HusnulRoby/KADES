@@ -369,6 +369,10 @@
       "PackagePath": "staticwebassets\\Content\\images\\logo\\logo_icon.png"
     },
     {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\userDefault.png",
+      "PackagePath": "staticwebassets\\Content\\images\\logo\\userDefault.png"
+    },
+    {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\js\\Chart.bundle.js",
       "PackagePath": "staticwebassets\\Content\\js\\Chart.bundle.js"
     },

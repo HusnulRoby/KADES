@@ -38,9 +38,11 @@
                                     <th width="150px">Action</th>
                                     <th>Nama Aset</th>
                                     <th>Jenis Aset</th>
+                                    <th>Sumber Aset</th>
+                                    <th>Kondisi Aset</th>
                                     <th>Lokasi</th>
                                     <th>Nilai Aset</th>
-                                    <th>Tanggal Masuk</th>
+                                    @*<th>Tanggal Masuk</th>*@
 
                                 </tr>
                             </thead>
@@ -61,10 +63,30 @@
                                         </td>
                                         <td>@item.NAMA_ASET</td>
                                         <td>@item.JENIS_ASET</td>
+                                        <td>@item.SUMBER_ASET</td>
+                                        <td>
+                                            @{
+                                                string KONDISI = "";
+                                                if (item.KODE_KONDISI.Equals("BK"))
+                                                {
+                                                    KONDISI = "Baik";
+                                                }
+                                                else if (item.KODE_KONDISI.Equals("RR"))
+                                                {
+                                                    KONDISI = "Rusak Ringan";
+                                                }
+                                                else if (item.KODE_KONDISI.Equals("RB"))
+                                                {
+                                                    KONDISI = "Rusak Berat";
+                                                }
+
+                                                @KONDISI;
+                                            }
+                                        </td>
                                         <td>@item.LOKASI</td>
                                         <td>@item.NILAI_ASET</td>
-                                        <td>@item.TGL_INPUT.ToString("dd/MM/yyyy")</td>
-                                        
+                                        @*<td>@item.TGL_INPUT.ToString("dd/MM/yyyy")</td>*@
+
                                     </tr>
                                 }
                             </tbody>
@@ -77,7 +99,7 @@
     <!-- model popup -->
     <!-- The Modal -->
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
+        <div class="mdl_new modal-dialog">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -89,8 +111,8 @@
                     @*<div class="login_form">*@
                     <form asp-action="AddAsset" method="POST">
                         <fieldset>
-                            @*<div class="row">
-                                <div class="col-sm-6">*@
+                            <div class="row">
+                                <div class="col-sm-6">
                                     <div class="field_form">
                                         <label class="label_field  control-label">Name Aset</label>
                                         <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
@@ -99,6 +121,17 @@
                                         <label class="label_field  control-label">Jenis Aset</label>
                                         <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="@Model.DataAset.ID_JNSASET"></select>
                                     </div>
+                                    <div class="field_form">
+                                        <label class="label_field  control-label">Sumber Aset</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlSumberAset" asp-for="@Model.DataAset.KODE_SUMBER"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field  control-label">Kondisi Aset</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlKondisiAset" asp-for="@Model.DataAset.KODE_KONDISI"></select>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6">
                                     <div class="field_form">
                                         <label class="label_field  control-label">Lokasi</label>
                                         <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-sm form-control-user" />
@@ -111,9 +144,8 @@
                                         <label class="label_field  control-label">Tanggal Masuk</label>
                                         <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-sm form-control-user" />
                                     </div>
-
-                               @* </div>
-                            </div>*@
+                                </div>
+                            </div>
                         </fieldset>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-sm btn-success">Save</button>

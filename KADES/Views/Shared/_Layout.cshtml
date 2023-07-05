@@ -73,7 +73,8 @@
                         <li>
                             <a href="#asset" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-archive orange_color"></i> <span>Asset</span></a>
                             <ul class="collapse list-unstyled" id="asset">
-                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAsset">> <span>Buku Inventaris dan Kekayaan Desa</span></a></li>
+                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAsset">> <span>Buku Kekayaan Desa</span></a></li>
+                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAssetDeleted">> <span>Log Kekayaan Desa</span></a></li>
                             </ul>
                         </li>
                         <li>
@@ -119,18 +120,18 @@
                                     </a>
                                     <ul class="collapse list-unstyled" id="lembaga" style="padding:0px 10px">
                                         <li>
-                                            <a href="#BPD" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                                <span>Lembaga BPD</span>
+                                            <a href="#LPM" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                                <span>Lembaga LPM</span>
                                             </a>
-                                            <ul class="collapse list-unstyled" id="BPD" style="padding:0px 10px">
+                                            <ul class="collapse list-unstyled" id="LPM" style="padding:0px 10px">
                                                 <li>
                                                     <a asp-area="" asp-controller="Administration" asp-action="BPD">
-                                                        <span>Buku Anggota BPD</span>
+                                                        <span>Buku Anggota LPM</span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a asp-area="" asp-controller="Administration" asp-action="KegiatanBPD">
-                                                        <span>Buku Kegiatan BPD</span>
+                                                        <span>Buku Kegiatan LPM</span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -222,6 +223,11 @@
                                 <li>
                                     <a asp-area="" asp-controller="Maintenance" asp-action="JenisAset">
                                         <span>Jenis Aset</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-area="" asp-controller="Maintenance" asp-action="SumberAset">
+                                        <span>Sumber Aset</span>
                                     </a>
                                 </li>
 

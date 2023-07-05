@@ -17,9 +17,13 @@ namespace KADES.Models.Asset
         public int ID_JNSASET { get; set; }
         public string KODE_ASET { get; set; }
         public string NAMA_ASET { get; set; }
+        public string KODE_SUMBER { get; set; }
+        public string KODE_KONDISI { get; set; }
         public string LOKASI { get;set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
+        public bool STATUS { get; set; }
+
     }
 
     public class VW_DataAset
@@ -29,8 +33,12 @@ namespace KADES.Models.Asset
         public string JENIS_ASET { get; set; }
         public string KODE_ASET { get; set; }
         public string NAMA_ASET { get; set; }
+        public string KODE_SUMBER { get; set; }
+        public string SUMBER_ASET { get; set; }
+        public string KODE_KONDISI { get; set; }
         public string LOKASI { get; set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
+        public bool STATUS { get; set; }
     }
 }

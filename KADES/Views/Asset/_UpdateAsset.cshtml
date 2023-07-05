@@ -5,7 +5,7 @@
 
 
 <div class="modal fade" id="updateAsset-@Model.ID">
-    <div class="modal-dialog">
+    <div class="mdl_new modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
@@ -17,33 +17,45 @@
                 @*<div class="login_form">*@
                 <form asp-action="UpAsset" method="POST">
                     <fieldset>
-                        @*<div class="row">
-                            <div class="col-sm-6">*@
-                                <input id="ID" asp-for="ID" type="text" class="form-control form-control-sm form-control-user" hidden />
+                        <div class="row">
+                        <div class="col-sm-6">
+                            <input id="ID" asp-for="ID" type="text" class="form-control form-control-sm form-control-user" hidden />
+                                <input id="STATUS" asp-for="STATUS" type="text" class="form-control form-control-sm form-control-user" hidden />
 
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Name Aset</label>
-                                    <input id="NAMA_ASET" asp-for="NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Jenis Aset</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="ID_JNSASET"></select>
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Lokasi</label>
-                                    <input id="LOKASI" asp-for="LOKASI" type="text" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Nilai Aset</label>
-                                    <input id="NILAI_ASET" asp-for="NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Tanggal Masuk</label>
-                                    <input type="date" asp-for="TGL_INPUT" class="form-control form-control-sm form-control-user" />
-                                </div>
-@*
+                            <div class="field_form">
+                                <label class="label_field  control-label">Name Aset</label>
+                                <input id="NAMA_ASET" asp-for="NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
-                        </div>*@
+                            <div class="field_form">
+                                <label class="label_field  control-label">Jenis Aset</label>
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJnsAset" asp-for="ID_JNSASET"></select>
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field  control-label">Sumber Aset</label>
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlSumberAset" asp-for="KODE_SUMBER"></select>
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field  control-label">Kondisi Aset</label>
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlKondisiAset" asp-for="KODE_KONDISI"></select>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="field_form">
+                                <label class="label_field  control-label">Lokasi</label>
+                                <input id="LOKASI" asp-for="LOKASI" type="text" class="form-control form-control-sm form-control-user" />
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field  control-label">Nilai Aset</label>
+                                <input id="NILAI_ASET" asp-for="NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" />
+                            </div>
+                            <div class="field_form">
+                                <label class="label_field  control-label">Tanggal Masuk</label>
+                                <input type="date" asp-for="TGL_INPUT" class="form-control form-control-sm form-control-user" />
+                            </div>
+                        </div>
+
+                        </div>
                     </fieldset>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Save</button>

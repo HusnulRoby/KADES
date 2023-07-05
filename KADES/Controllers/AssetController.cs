@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
+using Org.BouncyCastle.Crypto.Utilities;
 using System.Data;
 using System.Diagnostics;
 using System.Text;
@@ -29,20 +30,25 @@ namespace KADES.Controllers
             ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
             var model = from A in _context.DataAset
+                        where A.STATUS.Equals(true)
                         join B in _context.RfJenisAset on A.ID_JNSASET equals B.ID
+                        join C in _context.RfSumberAset on A.KODE_SUMBER equals C.KODE_SUMBER
                         select new VW_DataAset()
                         {
                             ID = A.ID,
-                            KODE_ASET=A.KODE_ASET,
-                            NAMA_ASET=A.NAMA_ASET,
-                            ID_JNSASET=A.ID_JNSASET,
-                            JENIS_ASET=B.JENIS_ASET,
-                            LOKASI=A.LOKASI,
-                            NILAI_ASET=A.NILAI_ASET,
-                            TGL_INPUT=A.TGL_INPUT,
+                            KODE_ASET = A.KODE_ASET,
+                            NAMA_ASET = A.NAMA_ASET,
+                            ID_JNSASET = A.ID_JNSASET,
+                            JENIS_ASET = B.JENIS_ASET,
+                            KODE_SUMBER = A.KODE_SUMBER,
+                            SUMBER_ASET = C.SUMBER_ASET,
+                            KODE_KONDISI = A.KODE_KONDISI,
+                            LOKASI = A.LOKASI,
+                            NILAI_ASET = A.NILAI_ASET,
+                            TGL_INPUT = A.TGL_INPUT,
                         };
 
-            
+
 
             AssetModels assetModels = new AssetModels()
             {
@@ -55,7 +61,23 @@ namespace KADES.Controllers
                 Text = x.JENIS_ASET.ToString(),
             });
 
+            var getSumberAset = _context.RfSumberAset.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.KODE_SUMBER.ToString(),
+                Text = x.SUMBER_ASET.ToString(),
+            });
+
+            List<SelectListItem> kondisiAset = new List<SelectListItem>()
+            {
+                new SelectListItem { Value = "BK", Text = "Baik" },
+                new SelectListItem { Value = "RR", Text = "Rusak Ringan" },
+                new SelectListItem { Value = "RB", Text = "Rusak Berat" }
+            };
+
+
             ViewBag.ddlJnsAset = getJnsAset;
+            ViewBag.ddlSumberAset = getSumberAset;
+            ViewBag.ddlKondisiAset = kondisiAset;
 
             return View(assetModels);
         }
@@ -68,29 +90,33 @@ namespace KADES.Controllers
             {
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
                 var getKode = from jnsAset in _context.RfJenisAset.Where(x => x.ID.Equals(DataAset.ID_JNSASET))
-                                     select jnsAset.KODE_JNSASET;
+                              select jnsAset.KODE_JNSASET;
                 var cekData = _context.DataAset.FirstOrDefault();
                 var getID = 0;
 
-                var kodeJnsAset=getKode.FirstOrDefault();
+                var kodeJnsAset = getKode.FirstOrDefault();
 
-                if (cekData != null) {
-                    getID=_context.DataAset.Max(x => x.ID);
+                if (cekData != null)
+                {
+                    getID = _context.DataAset.Max(x => x.ID);
                 }
                 else
                 {
-                    getID= 1;
+                    getID = 1;
                 }
                 string formattedId = getID.ToString("D5");
                 var kodeAset = getKode.FirstOrDefault() + formattedId + DateTime.Now.ToString("ddMMyy"); //TNH0000310523
                 var getData = new DataAset
                 {
-                    ID_JNSASET=DataAset.ID_JNSASET,
-                    NAMA_ASET=DataAset.NAMA_ASET,
-                    KODE_ASET= kodeAset,
-                    LOKASI=DataAset.LOKASI,
-                    NILAI_ASET=DataAset.NILAI_ASET,
-                    TGL_INPUT=DataAset.TGL_INPUT,
+                    ID_JNSASET = DataAset.ID_JNSASET,
+                    NAMA_ASET = DataAset.NAMA_ASET,
+                    KODE_ASET = kodeAset,
+                    KODE_SUMBER = DataAset.KODE_SUMBER,
+                    KODE_KONDISI = DataAset.KODE_KONDISI,
+                    LOKASI = DataAset.LOKASI,
+                    NILAI_ASET = DataAset.NILAI_ASET,
+                    TGL_INPUT = DataAset.TGL_INPUT,
+                    STATUS = true
                 };
 
 
@@ -115,10 +141,12 @@ namespace KADES.Controllers
             {
                 var data = _context.DataAset.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-                data.NAMA_ASET=model.NAMA_ASET;
+                data.NAMA_ASET = model.NAMA_ASET;
                 data.ID_JNSASET = model.ID_JNSASET;
+                data.KODE_SUMBER = model.KODE_SUMBER;
+                data.KODE_KONDISI = model.KODE_KONDISI;
                 data.LOKASI = model.LOKASI;
-                data.NILAI_ASET= model.NILAI_ASET;
+                data.NILAI_ASET = model.NILAI_ASET;
                 data.TGL_INPUT = model.TGL_INPUT;
 
                 _context.DataAset.Update(data);
@@ -146,7 +174,9 @@ namespace KADES.Controllers
                     _notyf.Error("Delete Data Gagal");
                     return NotFound();
                 }
-                _context.Remove(getAcc);
+
+                getAcc.STATUS = false;
+                _context.Update(getAcc);
                 _context.SaveChanges();
                 _notyf.Success("Delete Data Sukses");
             }
@@ -166,29 +196,35 @@ namespace KADES.Controllers
             DataTable dt = new DataTable();
             IQueryable<VW_DataAset>? Query;
 
-            
+
             string[] listHeaders = new string[]
             {
                 "JENIS ASET",
                 "KODE ASET",
                 "NAMA ASET",
+                "SUMBER ASET",
+                "KONDISI ASET",
                 "LOKASI",
                 "NILAI ASET",
                 "TANGGAL INPUT"
             };
 
-            Query = from a in _context.DataAset
+            Query = from a in _context.DataAset where a.STATUS.Equals(true)
                     join b in _context.RfJenisAset on a.ID_JNSASET equals b.ID
+                    join c in _context.RfSumberAset on a.KODE_SUMBER equals c.KODE_SUMBER
                     select new VW_DataAset()
                     {
-                        ID=a.ID,
-                        ID_JNSASET=a.ID_JNSASET,
-                        JENIS_ASET=b.JENIS_ASET,
-                        KODE_ASET=a.KODE_ASET,
-                        NAMA_ASET=a.NAMA_ASET,
-                        LOKASI=a.LOKASI,
-                        NILAI_ASET=a.NILAI_ASET,
-                        TGL_INPUT=a.TGL_INPUT
+                        ID = a.ID,
+                        ID_JNSASET = a.ID_JNSASET,
+                        JENIS_ASET = b.JENIS_ASET,
+                        KODE_ASET = a.KODE_ASET,
+                        NAMA_ASET = a.NAMA_ASET,
+                        KODE_SUMBER = a.KODE_SUMBER,
+                        SUMBER_ASET = c.SUMBER_ASET,
+                        KODE_KONDISI = a.KODE_KONDISI,
+                        LOKASI = a.LOKASI,
+                        NILAI_ASET = a.NILAI_ASET,
+                        TGL_INPUT = a.TGL_INPUT
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -207,9 +243,11 @@ namespace KADES.Controllers
                     worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
                 }
 
+                string kodisiAset = "";
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.JENIS_ASET, item.KODE_ASET, item.NAMA_ASET, item.LOKASI,item.NILAI_ASET,item.TGL_INPUT.ToString("dd/MM/yyyy"));
+                    kodisiAset = item.KODE_KONDISI.Equals("BK") ? "Baik" : item.KODE_KONDISI.Equals("RR") ? "Rusak Ringan" : item.KODE_KONDISI.Equals("RB") ? "Rusak Berat" : "";
+                    dt.Rows.Add(item.JENIS_ASET, item.KODE_ASET, item.NAMA_ASET, item.SUMBER_ASET, kodisiAset, item.LOKASI, item.NILAI_ASET, item.TGL_INPUT.ToString("dd/MM/yyyy"));
                 }
 
 
@@ -236,6 +274,126 @@ namespace KADES.Controllers
 
         }
 
+        public IActionResult DataAssetDeleted()
+        {
+            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            var model = from A in _context.DataAset
+                        where A.STATUS.Equals(false)
+                        join B in _context.RfJenisAset on A.ID_JNSASET equals B.ID
+                        join C in _context.RfSumberAset on A.KODE_SUMBER equals C.KODE_SUMBER
+                        select new VW_DataAset()
+                        {
+                            ID = A.ID,
+                            KODE_ASET = A.KODE_ASET,
+                            NAMA_ASET = A.NAMA_ASET,
+                            ID_JNSASET = A.ID_JNSASET,
+                            JENIS_ASET = B.JENIS_ASET,
+                            KODE_SUMBER = A.KODE_SUMBER,
+                            SUMBER_ASET = C.SUMBER_ASET,
+                            KODE_KONDISI = A.KODE_KONDISI,
+                            LOKASI = A.LOKASI,
+                            NILAI_ASET = A.NILAI_ASET,
+                            TGL_INPUT = A.TGL_INPUT,
+                        };
+
+
+
+            AssetModels assetModels = new AssetModels()
+            {
+                ListVW_Aset = model.ToList()
+            };
+
+            
+            return View(assetModels);
+        }
+
+        public ActionResult DownloadExcelDel()
+        {
+            DataTable dt = new DataTable();
+            IQueryable<VW_DataAset>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "JENIS ASET",
+                "KODE ASET",
+                "NAMA ASET",
+                "SUMBER ASET",
+                "KONDISI ASET",
+                "LOKASI",
+                "NILAI ASET",
+                "TANGGAL INPUT",
+                "STATUS ASET"
+            };
+
+            Query = from a in _context.DataAset
+                    where a.STATUS.Equals(false)
+                    join b in _context.RfJenisAset on a.ID_JNSASET equals b.ID
+                    join c in _context.RfSumberAset on a.KODE_SUMBER equals c.KODE_SUMBER
+                    select new VW_DataAset()
+                    {
+                        ID = a.ID,
+                        ID_JNSASET = a.ID_JNSASET,
+                        JENIS_ASET = b.JENIS_ASET,
+                        KODE_ASET = a.KODE_ASET,
+                        NAMA_ASET = a.NAMA_ASET,
+                        KODE_SUMBER = a.KODE_SUMBER,
+                        SUMBER_ASET = c.SUMBER_ASET,
+                        KODE_KONDISI = a.KODE_KONDISI,
+                        LOKASI = a.LOKASI,
+                        NILAI_ASET = a.NILAI_ASET,
+                        TGL_INPUT = a.TGL_INPUT
+                    };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                string kodisiAset = "";
+                string statusAset = "";
+                foreach (var item in Query)
+                {
+                    kodisiAset = item.KODE_KONDISI.Equals("BK") ? "Baik" : item.KODE_KONDISI.Equals("RR") ? "Rusak Ringan" : item.KODE_KONDISI.Equals("RB") ? "Rusak Berat" : "";
+                    statusAset = item.STATUS.Equals(false) ? "Dihapus" : "";
+                    dt.Rows.Add(item.JENIS_ASET, item.KODE_ASET, item.NAMA_ASET, item.SUMBER_ASET, kodisiAset, item.LOKASI, item.NILAI_ASET, item.TGL_INPUT.ToString("dd/MM/yyyy"), statusAset);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAset" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
+
+
+        }
         #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

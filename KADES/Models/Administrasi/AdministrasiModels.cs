@@ -68,10 +68,10 @@ namespace KADES.Models.Administrasi
         public int ID { get; set; }
         public string KODE_JABATAN { get; set; }
         public string SK { get; set; }
-        [Required(ErrorMessage ="No SK harus diisi!")]
+        public string? SK_BERHENTI { get; set; }
         public string NAMA { get; set; }
         [Required(ErrorMessage ="Nama harus diisi!")]
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
         public string NIK { get; set; }
         [Required(ErrorMessage = "NIK harus diisi!")]
@@ -85,9 +85,6 @@ namespace KADES.Models.Administrasi
         [DataType(DataType.DateTime)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? TGL_BERHENTI { get; set; }
-
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
     }
 
@@ -112,17 +109,15 @@ namespace KADES.Models.Administrasi
         public int ID { get; set; }
         public string KODE_JABATAN { get; set; }
         public string SK { get; set; }
+        public string SK_BERHENTI { get; set; }
         public string JABATAN { get; set; }
         public string NAMA { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public string NIK { get; set; }
         public string NO_TELP { get; set; }
         public string ALAMAT { get; set; }
         public DateTime TGL_MASUK { get; set; }
-        
         public string TGL_BERHENTI { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
 
     }
@@ -150,10 +145,12 @@ namespace KADES.Models.Administrasi
         public string KODE_JABATAN { get; set; }
         public string NAMA { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
         public string NIK { get; set; }
-        [Required(ErrorMessage = "NIK harus diisi!")]
+        public string SK { get; set; }
+        public string? SK_BERHENTI { get; set; }
+
         public string NO_TELP { get; set; }
         [Required(ErrorMessage = "No telp harus diisi!")]
         public string ALAMAT { get; set; }
@@ -162,9 +159,6 @@ namespace KADES.Models.Administrasi
         [Required(ErrorMessage = "Tanggal masuk harus diisi!")]
         
         public DateTime? TGL_PEMBERHENTIAN { get; set; }
-
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
     }
 
@@ -175,15 +169,14 @@ namespace KADES.Models.Administrasi
         public string KODE_JABATAN { get; set; }
         public string JABATAN { get; set; }
         public string NAMA { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public string NIK { get; set; }
+        public string SK { get; set; }
+        public string SK_BERHENTI { get; set; }
         public string NO_TELP { get; set; }
         public string ALAMAT { get; set; }
         public DateTime TGL_PENGANGKATAN { get; set; }
-
         public string TGL_PEMBERHENTIAN { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
 
     }
@@ -207,10 +200,12 @@ namespace KADES.Models.Administrasi
         public string KODE_JABATAN { get; set; }
         public string NAMA { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
         public string NIK { get; set; }
-        [Required(ErrorMessage = "NIK harus diisi!")]
+        public string SK { get; set; }
+        public string? SK_BERHENTI { get; set; }
+        
         public string NO_TELP { get; set; }
         [Required(ErrorMessage = "No telp harus diisi!")]
         public string ALAMAT { get; set; }
@@ -220,8 +215,6 @@ namespace KADES.Models.Administrasi
 
         public DateTime? TGL_PEMBERHENTIAN { get; set; }
 
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
     }
 
@@ -232,8 +225,10 @@ namespace KADES.Models.Administrasi
         public string KODE_JABATAN { get; set; }
         public string JABATAN { get; set; }
         public string NAMA { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public string NIK { get; set; }
+        public string SK { get; set; }
+        public string SK_BERHENTI { get; set; }
         public string NO_TELP { get; set; }
         public string ALAMAT { get; set; }
         public DateTime TGL_PENGANGKATAN { get; set; }
@@ -263,8 +258,9 @@ namespace KADES.Models.Administrasi
         public int ID { get; set; }
         public string KODE_JABATAN { get; set; }
         public string NAMA { get; set; }
-        [Required(ErrorMessage = "Nama harus diisi!")]
-        public bool JENIS_KELAMIN { get; set; }
+        public string SK { get; set; }
+        public string? SK_BERHENTI { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         [Required(ErrorMessage = "Nama harus diisi!")]
         public string NIK { get; set; }
         [Required(ErrorMessage = "NIK harus diisi!")]
@@ -277,8 +273,6 @@ namespace KADES.Models.Administrasi
 
         public DateTime? TGL_PEMBERHENTIAN { get; set; }
 
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
     }
 
@@ -289,15 +283,15 @@ namespace KADES.Models.Administrasi
         public string KODE_JABATAN { get; set; }
         public string JABATAN { get; set; }
         public string NAMA { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public string NIK { get; set; }
+        public string SK_BERHENTI { get; set; }
+        public string SK { get; set; }
         public string NO_TELP { get; set; }
         public string ALAMAT { get; set; }
         public DateTime TGL_PENGANGKATAN { get; set; }
 
         public string TGL_PEMBERHENTIAN { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DATE { get; set; }
         public bool ACTIVE { get; set; }
 
     }

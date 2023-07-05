@@ -23,6 +23,9 @@ namespace KADES.Models.Maintenance
         public RfJenisAset JenisAset { get; set; }
         public List<RfJenisAset> ListJenisAset { get; set; }
 
+        public RfSumberAset RfSumberAset { get; set; }
+        public List<RfSumberAset> ListSumberAset { get; set; }
+
 
         #endregion
 
@@ -77,6 +80,14 @@ namespace KADES.Models.Maintenance
         public int ID { get; set; }
         public string KODE_JNSASET { get; set; }
         public string JENIS_ASET { get; set; }
+        public bool ACTIVE { get; set; }
+    }
+
+    public class RfSumberAset
+    {
+        public int ID { get; set; }
+        public string KODE_SUMBER { get; set; }
+        public string SUMBER_ASET { get; set; }
         public bool ACTIVE { get; set; }
     }
     #endregion

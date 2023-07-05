@@ -34,7 +34,7 @@
                             <thead class="thead-light" >
                                 <tr>
                                     <th>Action</th>
-                                    <th>Nomor Surat</th>
+                                    <th>Kode Surat</th>
                                     <th>Nama Surat</th>
                                     <th>Created By</th>
                                     <th>Created Date</th>
@@ -91,14 +91,12 @@
                     <form asp-action="AddTempSurat" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field  control-label">Nomor Surat</label>
+                                <label class="label_field  control-label">Kode Surat</label>
                                 <input id="NO_SURAT" asp-for="@Model.TemplateSurat.NO_SURAT" type="text" class="form-control form-control-sm form-control-user" required />
-                                <span asp-validation-for="@Model.TemplateSurat.NO_SURAT" class="text-danger"></span>
                             </div>
                             <div class="field_form">
                                 <label class="label_field  control-label">Nama Surat</label>
                                 <input id="NAMA_SURAT" asp-for="@Model.TemplateSurat.NAMA_SURAT" type="text" class="form-control form-control-sm form-control-user" />
-                                <span asp-validation-for="@Model.TemplateSurat.NAMA_SURAT" class="text-danger"></span>
                             </div>
                             <div class="field_form">
                                 <label class="label_field  control-label">Upload Surat</label>

@@ -120,6 +120,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzZXRcRGF0YUFzc2V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Asset/DataAssetDeleted.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzZXRcRGF0YUFzc2V0RGVsZXRlZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Asset/_UpdateAsset.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNzZXRcX1VwZGF0ZUFzc2V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -164,6 +168,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcUGVuZGlkaWthbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/SumberAset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcU3VtYmVyQXNldC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/UserMaintenance.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcVXNlck1haW50ZW5hbmNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -194,6 +202,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/_UpRfPendidikan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcX1VwUmZQZW5kaWRpa2FuLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Maintenance/_UpSumberAset.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFpbnRlbmFuY2VcX1VwU3VtYmVyQXNldC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Kuliah/Skripsi/Apps/KADES/KADES/Views/Shared/Error.cshtml]

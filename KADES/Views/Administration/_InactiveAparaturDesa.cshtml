@@ -16,6 +16,19 @@
                 <form asp-action="InactiveAparaturDesa" method="POST">
                     <fieldset>
                         <input id="ID" asp-for="ID" type="hidden" />
+                        <input id="KODE_JABATAN" asp-for="KODE_JABATAN" type="hidden" />
+                        <input id="SK" asp-for="SK" type="hidden" />
+                        <input id="NAMA" asp-for="NAMA" type="hidden" />
+                        <input id="NIK" asp-for="NIK" type="hidden" />
+                        <input id="JENIS_KELAMIN" asp-for="JENIS_KELAMIN" type="hidden" />
+                        <input id="NO_TELP" asp-for="NO_TELP" type="hidden" />
+                        <input id="ALAMAT" asp-for="ALAMAT" type="hidden" />
+                        <input id="TGL_MASUK" asp-for="TGL_MASUK" type="hidden" />
+
+                        <div class="field_form">
+                            <label class="label_field  control-label">No. SK Pemberhentian</label>
+                            <input id="SK_BERHENTI" asp-for="SK_BERHENTI" type="text" class="form-control form-control-sm form-control-user" />
+                        </div>
 
                         <div class="field_form">
                             <label class="label_field  control-label">Tanggal Berhenti</label>

@@ -1,0 +1,48 @@
+﻿@using KADES.Models.Maintenance;
+@model RfSumberAset
+
+
+
+
+<div class="modal fade" id="upSumberAset-@Model.ID">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Data</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                @*<div class="login_form">*@
+                <form asp-action="UpSumberAset" method="POST">
+                    <fieldset>
+                        <input id="ID" asp-for="@Model.ID" hidden />
+                        <div class="field_form">
+                            <label class="label_field  control-label">Kode</label>
+                            <input id="KODE" asp-for="KODE_SUMBER" type="text" class="form-control form-control-sm form-control-user" />
+                        </div>
+
+                        <div class="field_form">
+                            <label class="label_field  control-label">Sumber Aset</label>
+                            <input id="SUMBER_ASET" asp-for="SUMBER_ASET" type="text" class="form-control form-control-sm form-control-user" />
+                        </div>
+
+                        <div class="field_form">
+                            <label class="label_field  control-label">Active</label>
+                            <input id="ACTIVE" asp-for="ACTIVE" type="checkbox" class="form-control-user" />
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+
+                @*</div>*@
+                <!-- Modal footer -->
+            </div>
+        </div>
+    </div>
+    <!-- end model popup -->
+</div>
