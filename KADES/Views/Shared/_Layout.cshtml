@@ -57,7 +57,7 @@
                             <div class="user_img"><img class="img-responsive" style="border-radius:0px" src="~/Content/images/Logo/Lambang_Kabupaten_Garut.svg" alt="#" /></div>
                             <div class="user_info">
                                 <h6>KADES</h6>
-                                <p><span ></span>(Kelola Aset Desa)</p>
+                                <p><span></span>(Kelola Aset Desa)</p>
                             </div>
                         </div>
                     </div>
@@ -73,8 +73,8 @@
                         <li>
                             <a href="#asset" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-archive orange_color"></i> <span>Asset</span></a>
                             <ul class="collapse list-unstyled" id="asset">
-                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAsset">> <span>Buku Kekayaan Desa</span></a></li>
-                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAssetDeleted">> <span>Log Kekayaan Desa</span></a></li>
+                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAsset"><span>Buku Kekayaan Desa</span></a></li>
+                                <li><a asp-area="" asp-controller="Asset" asp-action="DataAssetDeleted"><span>Log Kekayaan Desa</span></a></li>
                             </ul>
                         </li>
                         <li>
@@ -98,6 +98,8 @@
                                                 <span>Buku Aparatur Desa</span>
                                             </a>
                                         </li>
+                                        <li><a asp-area="" asp-controller="Administration" asp-action="DataPenduduk"> <span>Buku Data Penduduk</span></a></li>
+
                                     </ul>
 
                                 </li>
@@ -109,6 +111,11 @@
                                         <li>
                                             <a asp-area="" asp-controller="Administration" asp-action="RABDesa">
                                                 <span>Buku RAB Desa</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a asp-area="" asp-controller="Administration" asp-action="RealisasiRAB">
+                                                <span>Buku Realisasi RAB</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -175,7 +182,6 @@
                                     </ul>
                                 </li>
 
-                                <li><a asp-area="" asp-controller="Administration" asp-action="DataPenduduk"> <span>Buku Data Penduduk</span></a></li>
 
                             </ul>
                         </li>
@@ -251,7 +257,7 @@
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <div class="full">
                             <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
-                            
+
                             <div class="right_topbar">
                                 <div class="icon_info">
                                     @*<ul>

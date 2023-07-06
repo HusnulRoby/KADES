@@ -28,6 +28,7 @@ namespace KADES.Models
         public virtual DbSet<AparaturDesa>? AparaturDesa { get; set; }
         public virtual DbSet<RFJabatan>? RFJabatan { get; set; }
         public virtual DbSet<RAB_DESA>? RAB_Desa { get; set; }
+        public virtual DbSet<REALISASI_RAB>? REALISASI_RAB { get; set; }
         public virtual DbSet<BPD>? BPD { get; set; }
         public virtual DbSet<KegiatanBPD>? KegiatanBPD { get; set; }
         public virtual DbSet<KarangTaruna>? KarangTaruna { get; set; }

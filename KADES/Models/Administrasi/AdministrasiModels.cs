@@ -25,6 +25,14 @@ namespace KADES.Models.Administrasi
         #region RAB DESA
         public RAB_DESA RAB_DESA { get; set; }
         public List<RAB_DESA> ListRAB_DESA { get; set; }
+        public VW_RAB_DESA VW_RAB_DESA { get; set; }
+        public List<VW_RAB_DESA> ListVWRAB_DESA { get; set; }
+
+        public REALISASI_RAB REALISASI_RAB { get; set; }
+        public List<REALISASI_RAB> ListREALISASI_RAB { get; set; }
+
+        public VWREALISASI_RAB VWREALISASI_RAB { get; set; }
+        public List<VWREALISASI_RAB> ListVWREALISASI_RAB { get; set; }
         #endregion
 
         #region BPD
@@ -126,15 +134,50 @@ namespace KADES.Models.Administrasi
     #region RAB DESA
     public class RAB_DESA
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string JENIS_RAB { get; set; }
         public DateTime TGL_RAB { get; set; }
-        public string FILENAME { get; set; }
-        public string PATH_FILE { get; set; }
+        public string IDSUMBER_DANA { get; set; }
+        public double SALDO_AWAL { get; set; }
+        public double SALDO_AKHIR { get; set; }
         public string KETERANGAN { get; set; }
         public string CREATED_BY { get; set; }
         public DateTime CREATED_DATE { get; set; }
     }
+
+    public class VW_RAB_DESA
+    {
+        public int ID { get; set; }
+        public string JENIS_RAB { get; set; }
+        public DateTime TGL_RAB { get; set; }
+        public string IDSUMBER_DANA { get; set; }
+        public string SUMBER_DANA { get; set; }
+        public double SALDO_AWAL { get; set; }
+        public double SALDO_AKHIR { get; set; }
+        public string KETERANGAN { get; set; }
+        public string CREATED_BY { get; set; }
+        public DateTime CREATED_DATE { get; set; }
+    }
+
+    public class REALISASI_RAB
+    {
+        public int ID { get; set; }
+        public int ID_RAB { get; set; }
+        public string KEGIATAN { get; set; }
+        public DateTime TGL_REALISASI { get; set; }
+        public double BIAYA { get; set; }
+    }
+
+    public class VWREALISASI_RAB
+    {
+        public int ID { get; set; }
+        public int ID_RAB { get; set; }
+        public string JENIS_RAB { get; set; }
+        public string KEGIATAN { get; set; }
+        public DateTime TGL_REALISASI { get; set; }
+        public double BIAYA { get; set; }
+    }
+
     #endregion
 
     #region BPD
@@ -319,14 +362,11 @@ namespace KADES.Models.Administrasi
         public string KK { get; set; }
         public string POB { get; set; }
         public DateTime DOB { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public int ID_DLMKELUARGA { get; set; }
         public int ID_AGAMA { get; set; }
-        public string? NIK_AYAH { get; set; }
         public string? NAMA_AYAH { get; set; }
-        public string? NIK_IBU { get; set; }
         public string? NAMA_IBU { get; set; }
-        public string? ALAMAT { get; set; }
         public string? NO_TELP { get; set; }
         public int ID_DUSUN { get; set; }
         public string? RW { get; set; }
@@ -334,7 +374,6 @@ namespace KADES.Models.Administrasi
         public int ID_PENDIDIKAN { get; set; }
         public int ID_PEKERJAAN { get; set; }
         public int ID_KAWIN { get; set; }
-        public int ID_STATUS { get; set; }
     }
 
     public class VW_Penduduk
@@ -347,16 +386,13 @@ namespace KADES.Models.Administrasi
         public string? NO_AKTA { get; set; }
         public string POB { get; set; }
         public DateTime DOB { get; set; }
-        public bool JENIS_KELAMIN { get; set; }
+        public char JENIS_KELAMIN { get; set; }
         public int ID_DLMKELUARGA { get; set; }
         public string DLMKELUARGA { get; set; }
         public int ID_AGAMA { get; set; }
         public string AGAMA { get; set; }
-        public string? NIK_AYAH { get; set; }
         public string? NAMA_AYAH { get; set; }
-        public string? NIK_IBU { get; set; }
         public string? NAMA_IBU { get; set; }
-        public string? ALAMAT { get; set; }
         public string? NO_TELP { get; set; }
         public int ID_DUSUN { get; set; }
         public string DUSUN { get; set; }
@@ -368,8 +404,6 @@ namespace KADES.Models.Administrasi
         public string PEKERJAAN { get; set; }
         public int ID_KAWIN { get; set; }
         public string KAWIN { get; set; }
-        public int ID_STATUS { get; set; }
-        public string STATUS_HIDUP { get; set; }
     }
     #endregion
 }

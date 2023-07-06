@@ -115,7 +115,7 @@
                                 <div class="col-sm-6">
                                     <div class="field_form">
                                         <label class="label_field  control-label">Name Aset</label>
-                                        <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" />
+                                        <input id="NAMA_ASET" asp-for="@Model.DataAset.NAMA_ASET" type="text" class="form-control form-control-sm form-control-user" required />
                                     </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">Jenis Aset</label>
@@ -134,15 +134,15 @@
                                 <div class="col-sm-6">
                                     <div class="field_form">
                                         <label class="label_field  control-label">Lokasi</label>
-                                        <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-sm form-control-user" />
+                                        <input id="LOKASI" asp-for="@Model.DataAset.LOKASI" type="text" class="form-control form-control-sm form-control-user" required/>
                                     </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">Nilai Aset</label>
-                                        <input id="NILAI_ASET" asp-for="@Model.DataAset.NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" />
+                                        <input id="NILAI_ASET" asp-for="@Model.DataAset.NILAI_ASET" type="number" class="form-control form-control-sm form-control-user" required/>
                                     </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">Tanggal Masuk</label>
-                                        <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-sm form-control-user" />
+                                        <input type="date" asp-for="@Model.DataAset.TGL_INPUT" class="form-control form-control-sm form-control-user" required/>
                                     </div>
                                 </div>
                             </div>

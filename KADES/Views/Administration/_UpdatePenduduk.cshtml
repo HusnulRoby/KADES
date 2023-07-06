@@ -20,98 +20,85 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="field_form">
+                                    <label class="label_field  control-label">No. KK</label>
+                                    <input id="KK" asp-for="KK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" required />
+                                </div>
+                                <div class="field_form">
                                     <label class="label_field  control-label">NIK</label>
-                                    <input id="NIK" asp-for="NIK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
+                                    <input id="NIK" asp-for="NIK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" required />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field  control-label">Nama</label>
+                                    <input id="NAMA" asp-for="NAMA" type="text" class="form-control form-control-sm form-control-user" required />
                                 </div>
 
                                 <div class="field_form">
-                                    <label class="label_field  control-label">No. KK</label>
-                                    <input id="KK" asp-for="KK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
+                                    <label class="label_field  control-label">Jenis Kelamin</label>
+                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJK" asp-for="JENIS_KELAMIN"></select>
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">Hubungan Dalam Keluarga</label>
+                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDlmKeluarga" asp-for="ID_DLMKELUARGA"></select>
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">No Telp</label>
+                                    <input id="NO_TELP" asp-for="NO_TELP" type="text" class="form-control form-control-sm form-control-user" required />
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-4">
+
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">No. Akta Kelahiran</label>
+                                    <input id="AKTA" asp-for="NO_AKTA" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">Tempat Lahir</label>
+                                    <input id="POB" asp-for="POB" type="text" class="form-control form-control-sm form-control-user" required />
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">Tanggal Lahir</label>
+                                    <input type="date" asp-for="DOB" class="form-control form-control-sm form-control-user" required />
+                                </div>
+
+                                <div class="field_form">
+                                    <label class="label_field  control-label">Kampung</label>
+                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDusun" asp-for="ID_DUSUN"></select>
                                 </div>
                                 <div class="field_form">
-                                    <label class="label_field  control-label">Agama</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlAgama" asp-for="ID_AGAMA"></select>
+                                    <label class="label_field  control-label">RT</label>
+                                    <input id="RT" asp-for="RT" type="number" class="form-control form-control-sm form-control-user" required />
+                                </div>
+                                <div class="field_form">
+                                    <label class="label_field  control-label">RW</label>
+                                    <input id="RW" asp-for="RW" type="number" class="form-control form-control-sm form-control-user" required />
                                 </div>
                             </div>
 
                             <div class="col-sm-4">
                                 <div class="field_form">
-                                    <label class="label_field  control-label">Nama</label>
-                                    <input id="NAMA" asp-for="NAMA" type="text" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Hubungan Dalam Keluarga</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDlmKeluarga" asp-for="ID_DLMKELUARGA"></select>
+                                    <label class="label_field  control-label">Agama</label>
+                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlAgama" asp-for="ID_AGAMA"></select>
                                 </div>
                                 <div class="field_form">
                                     <label class="label_field  control-label">Status Perkawinan</label>
                                     <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlStatusKawin" asp-for="ID_KAWIN"></select>
                                 </div>
 
-
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Status Hidup</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlStatusHidup" asp-for="ID_STATUS"></select>
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Jenis Kelamin</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJK" asp-for="JENIS_KELAMIN"></select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">No. Akta Kelahiran</label>
-                                    <input id="AKTA" asp-for="NO_AKTA" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Tempat Lahir</label>
-                                    <input id="POB" asp-for="POB" type="text" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Tanggal Lahir</label>
-                                    <input type="date" asp-for="DOB" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
                                 <div class="field_form">
                                     <label class="label_field  control-label">Pendidikan</label>
                                     <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlRfPendidikan" asp-for="ID_PENDIDIKAN"></select>
                                 </div>
-                            </div>
-                            <div class="col-sm-4">
                                 <div class="field_form">
                                     <label class="label_field  control-label">Pekerjaan</label>
                                     <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlRfPekerjaan" asp-for="ID_PEKERJAAN"></select>
                                 </div>
-                            </div>
-                            <div class="col-sm-4"></div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">NIK Ayah</label>
-                                    <input id="NIKA" asp-for="NIK_AYAH" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">NIK Ibu</label>
-                                    <input id="NIKI" asp-for="NIK_IBU" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
                                 <div class="field_form">
                                     <label class="label_field  control-label">Nama Ayah</label>
                                     <input id="AYAH" asp-for="NAMA_AYAH" type="text" class="form-control form-control-sm form-control-user" />
@@ -120,37 +107,7 @@
                                     <label class="label_field  control-label">Nama Ibu</label>
                                     <input id="IBU" asp-for="NAMA_IBU" type="text" class="form-control form-control-sm form-control-user" />
                                 </div>
-                            </div>
-                            <div class="col-sm-4"></div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Dusun</label>
-                                    <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDusun" asp-for="ID_DUSUN"></select>
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">RT</label>
-                                    <input id="RT" asp-for="RT" type="number" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                            
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">No Telp</label>
-                                    <input id="NO_TELP" asp-for="NO_TELP" type="text" class="form-control form-control-sm form-control-user" />
-                                </div>
-                                <div class="field_form">
-                                    <label class="label_field  control-label">RW</label>
-                                    <input id="RW" asp-for="RW" type="number" class="form-control form-control-sm form-control-user" />
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="field_form">
-                                    <label class="label_field  control-label">Alamat</label>
-                                    <textarea id="ALAMAT" style="height:110px;margin-bottom:10px" class="form-control form-control-sm form-control-user" asp-for="ALAMAT"></textarea>
-                                </div>
                             </div>
                         </div>
                     </fieldset>

@@ -35,33 +35,39 @@
                             <thead class="thead-light"  style="text-align:center">
                                 <tr>
                                     <th>Action</th>
-                                    <th>Jenis RAB</th>
+                                    <th>Rencana Kegiatan</th>
                                     <th>Tanggal RAB</th>
-                                    <th>Lampiran</th>
+                                    <th>Sumber Dana</th>
+                                    <th>Saldo Awal</th>
+                                    <th>Saldo Akhir</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.ListRAB_DESA)
+                                @foreach (var item in Model.ListVWRAB_DESA)
                                 {
                                     <tr>
                                         <td>
                                             <div>
 
-                                                <form asp-action="DeleteRAB" asp-route-id="@item.ID" id="DelRAB" method="post">
+                                                <form asp-action="DeleteRAB" asp-route-id="@item.ID" id="DelRAB-@item.ID" method="post">
                                                     <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateRAB-"+item.ID)" data-url="@Url.Action($"UpdateRAB/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB()" />
+                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB(@item.ID)" />
                                                 </form>
                                             </div>
                                             @await Html.PartialAsync("_UpdateRAB",item) 
                                         </td>
                                         <td>@item.JENIS_RAB</td>
                                         <td>@item.TGL_RAB.ToString("dd/MM/yyyy")</td>
-                                        <td>
+                                        <td>@item.SUMBER_DANA</td>
+                                        <td>@item.SALDO_AWAL</td>
+                                        <td>@item.SALDO_AKHIR</td>
+                                        
+                                        @*<td>
                                             <form asp-action="DownloadRAB" asp-route-id="@item.ID" id="DownloadRAB" method="post">
                                                 <input type="submit" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Download" />
                                             </form>
-                                        </td>
+                                        </td>*@
                                         <td>@item.KETERANGAN</td>
                                     </tr>
                                 }
@@ -87,17 +93,22 @@
                     <form asp-action="AddRABDesa" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <div class="field_form">
-                                <label class="label_field  control-label">Jenis RAB</label>
-                                <input id="JENIS_RAB" asp-for="@Model.RAB_DESA.JENIS_RAB" type="text" class="form-control form-control-sm form-control-user" />
+                                <label class="label_field  control-label">Rencana Kegiatan</label>
+                                <input id="JENIS_RAB" asp-for="@Model.RAB_DESA.JENIS_RAB" type="text" class="form-control form-control-sm form-control-user" required />
                             </div>
                             <div class="field_form">
                                 <label class="label_field  control-label">Tanggal RAB</label>
-                                <input type="date" asp-for="@Model.RAB_DESA.TGL_RAB" class="form-control form-control-sm form-control-user" />
+                                <input type="date" asp-for="@Model.RAB_DESA.TGL_RAB" class="form-control form-control-sm form-control-user" required />
                             </div>
                             <div class="field_form">
-                                <label class="label_field  control-label">Lampiran</label>
-                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.RAB_DESA.PATH_FILE" name="FILE_UPLOAD" accept=".doc,.docx" class="form-control form-control-sm form-control-user" multiple />
+                                <label class="label_field  control-label">Sumber Dana</label>
+                                <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlSumberDana" asp-for="@Model.RAB_DESA.IDSUMBER_DANA"></select>
                             </div>
+                            <div class="field_form">
+                                <label class="label_field  control-label">Dana</label>
+                                <input id="SALDO_AWAL" asp-for="@Model.RAB_DESA.SALDO_AWAL" type="number" class="form-control form-control-sm form-control-user" required />
+                            </div>
+                            
                             <div class="field_form">
                                 <label class="label_field  control-label">Keterangan</label>
                                 <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-sm form-control-user" asp-for="@Model.RAB_DESA.KETERANGAN"></textarea>
@@ -120,10 +131,10 @@
 
 <script type="text/javascript">
 
-    function DeleteRAB() {
+    function DeleteRAB(ID) {
 
         if (window.confirm("Delete This Data?")) {
-            $('#DelRAB').submit();
+            $('#DelRAB-'+ID).submit();
         }
 
     }

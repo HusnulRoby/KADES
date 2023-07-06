@@ -121,20 +121,20 @@
                         <fieldset>
                             <div class="field_form">
                                 <label class="label_field  control-label">Kegiatan</label>
-                                <input id="KEGIATAN" asp-for="@Model.KegiatanPKK.KEGIATAN" type="text" class="form-control form-control-sm form-control-user" />
+                                <input id="KEGIATAN" asp-for="@Model.KegiatanPKK.KEGIATAN" type="text" class="form-control form-control-sm form-control-user" required />
                             </div>
                             <div class="field_form">
                                 <label class="label_field  control-label">Penanggung Jawab</label>
-                                <input id="KOORDINATOR" asp-for="@Model.KegiatanPKK.KOORDINATOR" type="text" class="form-control form-control-sm form-control-user" />
+                                <input id="KOORDINATOR" asp-for="@Model.KegiatanPKK.KOORDINATOR" type="text" class="form-control form-control-sm form-control-user" required />
                             </div>
                             <div class="field_form">
                                 <label class="label_field  control-label">Tanggal Mulai</label>
-                                <input type="date" asp-for="@Model.KegiatanPKK.TGL_MULAI" class="form-control form-control-sm form-control-user" />
+                                <input type="date" asp-for="@Model.KegiatanPKK.TGL_MULAI" class="form-control form-control-sm form-control-user" required/>
                             </div>
 
                             <div class="field_form">
                                 <label class="label_field  control-label">Tanggal berakhir</label>
-                                <input type="date" asp-for="@Model.KegiatanPKK.TGL_BERAKHIR" class="form-control form-control-sm form-control-user" />
+                                <input type="date" asp-for="@Model.KegiatanPKK.TGL_BERAKHIR" class="form-control form-control-sm form-control-user" required />
                             </div>
 
                         </fieldset>

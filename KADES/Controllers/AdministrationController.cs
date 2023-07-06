@@ -1,9 +1,12 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using KADES.Models;
 using KADES.Models.Administrasi;
+using KADES.Models.Asset;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.IdentityModel.Abstractions;
 using OfficeOpenXml;
+using Org.BouncyCastle.Asn1.Cms;
 using System.Data;
 using System.Diagnostics;
 using System.Text;
@@ -267,11 +270,8 @@ namespace KADES.Controllers
                             ID_DLMKELUARGA = A.ID_DLMKELUARGA,
                             ID_AGAMA = A.ID_AGAMA,
                             AGAMA = B.AGAMA,
-                            NIK_AYAH = A.NIK_AYAH,
                             NAMA_AYAH = A.NAMA_AYAH,
-                            NIK_IBU = A.NIK_IBU,
                             NAMA_IBU = A.NAMA_IBU,
-                            ALAMAT = A.ALAMAT,
                             NO_TELP = A.NO_TELP,
                             ID_DUSUN = A.ID_DUSUN,
                             DUSUN = D.DUSUN,
@@ -282,28 +282,22 @@ namespace KADES.Controllers
                             ID_PEKERJAAN = A.ID_PEKERJAAN,
                             PEKERJAAN = F.PEKERJAAN,
                             ID_KAWIN = A.ID_KAWIN,
-                            ID_STATUS = A.ID_STATUS,
 
                         };
 
             List<SelectListItem> JK = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "1", Text = "Perempuan" },
-                new SelectListItem { Value = "0", Text = "laki - laki" }
+                new SelectListItem { Value = "P", Text = "Perempuan" },
+                new SelectListItem { Value = "L", Text = "laki - laki" }
             };
 
             List<SelectListItem> DlmKeluarga = new List<SelectListItem>()
             {
-                new SelectListItem { Value = "0", Text = "Ayah" },
+                new SelectListItem { Value = "0", Text = "Kepala Keluarga" },
                 new SelectListItem { Value = "1", Text = "Ibu" },
                 new SelectListItem { Value = "2", Text = "Anak" }
             };
 
-            List<SelectListItem> StatusHidup = new List<SelectListItem>()
-            {
-                new SelectListItem { Value = "0", Text = "Hidup" },
-                new SelectListItem { Value = "1", Text = "Mati" }
-            };
 
             List<SelectListItem> StatusKawin = new List<SelectListItem>()
             {
@@ -317,7 +311,6 @@ namespace KADES.Controllers
                 ddlRfAgama = _context.RfAgama.Where(x => x.ACTIVE.Equals(true)).ToList(),
                 ddlDlmKeluarga = DlmKeluarga,
                 ddlRfDusun = _context.RfDusun.Where(x => x.ACTIVE.Equals(true)).ToList(),
-                ddlStatusHidup = StatusHidup,
                 ddlStatusKawin = StatusKawin,
                 ddlJK = JK,
                 ddlRfPendidikan = _context.RfPendidikan.Where(x => x.ACTIVE.Equals(true)).ToList(),
@@ -352,7 +345,6 @@ namespace KADES.Controllers
             ViewBag.ddlAgama = getAgama;
             ViewBag.ddlDlmKeluarga = DlmKeluarga;
             ViewBag.ddlDusun = getDusun;
-            ViewBag.ddlStatusHidup = StatusHidup;
             ViewBag.ddlStatusKawin = StatusKawin;
             ViewBag.ddlRfPendidikan = getPendidikan;
             ViewBag.ddlRfPekerjaan = getPekerjaan;
@@ -379,11 +371,8 @@ namespace KADES.Controllers
                     JENIS_KELAMIN = Penduduk.JENIS_KELAMIN,
                     ID_DLMKELUARGA = Penduduk.ID_DLMKELUARGA,
                     ID_AGAMA = Penduduk.ID_AGAMA,
-                    NIK_AYAH = Penduduk.NIK_AYAH,
                     NAMA_AYAH = Penduduk.NAMA_AYAH,
-                    NIK_IBU = Penduduk.NIK_IBU,
                     NAMA_IBU = Penduduk.NAMA_IBU,
-                    ALAMAT = Penduduk.ALAMAT,
                     NO_TELP = Penduduk.NO_TELP,
                     ID_DUSUN = Penduduk.ID_DUSUN,
                     RT = Penduduk.RT,
@@ -391,7 +380,6 @@ namespace KADES.Controllers
                     ID_PENDIDIKAN = Penduduk.ID_PENDIDIKAN,
                     ID_PEKERJAAN = Penduduk.ID_PEKERJAAN,
                     ID_KAWIN = Penduduk.ID_KAWIN,
-                    ID_STATUS = Penduduk.ID_STATUS,
                 };
 
 
@@ -406,7 +394,7 @@ namespace KADES.Controllers
                 _notyf.Error("Tambah Data Gagal");
                 throw ex;
             }
-            return RedirectToAction("Penduduk");
+            return RedirectToAction("DataPenduduk");
         }
 
         [HttpPost]
@@ -427,11 +415,8 @@ namespace KADES.Controllers
                     data.JENIS_KELAMIN = model.JENIS_KELAMIN;
                     data.ID_DLMKELUARGA = model.ID_DLMKELUARGA;
                     data.ID_AGAMA = model.ID_AGAMA;
-                    data.NIK_AYAH = model.NIK_AYAH;
                     data.NAMA_AYAH = model.NAMA_AYAH;
-                    data.NIK_IBU = model.NIK_IBU;
                     data.NAMA_IBU = model.NAMA_IBU;
-                    data.ALAMAT = model.ALAMAT;
                     data.NO_TELP = model.NO_TELP;
                     data.ID_DUSUN = model.ID_DUSUN;
                     data.RW = model.RW;
@@ -439,7 +424,6 @@ namespace KADES.Controllers
                     data.ID_PENDIDIKAN = model.ID_PENDIDIKAN;
                     data.ID_PEKERJAAN = model.ID_PEKERJAAN;
                     data.ID_KAWIN = model.ID_KAWIN;
-                    data.ID_STATUS = model.ID_STATUS;
 
                     _context.Penduduk.Update(data);
                     _context.SaveChanges();
@@ -452,7 +436,7 @@ namespace KADES.Controllers
             }
 
 
-            return RedirectToAction("Penduduk");
+            return RedirectToAction("DataPenduduk");
         }
 
         public ActionResult DownloadExcelSensus()
@@ -465,7 +449,6 @@ namespace KADES.Controllers
             {
                 "NIK",
                 "NAMA",
-                "STATUS HIDUP",
                 "NOMOR KK",
                 "HUBUNGAN DALAM KELUARGA",
                 "JENIS KELAMIN",
@@ -476,15 +459,12 @@ namespace KADES.Controllers
                 "TANGGAL LAHIR",
                 "PENDIDIKAN",
                 "PEKERJAAN",
-                "NIK AYAH",
                 "NAMA AYAH",
-                "NIK IBU",
                 "NAMA IBU",
                 "NOMOR TELP",
-                "DUSUN",
+                "KAMPUNG",
                 "RT",
-                "RW",
-                "ALAMAT"
+                "RW"
             };
 
             Query = from A in _context.Penduduk
@@ -505,11 +485,8 @@ namespace KADES.Controllers
                         ID_DLMKELUARGA = A.ID_DLMKELUARGA,
                         ID_AGAMA = A.ID_AGAMA,
                         AGAMA = B.AGAMA,
-                        NIK_AYAH = A.NIK_AYAH,
                         NAMA_AYAH = A.NAMA_AYAH,
-                        NIK_IBU = A.NIK_IBU,
                         NAMA_IBU = A.NAMA_IBU,
-                        ALAMAT = A.ALAMAT,
                         NO_TELP = A.NO_TELP,
                         ID_DUSUN = A.ID_DUSUN,
                         DUSUN = D.DUSUN,
@@ -519,8 +496,7 @@ namespace KADES.Controllers
                         PENDIDIKAN = E.PENDIDIKAN,
                         ID_PEKERJAAN = A.ID_PEKERJAAN,
                         PEKERJAAN = F.PEKERJAAN,
-                        ID_KAWIN = A.ID_KAWIN,
-                        ID_STATUS = A.ID_STATUS,
+                        ID_KAWIN = A.ID_KAWIN
                     };
 
             for (int i = 0; i < listHeaders.Length; i++)
@@ -542,16 +518,14 @@ namespace KADES.Controllers
                 var JK = "";
                 var dlmKeluarga = "";
                 var kawin = "";
-                var statHidup = "";
                 foreach (var item in Query)
                 {
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
                     dlmKeluarga = item.ID_DLMKELUARGA.Equals(0) ? "Ayah" : item.DLMKELUARGA.Equals(1) ? "Ibu" : item.DLMKELUARGA.Equals(2) ? "Anak" : "";
                     kawin = item.ID_KAWIN.Equals(0) ? "Kawin" : "Belum Kawin";
-                    statHidup = item.ID_STATUS.Equals(0) ? "Hidup" : "Mati";
-                    dt.Rows.Add(item.NIK, item.NAMA, statHidup, item.KK, dlmKeluarga, JK, item.AGAMA, kawin, item.NO_AKTA,
-                        item.POB, item.DOB.ToString("dd/MM/yyyy"), item.PENDIDIKAN, item.PEKERJAAN, item.NIK_AYAH, item.NAMA_AYAH, item.NIK_IBU,
-                        item.NAMA_IBU, item.NO_TELP, item.DUSUN, item.RT, item.RW, item.ALAMAT);
+                    dt.Rows.Add(item.NIK, item.NAMA, item.KK, dlmKeluarga, JK, item.AGAMA, kawin, item.NO_AKTA,
+                        item.POB, item.DOB.ToString("dd/MM/yyyy"), item.PENDIDIKAN, item.PEKERJAAN, item.NAMA_AYAH,
+                        item.NAMA_IBU, item.NO_TELP, item.DUSUN, item.RT, item.RW);
                 }
 
 
@@ -582,60 +556,72 @@ namespace KADES.Controllers
 
         public IActionResult RABDesa()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
-
-            var model = new AdministrasiModels()
+            try
             {
-                ListRAB_DESA = _context.RAB_Desa.ToList(),
+                ViewBag.USERID = HttpContext.Session.GetString("UserId");
+
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("Home/Home");
+            }
+
+            var model = from A in _context.RAB_Desa
+                        join B in _context.RfSumberAset on A.IDSUMBER_DANA equals B.KODE_SUMBER
+                        select new VW_RAB_DESA()
+                        {
+                            ID = A.ID,
+                            JENIS_RAB=A.JENIS_RAB,
+                            TGL_RAB=A.TGL_RAB,
+                            IDSUMBER_DANA=A.IDSUMBER_DANA,
+                            SUMBER_DANA=B.SUMBER_ASET,
+                            SALDO_AWAL=A.SALDO_AWAL,
+                            SALDO_AKHIR=A.SALDO_AKHIR,
+                            KETERANGAN=A.KETERANGAN,
+                            CREATED_BY=A.CREATED_BY,
+                            CREATED_DATE=A.CREATED_DATE,
+
+                        };
+
+            var getSumberDana = _context.RfSumberAset.Where(x => x.ACTIVE.Equals(true)).Select(x => new SelectListItem
+            {
+                Value = x.KODE_SUMBER.ToString(),
+                Text = x.SUMBER_ASET.ToString(),
+            });
+
+            ViewBag.ddlSumberDana = getSumberDana;
+
+            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+            {
+                ListVWRAB_DESA = model.ToList(),
 
             };
-            return View(model);
+            return View(AdministrasiModels);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRABDesa(RAB_DESA RAB_DESA, IFormFile FILE_UPLOAD)
+        public async Task<IActionResult> AddRABDesa(RAB_DESA RAB_DESA)
         {
             var USERID = HttpContext.Session.GetString("UserId").ToString();
 
             try
             {
-                if (FILE_UPLOAD == null)
+                var getData = new RAB_DESA
                 {
-                    _notyf.Warning("FIle Document Tidak Boleh Kosong!");
-                }
-                else
-                {
-                    var fileNama = FILE_UPLOAD.FileName;
-                    var pathFolder = Path.Combine(_env.WebRootPath, "Upload/RAB/Lampiran/" + DateTime.Now.ToString("ddMMyyyy"));
-                    var fullPath = Path.Combine(pathFolder, fileNama);
+                    JENIS_RAB = RAB_DESA.JENIS_RAB,
+                    TGL_RAB = RAB_DESA.TGL_RAB,
+                    IDSUMBER_DANA = RAB_DESA.IDSUMBER_DANA,
+                    SALDO_AWAL = RAB_DESA.SALDO_AWAL,
+                    SALDO_AKHIR= RAB_DESA.SALDO_AWAL,
+                    KETERANGAN = string.IsNullOrEmpty(RAB_DESA.KETERANGAN) ? "" : RAB_DESA.KETERANGAN,
+                    CREATED_BY = USERID,
+                    CREATED_DATE = DateTime.Now,
 
-                    if (!Directory.Exists(pathFolder))
-                    {
-                        Directory.CreateDirectory(pathFolder);
-                    }
-
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        await FILE_UPLOAD.CopyToAsync(stream);
-                    }
-
-
-                    var getData = new RAB_DESA
-                    {
-                        ID = Guid.NewGuid().ToString(),
-                        JENIS_RAB = RAB_DESA.JENIS_RAB,
-                        TGL_RAB = RAB_DESA.TGL_RAB,
-                        FILENAME = fileNama,
-                        PATH_FILE = fullPath,
-                        KETERANGAN = RAB_DESA.KETERANGAN,
-                        CREATED_BY = USERID,
-                        CREATED_DATE = DateTime.Now,
-
-                    };
-                    _context.Add(getData);
-                    _context.SaveChanges();
-                    _notyf.Success("Tambah Data Sukses");
-                }
+                };
+                _context.Add(getData);
+                _context.SaveChanges();
+                _notyf.Success("Tambah Data Sukses");
 
             }
             catch (Exception ex)
@@ -649,7 +635,7 @@ namespace KADES.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRABAsync(RAB_DESA model, IFormFile FILE_UPLOAD)
+        public IActionResult UpdateRAB(RAB_DESA model)
         {
 
             try
@@ -657,29 +643,15 @@ namespace KADES.Controllers
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
                 var data = _context.RAB_Desa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-                if (FILE_UPLOAD != null)
-                {
-
-                    data.JENIS_RAB = model.JENIS_RAB;
-                    data.TGL_RAB = model.TGL_RAB;
-                    data.KETERANGAN = model.KETERANGAN;
-                    data.CREATED_BY = USERID;
-                    data.CREATED_DATE = DateTime.Now;
-                    data.FILENAME = FILE_UPLOAD.FileName;
-                    var pathFolder = Path.Combine(_env.WebRootPath, "Upload/RAB/Lampiran/" + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-                    data.PATH_FILE = Path.Combine(pathFolder, data.FILENAME);
-
-                    if (!Directory.Exists(pathFolder))
-                    {
-                        Directory.CreateDirectory(pathFolder);
-                    }
-
-                    using (var stream = new FileStream(data.PATH_FILE, FileMode.Create))
-                    {
-                        await FILE_UPLOAD.CopyToAsync(stream);
-                    }
-
-                }
+                var selisih = model.SALDO_AWAL - data.SALDO_AWAL;
+;                data.SALDO_AWAL = model.SALDO_AWAL;
+                data.SALDO_AKHIR += selisih;
+                data.IDSUMBER_DANA = model.IDSUMBER_DANA;
+                data.JENIS_RAB = model.JENIS_RAB;
+                data.TGL_RAB = model.TGL_RAB;
+                data.KETERANGAN = model.KETERANGAN;
+                data.CREATED_BY = USERID;
+                data.CREATED_DATE = DateTime.Now;
 
                 _context.RAB_Desa.Update(data);
                 _context.SaveChanges();
@@ -696,7 +668,7 @@ namespace KADES.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteRAB(string ID)
+        public IActionResult DeleteRAB(int ID)
         {
             try
             {
@@ -720,39 +692,179 @@ namespace KADES.Controllers
 
         }
 
-
-        [HttpPost]
-        public IActionResult DownloadRAB(string ID)
+        public IActionResult RealisasiRAB()
         {
             try
             {
-                var FILENAME = "";
-                var PATH_FILE = "";
+                ViewBag.USERID = HttpContext.Session.GetString("UserId");
 
-                var getAcc = _context.RAB_Desa.Find(ID);
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("Home/Home");
+            }
+
+            var model = from A in _context.REALISASI_RAB
+                        join B in _context.RAB_Desa on A.ID_RAB equals B.ID
+                        select new VWREALISASI_RAB()
+                        {
+                            ID = A.ID,
+                            ID_RAB = B.ID,
+                            JENIS_RAB = B.JENIS_RAB,
+                            KEGIATAN=A.KEGIATAN,
+                            TGL_REALISASI = A.TGL_REALISASI,
+                            BIAYA=A.BIAYA,
+
+                        };
+
+            var getSumberRAB = _context.RAB_Desa.Select(x => new SelectListItem
+            {
+                Value = x.ID.ToString(),
+                Text = x.JENIS_RAB.ToString(),
+            });
+
+            ViewBag.ddlSumberRAB = getSumberRAB;
+
+            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+            {
+                ListVWREALISASI_RAB = model.ToList(),
+
+            };
+            return View(AdministrasiModels);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRe(REALISASI_RAB REALISASI_RAB)
+        {
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+            try
+            {
+                var getData = new REALISASI_RAB
+                {
+                    ID=REALISASI_RAB.ID_RAB,
+                    ID_RAB=REALISASI_RAB.ID_RAB,
+                    KEGIATAN=REALISASI_RAB.KEGIATAN,
+                    TGL_REALISASI=REALISASI_RAB.TGL_REALISASI,
+                    BIAYA=REALISASI_RAB.BIAYA
+
+                };
+                _context.Add(getData);
+
+                var saldoRAB=_context.RAB_Desa.Where(x => x.ID==REALISASI_RAB.ID_RAB).FirstOrDefault();
+
+                saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL-getData.BIAYA;
+                _context.Update(saldoRAB);
+                _context.SaveChanges();
+
+                _notyf.Success("Tambah Data Sukses");
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Tambah Data Gagal");
+
+                throw ex;
+
+            }
+            return RedirectToAction("RealisasiRAB");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateRe(REALISASI_RAB model)
+        {
+
+            try
+            {
+                var USERID = HttpContext.Session.GetString("UserId").ToString();
+                var data = _context.REALISASI_RAB.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+
+                data.KEGIATAN = model.KEGIATAN;
+                data.TGL_REALISASI = model.TGL_REALISASI;
+                data.BIAYA = model.BIAYA;
+
+                _context.REALISASI_RAB.Update(data);
+
+                var saldoRAB = _context.RAB_Desa.Where(x => x.ID == model.ID_RAB).FirstOrDefault();
+
+                saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL - model.BIAYA;
+                _context.Update(saldoRAB);
+                _context.SaveChanges();
+                _notyf.Success("Update Data Sukses");
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Update Data Gagal");
+                //throw ex;
+            }
+
+            return RedirectToAction("RealisasiRAB");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteRe(int ID)
+        {
+            try
+            {
+                var getAcc = _context.REALISASI_RAB.Find(ID);
                 if (getAcc == null)
                 {
                     return NotFound();
                 }
+                _context.Remove(getAcc);
 
-                FILENAME = getAcc.FILENAME;
-                PATH_FILE = getAcc.PATH_FILE;
+                var saldoRAB = _context.RAB_Desa.Where(x => x.ID == getAcc.ID_RAB).FirstOrDefault();
 
-                var net = new System.Net.WebClient();
-                var data = net.DownloadData(PATH_FILE);
-
-                var content = new System.IO.MemoryStream(data);
-                //byte[] bytes = Encoding.UTF8.GetBytes(PATH_FILE);
-                return File(content, "application/octet-stream", FILENAME);
+                saldoRAB.SALDO_AKHIR += getAcc.BIAYA;
+                _context.Update(saldoRAB);
+                _context.SaveChanges();
+                _notyf.Success("Delete Data Sukses");
             }
             catch (Exception ex)
             {
-                _notyf.Error("Download Data Gagal");
+                _notyf.Error("Delete Data Gagal");
 
                 throw ex;
             }
-            //return RedirectToAction("RABDesa");
+
+            return RedirectToAction("RealisasiRAB");
+
         }
+
+        //[HttpPost]
+        //public IActionResult DownloadRAB(string ID)
+        //{
+        //    try
+        //    {
+        //        var FILENAME = "";
+        //        var PATH_FILE = "";
+
+        //        var getAcc = _context.RAB_Desa.Find(ID);
+        //        if (getAcc == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        FILENAME = getAcc.FILENAME;
+        //        PATH_FILE = getAcc.PATH_FILE;
+
+        //        var net = new System.Net.WebClient();
+        //        var data = net.DownloadData(PATH_FILE);
+
+        //        var content = new System.IO.MemoryStream(data);
+        //        //byte[] bytes = Encoding.UTF8.GetBytes(PATH_FILE);
+        //        return File(content, "application/octet-stream", FILENAME);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _notyf.Error("Download Data Gagal");
+
+        //        throw ex;
+        //    }
+        //    //return RedirectToAction("RABDesa");
+        //}
 
         public ActionResult DownloadExcelRAB()
         {
@@ -762,12 +874,30 @@ namespace KADES.Controllers
 
             string[] listHeaders = new string[]
             {
-                "JENIS RAB",
+                "RENCANA KEGIATAN",
                 "TANGGAL RAB",
+                "SUMBER DANA",
+                "SALDO AWAL",
+                "SALDO AKHIR",
                 "KETERANGAN"
             };
 
-            var Query = _context.RAB_Desa.ToList();
+            var Query = from A in _context.RAB_Desa
+                        join B in _context.RfSumberAset on A.IDSUMBER_DANA equals B.KODE_SUMBER
+                        select new VW_RAB_DESA()
+                        {
+                            ID = A.ID,
+                            JENIS_RAB = A.JENIS_RAB,
+                            TGL_RAB = A.TGL_RAB,
+                            IDSUMBER_DANA = A.IDSUMBER_DANA,
+                            SUMBER_DANA = B.SUMBER_ASET,
+                            SALDO_AWAL = A.SALDO_AWAL,
+                            SALDO_AKHIR = A.SALDO_AKHIR,
+                            KETERANGAN = A.KETERANGAN,
+                            CREATED_BY = A.CREATED_BY,
+                            CREATED_DATE = A.CREATED_DATE,
+
+                        };
 
             for (int i = 0; i < listHeaders.Length; i++)
             {
@@ -787,7 +917,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"), item.KETERANGAN);
+                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"),item.SUMBER_DANA,item.SALDO_AWAL,item.SALDO_AKHIR, item.KETERANGAN);
                 }
 
 

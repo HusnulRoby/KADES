@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mlVpajKxbk9WM6aYQVckg+qCc4X+9H8I23/JFYG5mPU=",
+  "Hash": "+ePHZe0fkdHsxHZ6p8gVrk2c/NapEKrTasuCRPZ0cCA=",
   "Source": "KADES",
   "BasePath": "_content/KADES",
   "Mode": "Default",
@@ -7648,6 +7648,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\Document\\jawabanUAP_Nomor_2.docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RAB\\Lampiran\\06072023\\ListSoal_Kelompok Husnul & Pak Joni (1).docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/RAB/Lampiran/06072023/ListSoal_Kelompok Husnul & Pak Joni (1).docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\RAB\\Lampiran\\06072023\\ListSoal_Kelompok Husnul & Pak Joni (1).docx"
     },
     {
       "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RAB\\Lampiran\\17012023\\jawaban1_UAP.docx",
