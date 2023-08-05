@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KADES.Models.Account;
+using System.ComponentModel.DataAnnotations;
 
 namespace KADES.Models.Home
 {
@@ -8,6 +9,8 @@ namespace KADES.Models.Home
         public List<Note> listNote { get; set; }
         public VW_Note VW_Note { get; set; }
         public List<VW_Note> listVwNote { get; set; }
+
+        public RFUsers Users { get; set; }
     }
 
     public class Note

@@ -1,4 +1,5 @@
-﻿using KADES.Models.Maintenance;
+﻿using KADES.Models.Home;
+using KADES.Models.Maintenance;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,6 +7,7 @@ namespace KADES.Models.Administrasi
 {
     public class AdministrasiModels
     {
+        public HomeModels HomeModels { get; set; }
         #region APARATUR DESA
         public AparaturDesa AparaturDesa { get; set; }
         public List<AparaturDesa> ListAparaturDesa { get; set; }
@@ -66,7 +68,13 @@ namespace KADES.Models.Administrasi
         public List<RfPekerjaan> ddlRfPekerjaan { get; set; }
         #endregion
 
-        
+        public AdmSearchBydate? AdmSearchBydate { get; set; }
+    }
+
+    public class AdmSearchBydate
+    {
+        public string PERIODFROM { get; set; }
+        public string PERIODTO { get; set; }
     }
 
     #region APARATUR DESA
@@ -166,6 +174,8 @@ namespace KADES.Models.Administrasi
         public string KEGIATAN { get; set; }
         public DateTime TGL_REALISASI { get; set; }
         public double BIAYA { get; set; }
+        public string FILENAME { get; set; }
+        public string PATH { get; set; }
     }
 
     public class VWREALISASI_RAB
@@ -176,6 +186,8 @@ namespace KADES.Models.Administrasi
         public string KEGIATAN { get; set; }
         public DateTime TGL_REALISASI { get; set; }
         public double BIAYA { get; set; }
+        public string FILENAME { get; set; }
+        public string PATH { get; set; }
     }
 
     #endregion
@@ -388,7 +400,7 @@ namespace KADES.Models.Administrasi
         public DateTime DOB { get; set; }
         public char JENIS_KELAMIN { get; set; }
         public int ID_DLMKELUARGA { get; set; }
-        public string DLMKELUARGA { get; set; }
+        public int DLMKELUARGA { get; set; }
         public int ID_AGAMA { get; set; }
         public string AGAMA { get; set; }
         public string? NAMA_AYAH { get; set; }

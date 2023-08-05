@@ -23,13 +23,37 @@
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
                         <h2>Buku Rencana Anggaran Biaya</h2>
-                        <span class="plus_green_bt_exp"><a class="fa fa-download" style="font-size:15px" asp-controller="Administration" asp-action="DownloadExcelRAB"></a></span>
+                        <span class="plus_green_bt_exp"><a class="fa fa-download" style="font-size:15px" asp-controller="Administration" asp-action="DownloadExcelRAB" asp-route-PERIODFROM="@Model.AdmSearchBydate.PERIODFROM" asp-route-PERIODTO="@Model.AdmSearchBydate.PERIODTO"></a></span>
                         <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
 
                     </div>
 
                 </div>
                 <div class="table_section padding_infor_info">
+                    <div class="box-body">
+                        <div id="divSearchList" class="table-responsive">
+                            <div class="divRectangle" id="rectangle" style="width:50%">
+                                <form method="get" action="@Url.Action("RABDesa", "Administration")">
+                                    <div class="form-group row top-buffer">
+                                        <label class="control-label col-sm-5">Tanggal RAB</label>
+                                        <div class="col-6">
+                                            <input type="date" id="PERIODFROM" class="form-control form-control-sm form-control-user" asp-for="@Model.AdmSearchBydate.PERIODFROM" />
+                                            <span>To</span>
+                                            <input type="date" id="PERIODTO" class="form-control form-control-sm form-control-user" asp-for="@Model.AdmSearchBydate.PERIODTO" />
+                                        </div>
+                                    </div>
+
+                                    <div class="MenuSearch" style="text-align:center;padding-top:12px">
+                                        <button class="btn btn-sm btn-sm btn-outline-info" type="submit"><i class="glyphicon glyphicon-search"></i> <span>Search</span></button> <span></span>
+                                        <button class="btn btn-sm btn-sm btn-outline-warning" onclick="clearSearch()" type="button"><i class="glyphicon glyphicon-refresh"></i>  <span>Clear</span></button> <span></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+                    </br>
+                    </br>
                     <div class="table-responsive-sm">
                         <table id="dataTable" class="table" style="width:100%">
                             <thead class="thead-light"  style="text-align:center">
@@ -46,30 +70,24 @@
                             <tbody>
                                 @foreach (var item in Model.ListVWRAB_DESA)
                                 {
-                                    <tr>
-                                        <td>
-                                            <div>
+                                        <tr>
+                                            <td>
+                                                <div>
 
-                                                <form asp-action="DeleteRAB" asp-route-id="@item.ID" id="DelRAB-@item.ID" method="post">
-                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateRAB-"+item.ID)" data-url="@Url.Action($"UpdateRAB/{item.ID}")" value="Update" />
-                                                    <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB(@item.ID)" />
-                                                </form>
-                                            </div>
+                                                    <form asp-action="DeleteRAB" asp-route-id="@item.ID" id="DelRAB-@item.ID" method="post">
+                                                        <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-info" data-toggle="modal" data-target="@("#updateRAB-"+item.ID)" data-url="@Url.Action($"UpdateRAB/{item.ID}")" value="Update" />
+                                                        <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRAB(@item.ID)" />
+                                                    </form>
+                                                </div>
                                             @await Html.PartialAsync("_UpdateRAB",item) 
-                                        </td>
-                                        <td>@item.JENIS_RAB</td>
-                                        <td>@item.TGL_RAB.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.SUMBER_DANA</td>
-                                        <td>@item.SALDO_AWAL</td>
-                                        <td>@item.SALDO_AKHIR</td>
-                                        
-                                        @*<td>
-                                            <form asp-action="DownloadRAB" asp-route-id="@item.ID" id="DownloadRAB" method="post">
-                                                <input type="submit" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Download" />
-                                            </form>
-                                        </td>*@
-                                        <td>@item.KETERANGAN</td>
-                                    </tr>
+                                            </td>
+                                            <td>@item.JENIS_RAB</td>
+                                            <td>@item.TGL_RAB.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.SUMBER_DANA</td>
+                                            <td>@item.SALDO_AWAL</td>
+                                            <td>@item.SALDO_AKHIR</td>
+                                            <td>@item.KETERANGAN</td>
+                                        </tr>
                                 }
                             </tbody>
                         </table>
@@ -108,7 +126,7 @@
                                 <label class="label_field  control-label">Dana</label>
                                 <input id="SALDO_AWAL" asp-for="@Model.RAB_DESA.SALDO_AWAL" type="number" class="form-control form-control-sm form-control-user" required />
                             </div>
-                            
+
                             <div class="field_form">
                                 <label class="label_field  control-label">Keterangan</label>
                                 <textarea id="KETERANGAN" style="height:130px" class="form-control form-control-sm form-control-user" asp-for="@Model.RAB_DESA.KETERANGAN"></textarea>
@@ -138,7 +156,9 @@
         }
 
     }
-
+     function clearSearch() {
+        ClearDataInDIV("divSearchList");
+    }
 
 
 </script>

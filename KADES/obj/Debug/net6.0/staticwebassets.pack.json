@@ -357,6 +357,14 @@
       "PackagePath": "staticwebassets\\Content\\images\\logo\\Lambang_Kabupaten_Garut1.svg.png"
     },
     {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\karangParanje.jpg",
+      "PackagePath": "staticwebassets\\Content\\images\\logo\\karangParanje.jpg"
+    },
+    {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\karangParanje2.jpg",
+      "PackagePath": "staticwebassets\\Content\\images\\logo\\karangParanje2.jpg"
+    },
+    {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\logo.png",
       "PackagePath": "staticwebassets\\Content\\images\\logo\\logo.png"
     },
@@ -1555,6 +1563,10 @@
     {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RAB\\Lampiran\\jawaban1_UAP.docx",
       "PackagePath": "staticwebassets\\Upload\\RAB\\Lampiran\\jawaban1_UAP.docx"
+    },
+    {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx",
+      "PackagePath": "staticwebassets\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx"
     },
     {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\css\\site.css",

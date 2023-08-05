@@ -39,7 +39,7 @@ namespace KADES.Controllers
             ViewBag.logThisYear=getLogThisYear;
             ViewBag.countAsset= getCountAsset;
 
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             HomeModels homeModels = new HomeModels() {
                 listNote = getNote
@@ -51,7 +51,7 @@ namespace KADES.Controllers
         #region Maitenance Notes
         public IActionResult Notes()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
             var a = DateTime.Now.ToString("dd/MM/yyyy");
 
             var model = from A in _context.Note

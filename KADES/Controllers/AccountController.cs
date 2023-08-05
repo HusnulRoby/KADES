@@ -45,7 +45,11 @@ namespace KADES.Controllers
                 if (getAcc != null)
                 {
                     HttpContext.Session.SetString("UserId", model.USERID.ToString());
-                    //var a= HttpContext.Session.GetString("UserId");
+                    HttpContext.Session.SetString("Password", model.PASSWORD.ToString());
+
+                    var GROUPID = _context.RFUsers.FirstOrDefault(x => x.USERID == model.USERID && x.PASSWORD == model.PASSWORD).GROUPID;
+                    HttpContext.Session.SetString("GroupId", GROUPID.ToString());
+                    var a= HttpContext.Session.GetString("UserId");
                     //ViewBag.USERID = a;
                     return Redirect("/Home/Home");
                 }

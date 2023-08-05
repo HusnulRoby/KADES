@@ -38,7 +38,7 @@ namespace KADES.Controllers
         #region Maintenance Jabatan
         public IActionResult Jabatan()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             List<SelectListItem> catJabatan = new List<SelectListItem>()
             {
@@ -145,7 +145,7 @@ namespace KADES.Controllers
         #region Maintenance Dusun
         public IActionResult Dusun()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
@@ -242,7 +242,7 @@ namespace KADES.Controllers
 
         public IActionResult Agama()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
@@ -339,7 +339,7 @@ namespace KADES.Controllers
 
         public IActionResult Pendidikan()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
@@ -436,7 +436,7 @@ namespace KADES.Controllers
 
         public IActionResult Pekerjaan()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
@@ -532,7 +532,7 @@ namespace KADES.Controllers
         #region USER MAINTENANCE
         public IActionResult UserMaintenance()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             var model = from A in _context.RFUsers
                         join B in _context.RFGroup on A.GROUPID equals B.GROUPID
@@ -541,6 +541,7 @@ namespace KADES.Controllers
                             ID=A.ID,
                             USERID = A.USERID,
                             USERNAME = A.USERNAME,
+                            PASSWORD = A.PASSWORD,
                             GROUPID = A.GROUPID,
                             GROUP_NAME = B.GROUP_NAME,
                             EMAIL = A.EMAIL,
@@ -570,12 +571,15 @@ namespace KADES.Controllers
             try
             {
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
+
+                var genPass= Guid.NewGuid().ToString().Substring(0,8);
+
                 var getData = new RFUsers
                 {
                     USERID= RFUsers.USERID,
                     USERNAME= RFUsers.USERNAME,
                     GROUPID= RFUsers.GROUPID,
-                    PASSWORD= RFUsers.PASSWORD,
+                    PASSWORD= genPass,
                     EMAIL= RFUsers.EMAIL,
                 };
 
@@ -643,7 +647,7 @@ namespace KADES.Controllers
 
         public IActionResult JenisAset()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {
@@ -741,7 +745,7 @@ namespace KADES.Controllers
 
         public IActionResult SumberAset()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             MaintenanceModels maintenanceModel = new MaintenanceModels()
             {

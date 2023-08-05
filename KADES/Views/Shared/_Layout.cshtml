@@ -85,14 +85,14 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#Administration" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-book red_color"></i> <span>Administration Desa</span></a>
+                            <a href="#Administration" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-book red_color"></i> <span>Administrasi Desa</span></a>
                             <ul class="collapse list-unstyled" id="Administration">
                                 @*<li><a asp-area="" asp-controller="Administration" asp-action="Index">> <span>Buku Peraturan Desa</span></a></li>*@
                                 <li>
                                     <a href="#umum" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                        <span>Umum</span>
+                                        <i class="fa fa-users blue2_color childMenu1"></i><span>Umum</span>
                                     </a>
-                                    <ul class="collapse list-unstyled" id="umum" style="padding:0px 10px">
+                                    <ul class="collapse list-unstyled" id="umum" style="padding:0px 35px">
                                         <li>
                                             <a asp-area="" asp-controller="Administration" asp-action="AparaturDesa">
                                                 <span>Buku Aparatur Desa</span>
@@ -105,9 +105,9 @@
                                 </li>
                                 <li>
                                     <a href="#keuangan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                        <span>Keuangan</span>
+                                        <i class="fa fa-database blue2_color childMenu1"></i> <span>Keuangan</span>
                                     </a>
-                                    <ul class="collapse list-unstyled" id="keuangan" style="padding:0px 10px">
+                                    <ul class="collapse list-unstyled" id="keuangan" style="padding:0px 35px">
                                         <li>
                                             <a asp-area="" asp-controller="Administration" asp-action="RABDesa">
                                                 <span>Buku RAB Desa</span>
@@ -123,12 +123,12 @@
                                 </li>
                                 <li>
                                     <a href="#lembaga" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                        <span>Kelembagaan</span>
+                                        <i class="fa fa-briefcase blue2_color childMenu1"></i> <span>Kelembagaan</span>
                                     </a>
                                     <ul class="collapse list-unstyled" id="lembaga" style="padding:0px 10px">
                                         <li>
                                             <a href="#LPM" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                                <span>Lembaga LPM</span>
+                                                <i class="fa fa-circle-o childMenu1"></i> <span>LPM</span>
                                             </a>
                                             <ul class="collapse list-unstyled" id="LPM" style="padding:0px 10px">
                                                 <li>
@@ -146,7 +146,7 @@
 
                                         <li>
                                             <a href="#KTR" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                                <span>Lembaga Karang Taruna</span>
+                                                <i class="fa fa-circle-o childMenu1"></i> <span>Karang Taruna</span>
                                             </a>
                                             <ul class="collapse list-unstyled" id="KTR" style="padding:0px 10px">
                                                 <li>
@@ -164,7 +164,7 @@
 
                                         <li>
                                             <a href="#PKK" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                                <span>Lembaga PKK</span>
+                                                <i class="fa fa-circle-o childMenu1"></i><span>PKK</span>
                                             </a>
                                             <ul class="collapse list-unstyled" id="PKK" style="padding:0px 10px">
                                                 <li>
@@ -186,60 +186,64 @@
                             </ul>
                         </li>
 
-                        <li class="active">
-                            <a asp-controller="Maintenance" asp-action="UserMaintenance" aria-expanded="false"><i class="fa fa-user green_color"></i><span>User Maintenance</span></a>
+                        @if (ViewBag.GROUPID=="00")
+                        {
+                            <li class="active">
+                                <a asp-controller="Maintenance" asp-action="UserMaintenance" aria-expanded="false"><i class="fa fa-user green_color"></i><span>User Maintenance</span></a>
 
 
-                        </li>
+                            </li>
 
-                        <li>
-                            <a href="#ParameterMaintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                <i class="fa fa-cog gray_color"></i>
-                                <span>Parameter Maintenance</span>
-                            </a>
-                            <ul class="collapse list-unstyled" id="ParameterMaintenance" style="padding:0px 10px">
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="Jabatan">
-                                        <span>Jabatan</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="Dusun">
-                                        <span>Dusun</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="Agama">
-                                        <span>Agama</span>
-                                    </a>
-                                </li>
+                            <li>
+                                <a href="#ParameterMaintenance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                    <i class="fa fa-cog gray_color"></i>
+                                    <span>Parameter Maintenance</span>
+                                </a>
+                                <ul class="collapse list-unstyled" id="ParameterMaintenance" style="padding:0px 10px">
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="Jabatan">
+                                            <span>Jabatan</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="Dusun">
+                                            <span>Kampung</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="Agama">
+                                            <span>Agama</span>
+                                        </a>
+                                    </li>
 
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="Pendidikan">
-                                        <span>Pendidikan</span>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="Pendidikan">
+                                            <span>Pendidikan</span>
+                                        </a>
+                                    </li>
 
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="Pekerjaan">
-                                        <span>Pekerjaan</span>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="Pekerjaan">
+                                            <span>Pekerjaan</span>
+                                        </a>
+                                    </li>
 
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="JenisAset">
-                                        <span>Jenis Aset</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a asp-area="" asp-controller="Maintenance" asp-action="SumberAset">
-                                        <span>Sumber Aset</span>
-                                    </a>
-                                </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="JenisAset">
+                                            <span>Jenis Aset</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Maintenance" asp-action="SumberAset">
+                                            <span>Lembaga Sumber</span>
+                                        </a>
+                                    </li>
 
 
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        }
+                        
 
                         <li class="active">
                             <a asp-controller="Home" asp-action="Notes" aria-expanded="false"><i class="fa fa-pencil-square-o yellow_color"></i><span>Notes</span></a>

@@ -38,6 +38,7 @@
                                     <th>Group Id</th>
                                     <th>User Id</th>
                                     <th>Username</th>
+                                    <th>Password</th>
                                     <th>Email</th>
                                 </tr>
                             </thead>
@@ -57,6 +58,7 @@
                                         <td>@item.GROUPID</td>
                                         <td>@item.USERID</td>
                                         <td>@item.USERNAME</td>
+                                        <td>@item.PASSWORD</td>
                                         <td>@item.EMAIL</td>
                                         @*<td>
                                     @{
@@ -113,10 +115,10 @@
                                 <label class="label_field  control-label">Username</label>
                                 <input id="USERNAME" asp-for="@Model.RFUsers.USERNAME" type="text" class="form-control form-control-sm form-control-user" />
                             </div>
-                            <div class="field_form">
+                            @*<div class="field_form">
                                 <label class="label_field  control-label">Password</label>
                                 <input id="PASSWORD" asp-for="@Model.RFUsers.PASSWORD" type="text" class="form-control form-control-sm form-control-user" />
-                            </div>
+                            </div>*@
                             <div class="field_form">
                                 <label class="label_field  control-label">Email</label>
                                 <input id="EMAIL" asp-for="@Model.RFUsers.EMAIL" type="email" class="form-control form-control-sm form-control-user" />

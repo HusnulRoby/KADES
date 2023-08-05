@@ -39,7 +39,16 @@ namespace KADES.Controllers
         #region TEMPLATE SURAT
         public IActionResult TemplateSurat()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            try
+            {
+                ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
+
+            }
+            catch (Exception ex)
+            {
+
+                return Redirect("/Account/Login");
+            }
 
             PelayananModels pelayananModel = new PelayananModels()
             {
@@ -204,6 +213,7 @@ namespace KADES.Controllers
                 var data = _context.TemplateSurat.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
                 if (FILE_UPLOAD != null)
                 {
+
                     data.NO_SURAT = model.NO_SURAT;
                     data.NAMA_SURAT=model.NAMA_SURAT;
 
@@ -266,7 +276,7 @@ namespace KADES.Controllers
         #region LOG SURAT
         public IActionResult LogSurat(searchBydate searchBydate)
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             IQueryable<VW_LogSurat>? Query;
             try
@@ -334,20 +344,40 @@ namespace KADES.Controllers
                 "TANGGAL GENERATE"
             };
 
-            Query = from a in _context.TemplateSurat
-                    join b in _context.LogSurat on a.ID equals b.ID_SURAT
-                    where b.GENERATE_DATE.Date >= DateTime.Parse(PERIODFROM).Date && b.GENERATE_DATE.Date <= DateTime.Parse(PERIODTO).Date
-                    select new VW_LogSurat()
-                    {
-                        ID = b.ID,
-                        ID_SURAT = a.ID,
-                        NO_SURAT = a.NO_SURAT,
-                        NAMA_SURAT = a.NAMA_SURAT,
-                        ACTIVE = a.ACTIVE,
-                        GENERATE_BY = b.GENERATE_BY,
-                        GENERATE_DATE = b.GENERATE_DATE,
+            if (!string.IsNullOrEmpty(PERIODFROM)||!string.IsNullOrEmpty(PERIODTO))
+            {
+                Query = from a in _context.TemplateSurat
+                        join b in _context.LogSurat on a.ID equals b.ID_SURAT
+                        where b.GENERATE_DATE.Date >= DateTime.Parse(PERIODFROM).Date && b.GENERATE_DATE.Date <= DateTime.Parse(PERIODTO).Date
+                        select new VW_LogSurat()
+                        {
+                            ID = b.ID,
+                            ID_SURAT = a.ID,
+                            NO_SURAT = a.NO_SURAT,
+                            NAMA_SURAT = a.NAMA_SURAT,
+                            ACTIVE = a.ACTIVE,
+                            GENERATE_BY = b.GENERATE_BY,
+                            GENERATE_DATE = b.GENERATE_DATE,
 
-                    };
+                        };
+            }
+            else
+            {
+                Query = from a in _context.TemplateSurat
+                        join b in _context.LogSurat on a.ID equals b.ID_SURAT
+                        select new VW_LogSurat()
+                        {
+                            ID = b.ID,
+                            ID_SURAT = a.ID,
+                            NO_SURAT = a.NO_SURAT,
+                            NAMA_SURAT = a.NAMA_SURAT,
+                            ACTIVE = a.ACTIVE,
+                            GENERATE_BY = b.GENERATE_BY,
+                            GENERATE_DATE = b.GENERATE_DATE,
+
+                        };
+            }
+            
 
             for (int i = 0; i < listHeaders.Length; i++)
             {

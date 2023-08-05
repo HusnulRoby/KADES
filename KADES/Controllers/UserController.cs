@@ -23,7 +23,7 @@ namespace KADES.Controllers
 
         public IActionResult UserMaintenance()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             var model = from A in _context.RFUsers
                         join B in _context.RFGroup on A.GROUPID equals B.GROUPID
@@ -38,9 +38,7 @@ namespace KADES.Controllers
 
             AccountModels AccountModels = new AccountModels()
             {
-                //TemplateSurat = new TemplateSurat(),
-                //ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("APRT")).ToList(),
-                ListVW_Users = model.ToList()
+               ListVW_Users = model.ToList()
             };
 
             return View(AccountModels);
@@ -57,8 +55,6 @@ namespace KADES.Controllers
                 if (getAcc!=null)
                 {
                     HttpContext.Session.SetString("UserId", model.USERID.ToString());
-                    //var a= HttpContext.Session.GetString("UserId");
-                    //ViewBag.USERID = a;
                     return Redirect("/Home/Home");
                 }
                 else
@@ -75,40 +71,6 @@ namespace KADES.Controllers
             
             return View();
         }
-
-        ////Post Action
-        //[HttpPost]
-        //public ActionResult Login(User u)
-        //{
-        //    if (HttpContext.Session.GetString("UserName") == null)
-        //    {
-
-        //        if (ModelState.IsValid)
-        //        {
-        //            using (TestDBContext db = new TestDBContext())
-        //            {
-        //                var obj = db.Users.Where(a => a.UserName.Equals(u.UserName) && a.UserPassword.Equals(u.UserPassword)).FirstOrDefault();
-        //                if (obj != null)
-        //                {
-        //                    HttpContext.Session.SetString("UserName", obj.UserName.ToString());
-        //                    return RedirectToAction("Index");
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-
-
-
-        //        return RedirectToAction("Login");
-        //    }
-        //    return View();
-
-
-        //}
-
-
         public IActionResult Privacy()
         {
             return View();

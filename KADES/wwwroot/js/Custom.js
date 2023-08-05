@@ -159,3 +159,12 @@ function WarningMessage(val) {
         footer: ''
     });
 }
+
+function ClearDataInDIV(idDiv) {
+    $('#' + idDiv + ' input[type=text],input[type=number],input[type=file],input[type=password], textarea,input[type=date]').val("");
+    $('#' + idDiv + ' input[type=checkbox],input[type=radio]').prop("checked", false);
+    $('#' + idDiv + ' select').find('option[value="0"]').prop("selected", true);
+    $('#' + idDiv + ' select').find('option[value="0"]').prop("selected", true).trigger("change");
+    $('#' + idDiv + ' select').find('option[value=""]').prop("selected", true);
+    $('#' + idDiv + ' select').find('option[value=""]').prop("selected", true).trigger("change");
+}

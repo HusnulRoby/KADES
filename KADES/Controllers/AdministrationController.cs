@@ -2,6 +2,7 @@
 using KADES.Models;
 using KADES.Models.Administrasi;
 using KADES.Models.Asset;
+using KADES.Models.Pelayanan;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Abstractions;
@@ -34,53 +35,84 @@ namespace KADES.Controllers
             return View();
         }
 
-        #region APARATUR DESA
-        public IActionResult AparaturDesa()
+        #region APARATUR DESA 
+        public IActionResult AparaturDesa(AdmSearchBydate AdmSearchBydate)
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            try
+            {
+                var userID= HttpContext.Session.GetString("UserId");
+                ViewBag.USERID = userID;
 
-            var model = from A in _context.AparaturDesa
-                        join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
-                        select new VW_AparaturDesa()
-                        {
-                            ID = A.ID,
-                            NAMA = A.NAMA,
-                            JENIS_KELAMIN = A.JENIS_KELAMIN,
-                            SK = A.SK,
-                            SK_BERHENTI = A.SK_BERHENTI,
-                            KODE_JABATAN = A.KODE_JABATAN,
-                            JABATAN = B.JABATAN,
-                            NIK = A.NIK,
-                            NO_TELP = A.NO_TELP,
-                            ALAMAT = A.ALAMAT,
-                            TGL_MASUK = DateTime.Parse(A.TGL_MASUK.ToString("dd/MM/yyyy")),
-                            TGL_BERHENTI = A.TGL_BERHENTI.ToString()
-                        };
+            }
+            catch (Exception ex)
+            {
 
-            List<SelectListItem> JK = new List<SelectListItem>()
+                return Redirect("/Account/Login");
+            }
+
+            try
+            {
+                if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+                {
+                    AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+                }
+
+                if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+                {
+                    AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+                }
+
+                var model = from A in _context.AparaturDesa
+                            join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                            where A.TGL_MASUK.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_MASUK.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
+                            select new VW_AparaturDesa()
+                            {
+                                ID = A.ID,
+                                NAMA = A.NAMA,
+                                JENIS_KELAMIN = A.JENIS_KELAMIN,
+                                SK = A.SK,
+                                SK_BERHENTI = A.SK_BERHENTI,
+                                KODE_JABATAN = A.KODE_JABATAN,
+                                JABATAN = B.JABATAN,
+                                NIK = A.NIK,
+                                NO_TELP = A.NO_TELP,
+                                ALAMAT = A.ALAMAT,
+                                TGL_MASUK = DateTime.Parse(A.TGL_MASUK.ToString("dd/MM/yyyy")),
+                                TGL_BERHENTI = A.TGL_BERHENTI.ToString()
+                            };
+
+                List<SelectListItem> JK = new List<SelectListItem>()
             {
                 new SelectListItem { Value = "P", Text = "Perempuan" },
                 new SelectListItem { Value = "L", Text = "Laki - laki" }
             };
 
-            AdministrasiModels AdministrasiModels = new AdministrasiModels()
+                AdministrasiModels AdministrasiModels = new AdministrasiModels()
+                {
+                    //TemplateSurat = new TemplateSurat(),
+                    ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("APRT")).ToList(),
+                    ddlJK = JK,
+                    ListVW_AparaturDesa = model.ToList(),
+                    AdmSearchBydate = AdmSearchBydate
+                };
+
+                var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("APRT")).Select(x => new SelectListItem
+                {
+                    Value = x.KODE_JABATAN,
+                    Text = x.JABATAN.ToString(),
+                });
+
+                ViewBag.ddlJabatan = getRoles;
+                ViewBag.ddlJK = JK;
+
+                return View(AdministrasiModels);
+            }
+            catch (Exception ex)
             {
-                //TemplateSurat = new TemplateSurat(),
-                ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("APRT")).ToList(),
-                ddlJK = JK,
-                ListVW_AparaturDesa = model.ToList()
-            };
 
-            var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("APRT")).Select(x => new SelectListItem
-            {
-                Value = x.KODE_JABATAN,
-                Text = x.JABATAN.ToString(),
-            });
-
-            ViewBag.ddlJabatan = getRoles;
-            ViewBag.ddlJK = JK;
-
-            return View(AdministrasiModels);
+                throw ex;
+            }
+            
         }
 
 
@@ -158,7 +190,7 @@ namespace KADES.Controllers
             return RedirectToAction("AparaturDesa");
         }
 
-        public ActionResult DownloadExcelAPR()
+        public ActionResult DownloadExcelAPR(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             IQueryable<VW_AparaturDesa>? Query;
@@ -178,23 +210,47 @@ namespace KADES.Controllers
                 "TANGGAL PEMBERHENTIAN"
             };
 
-            Query = from A in _context.AparaturDesa
-                    join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
-                    select new VW_AparaturDesa()
-                    {
-                        ID = A.ID,
-                        NAMA = A.NAMA,
-                        JENIS_KELAMIN = A.JENIS_KELAMIN,
-                        SK = A.SK,
-                        KODE_JABATAN = A.KODE_JABATAN,
-                        JABATAN = B.JABATAN,
-                        NIK = A.NIK,
-                        NO_TELP = A.NO_TELP,
-                        ALAMAT = A.ALAMAT,
-                        TGL_MASUK = A.TGL_MASUK,
-                        SK_BERHENTI=A.SK_BERHENTI,
-                        TGL_BERHENTI = A.TGL_BERHENTI.ToString()
-                    };
+            if (!string.IsNullOrEmpty(PERIODFROM)|| !string.IsNullOrEmpty(PERIODTO))
+            {
+                Query = from A in _context.AparaturDesa
+                        join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_MASUK.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_MASUK.Date <= DateTime.Parse(PERIODTO).Date
+                        select new VW_AparaturDesa()
+                        {
+                            ID = A.ID,
+                            NAMA = A.NAMA,
+                            JENIS_KELAMIN = A.JENIS_KELAMIN,
+                            SK = A.SK,
+                            KODE_JABATAN = A.KODE_JABATAN,
+                            JABATAN = B.JABATAN,
+                            NIK = A.NIK,
+                            NO_TELP = A.NO_TELP,
+                            ALAMAT = A.ALAMAT,
+                            TGL_MASUK = A.TGL_MASUK,
+                            SK_BERHENTI = A.SK_BERHENTI,
+                            TGL_BERHENTI = A.TGL_BERHENTI.ToString()
+                        };
+            }
+            else
+            {
+                Query = from A in _context.AparaturDesa
+                        join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        select new VW_AparaturDesa()
+                        {
+                            ID = A.ID,
+                            NAMA = A.NAMA,
+                            JENIS_KELAMIN = A.JENIS_KELAMIN,
+                            SK = A.SK,
+                            KODE_JABATAN = A.KODE_JABATAN,
+                            JABATAN = B.JABATAN,
+                            NIK = A.NIK,
+                            NO_TELP = A.NO_TELP,
+                            ALAMAT = A.ALAMAT,
+                            TGL_MASUK = A.TGL_MASUK,
+                            SK_BERHENTI = A.SK_BERHENTI,
+                            TGL_BERHENTI = A.TGL_BERHENTI.ToString()
+                        };
+            }
 
             for (int i = 0; i < listHeaders.Length; i++)
             {
@@ -250,7 +306,7 @@ namespace KADES.Controllers
         #region PENDUDUK
         public IActionResult DataPenduduk()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             var model = from A in _context.Penduduk
                         join B in _context.RfAgama on A.ID_AGAMA equals B.ID
@@ -516,12 +572,14 @@ namespace KADES.Controllers
                 }
 
                 var JK = "";
+                var dlmKeluargaTemp = 0;
                 var dlmKeluarga = "";
                 var kawin = "";
                 foreach (var item in Query)
                 {
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
-                    dlmKeluarga = item.ID_DLMKELUARGA.Equals(0) ? "Ayah" : item.DLMKELUARGA.Equals(1) ? "Ibu" : item.DLMKELUARGA.Equals(2) ? "Anak" : "";
+                    dlmKeluargaTemp = item.ID_DLMKELUARGA;
+                    dlmKeluarga = dlmKeluargaTemp == 0 ? "Ayah" : dlmKeluargaTemp == 1 ? "Ibu" : dlmKeluargaTemp ==2 ? "Anak" : "";
                     kawin = item.ID_KAWIN.Equals(0) ? "Kawin" : "Belum Kawin";
                     dt.Rows.Add(item.NIK, item.NAMA, item.KK, dlmKeluarga, JK, item.AGAMA, kawin, item.NO_AKTA,
                         item.POB, item.DOB.ToString("dd/MM/yyyy"), item.PENDIDIKAN, item.PEKERJAAN, item.NAMA_AYAH,
@@ -554,11 +612,12 @@ namespace KADES.Controllers
 
         #region RAB DESA
 
-        public IActionResult RABDesa()
+        public IActionResult RABDesa(AdmSearchBydate AdmSearchBydate)
         {
+
             try
             {
-                ViewBag.USERID = HttpContext.Session.GetString("UserId");
+                ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             }
             catch (Exception ex)
@@ -567,8 +626,19 @@ namespace KADES.Controllers
                 return RedirectToAction("Home/Home");
             }
 
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+            {
+                AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+            {
+                AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+            }
+
             var model = from A in _context.RAB_Desa
                         join B in _context.RfSumberAset on A.IDSUMBER_DANA equals B.KODE_SUMBER
+                        where A.TGL_RAB.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_RAB.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
                         select new VW_RAB_DESA()
                         {
                             ID = A.ID,
@@ -595,6 +665,7 @@ namespace KADES.Controllers
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListVWRAB_DESA = model.ToList(),
+                AdmSearchBydate=AdmSearchBydate
 
             };
             return View(AdministrasiModels);
@@ -692,11 +763,11 @@ namespace KADES.Controllers
 
         }
 
-        public IActionResult RealisasiRAB()
+        public IActionResult RealisasiRAB(AdmSearchBydate AdmSearchBydate)
         {
             try
             {
-                ViewBag.USERID = HttpContext.Session.GetString("UserId");
+                ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
 
             }
             catch (Exception ex)
@@ -705,8 +776,19 @@ namespace KADES.Controllers
                 return RedirectToAction("Home/Home");
             }
 
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+            {
+                AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+            {
+                AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+            }
+
             var model = from A in _context.REALISASI_RAB
                         join B in _context.RAB_Desa on A.ID_RAB equals B.ID
+                        where A.TGL_REALISASI.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_REALISASI.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
                         select new VWREALISASI_RAB()
                         {
                             ID = A.ID,
@@ -715,6 +797,8 @@ namespace KADES.Controllers
                             KEGIATAN=A.KEGIATAN,
                             TGL_REALISASI = A.TGL_REALISASI,
                             BIAYA=A.BIAYA,
+                            FILENAME=A.FILENAME,
+                            PATH=A.PATH,
 
                         };
 
@@ -729,37 +813,63 @@ namespace KADES.Controllers
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListVWREALISASI_RAB = model.ToList(),
+                AdmSearchBydate=AdmSearchBydate
 
             };
             return View(AdministrasiModels);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRe(REALISASI_RAB REALISASI_RAB)
+        public async Task<IActionResult> AddRe(REALISASI_RAB REALISASI_RAB, IFormFile FILE_UPLOAD)
         {
             var USERID = HttpContext.Session.GetString("UserId").ToString();
 
             try
             {
-                var getData = new REALISASI_RAB
+                if (FILE_UPLOAD == null)
                 {
-                    ID=REALISASI_RAB.ID_RAB,
-                    ID_RAB=REALISASI_RAB.ID_RAB,
-                    KEGIATAN=REALISASI_RAB.KEGIATAN,
-                    TGL_REALISASI=REALISASI_RAB.TGL_REALISASI,
-                    BIAYA=REALISASI_RAB.BIAYA
+                    _notyf.Warning("FIle Document Tidak Boleh Kosong!");
+                }
+                else
+                {
+                    var jnsRAB = _context.RAB_Desa.FirstOrDefault(x => x.ID.Equals(REALISASI_RAB.ID_RAB)).JENIS_RAB;
 
-                };
-                _context.Add(getData);
+                    var fileNama = FILE_UPLOAD.FileName;
+                    var fileToPath = "Upload/RealisasiRAB/" + jnsRAB.ToString()+"/";
+                    var pathFolder = Path.Combine(_env.WebRootPath, fileToPath);
+                    var fullPath = Path.Combine(pathFolder, fileNama);
 
-                var saldoRAB=_context.RAB_Desa.Where(x => x.ID==REALISASI_RAB.ID_RAB).FirstOrDefault();
+                    if (!Directory.Exists(pathFolder))
+                    {
+                        Directory.CreateDirectory(pathFolder);
+                    }
 
-                saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL-getData.BIAYA;
-                _context.Update(saldoRAB);
-                _context.SaveChanges();
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await FILE_UPLOAD.CopyToAsync(stream);
+                    }
 
-                _notyf.Success("Tambah Data Sukses");
+                    var getData = new REALISASI_RAB
+                    {
+                        //ID = REALISASI_RAB.ID_RAB,
+                        ID_RAB = REALISASI_RAB.ID_RAB,
+                        KEGIATAN = REALISASI_RAB.KEGIATAN,
+                        TGL_REALISASI = REALISASI_RAB.TGL_REALISASI,
+                        BIAYA = REALISASI_RAB.BIAYA,
+                        FILENAME = fileNama,
+                        PATH = fileToPath + fileNama,
 
+                    };
+                    _context.Add(getData);
+
+                    var saldoRAB = _context.RAB_Desa.Where(x => x.ID == REALISASI_RAB.ID_RAB).FirstOrDefault();
+
+                    saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL - getData.BIAYA;
+                    _context.Update(saldoRAB);
+                    _context.SaveChanges();
+
+                    _notyf.Success("Tambah Data Sukses");
+                }
             }
             catch (Exception ex)
             {
@@ -772,7 +882,40 @@ namespace KADES.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateRe(REALISASI_RAB model)
+        public IActionResult DownloadFile(int ID)
+        {
+
+
+            var USERID = HttpContext.Session.GetString("UserId").ToString();
+            var FILENAME = "";
+
+            try
+            {
+                var getAcc = _context.REALISASI_RAB.Find(ID);
+                
+
+                FILENAME = getAcc.FILENAME;
+                var PATH_FILE = Path.Combine(_env.WebRootPath, getAcc.PATH);
+
+                var net = new System.Net.WebClient();
+                var data = net.DownloadData(PATH_FILE);
+
+                var content = new System.IO.MemoryStream(data);
+
+                return File(content, "application/octet-stream", FILENAME);
+
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Downloads Gagal");
+                return RedirectToAction("RealisasiRAB");
+
+            }
+            //return RedirectToAction("TemplateSurat");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateReAsync(REALISASI_RAB model, IFormFile FILE_UPLOAD)
         {
 
             try
@@ -780,18 +923,44 @@ namespace KADES.Controllers
                 var USERID = HttpContext.Session.GetString("UserId").ToString();
                 var data = _context.REALISASI_RAB.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
-                data.KEGIATAN = model.KEGIATAN;
-                data.TGL_REALISASI = model.TGL_REALISASI;
-                data.BIAYA = model.BIAYA;
+                if (FILE_UPLOAD != null)
+                {
+                    var jnsRAB = _context.RAB_Desa.FirstOrDefault(x => x.ID.Equals(model.ID_RAB)).JENIS_RAB;
 
-                _context.REALISASI_RAB.Update(data);
+                    var fileName = FILE_UPLOAD.FileName;
+                    var fileToPath = "Upload/RealisasiRAB/" + jnsRAB.ToString() + DateTime.Now.ToString("ddMMyyyy");
+                    var pathFolder = Path.Combine(_env.WebRootPath, fileToPath);
+                    var fullPath = Path.Combine(pathFolder, fileName);
 
-                var saldoRAB = _context.RAB_Desa.Where(x => x.ID == model.ID_RAB).FirstOrDefault();
+                    System.IO.File.Delete(pathFolder+model.FILENAME);
 
-                saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL - model.BIAYA;
-                _context.Update(saldoRAB);
-                _context.SaveChanges();
-                _notyf.Success("Update Data Sukses");
+                    if (!Directory.Exists(pathFolder))
+                    {
+                        Directory.CreateDirectory(pathFolder);
+                    }
+
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        await FILE_UPLOAD.CopyToAsync(stream);
+                    }
+
+
+                    data.KEGIATAN = model.KEGIATAN;
+                    data.TGL_REALISASI = model.TGL_REALISASI;
+                    data.BIAYA = model.BIAYA;
+                    data.FILENAME = fileName;
+                    data.PATH = fileToPath + fileName;
+
+                    _context.REALISASI_RAB.Update(data);
+
+                    var saldoRAB = _context.RAB_Desa.Where(x => x.ID == model.ID_RAB).FirstOrDefault();
+
+                    saldoRAB.SALDO_AKHIR = saldoRAB.SALDO_AWAL - model.BIAYA;
+                    _context.Update(saldoRAB);
+                    _context.SaveChanges();
+                    _notyf.Success("Update Data Sukses");
+                }
+                
 
             }
             catch (Exception ex)
@@ -866,7 +1035,7 @@ namespace KADES.Controllers
         //    //return RedirectToAction("RABDesa");
         //}
 
-        public ActionResult DownloadExcelRAB()
+        public ActionResult DownloadExcelRAB(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             //IQueryable<RAB_DESA>? Query;
@@ -884,6 +1053,7 @@ namespace KADES.Controllers
 
             var Query = from A in _context.RAB_Desa
                         join B in _context.RfSumberAset on A.IDSUMBER_DANA equals B.KODE_SUMBER
+                        where A.TGL_RAB.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_RAB.Date <= DateTime.Parse(PERIODTO).Date
                         select new VW_RAB_DESA()
                         {
                             ID = A.ID,
@@ -942,15 +1112,97 @@ namespace KADES.Controllers
             }
         }
 
+        public ActionResult DownloadExcelRe(string PERIODFROM, string PERIODTO)
+        {
+            DataTable dt = new DataTable();
+            //IQueryable<RAB_DESA>? Query;
+
+
+            string[] listHeaders = new string[]
+            {
+                "KEGIATAN",
+                "TANGGAL REALISASI",
+                "SUMBER ANGGARAN",
+                "BIAYA KEGIATAN",
+            };
+
+            var Query = from A in _context.REALISASI_RAB
+                        join B in _context.RAB_Desa on A.ID_RAB equals B.ID
+                        where A.TGL_REALISASI.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_REALISASI.Date <= DateTime.Parse(PERIODTO).Date
+                        select new VWREALISASI_RAB()
+                        {
+                            ID = A.ID,
+                            ID_RAB = B.ID,
+                            JENIS_RAB = B.JENIS_RAB,
+                            KEGIATAN = A.KEGIATAN,
+                            TGL_REALISASI = A.TGL_REALISASI,
+                            BIAYA = A.BIAYA,
+
+                        };
+
+            for (int i = 0; i < listHeaders.Length; i++)
+            {
+                dt.Columns.Add(listHeaders[i]);
+            }
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Data");
+
+                //Write column headers
+                for (var col = 0; col < dt.Columns.Count; col++)
+                {
+                    worksheet.Cells[1, col + 1].Value = dt.Columns[col].ColumnName;
+                }
+
+                foreach (var item in Query)
+                {
+                    dt.Rows.Add(item.KEGIATAN,item.TGL_REALISASI.ToString("dd/MM/yyyy"), item.JENIS_RAB, item.BIAYA);
+                }
+
+
+
+                //Write data rows using LINQ query
+                var dataRows = dt.AsEnumerable();
+                int row = 2;
+                foreach (var dataRow in dataRows)
+                {
+                    for (var col = 0; col < dt.Columns.Count; col++)
+                    {
+                        worksheet.Cells[row, col + 1].Value = dataRow[col];
+                    }
+                    row++;
+                }
+
+                // Generate the Excel file as a byte array
+                var excelBytes = package.GetAsByteArray();
+
+                // Return the Excel file as a downloadable file
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LaporanRealisasiRAB" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+            }
+        }
         #endregion
 
         #region BPD
-        public IActionResult BPD()
+        public IActionResult BPD(AdmSearchBydate AdmSearchBydate)
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+            {
+                AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+            {
+                AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+            }
 
             var model = from A in _context.BPD
                         join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
+
                         select new VW_BPD()
                         {
                             ID = A.ID,
@@ -978,7 +1230,8 @@ namespace KADES.Controllers
                 //TemplateSurat = new TemplateSurat(),
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("BPD")).ToList(),
                 ddlJK = JK,
-                ListVW_BPD = model.ToList()
+                ListVW_BPD = model.ToList(),
+                AdmSearchBydate=AdmSearchBydate,
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("BPD")).Select(x => new SelectListItem
@@ -1068,7 +1321,7 @@ namespace KADES.Controllers
 
         public IActionResult KegiatanBPD()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListKegiatanBPD = _context.KegiatanBPD.ToList(),
@@ -1077,7 +1330,7 @@ namespace KADES.Controllers
             return View(AdministrasiModels);
         }
 
-        public ActionResult DownloadExcelBPD()
+        public ActionResult DownloadExcelBPD(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             IQueryable<VW_BPD>? Query;
@@ -1099,6 +1352,7 @@ namespace KADES.Controllers
 
             Query = from A in _context.BPD
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_BPD()
                     {
                         ID = A.ID,
@@ -1160,7 +1414,7 @@ namespace KADES.Controllers
                 var excelBytes = package.GetAsByteArray();
 
                 // Return the Excel file as a downloadable file
-                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAnggotaBPD" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "DataAnggotaLPM" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
             }
         }
 
@@ -1252,12 +1506,23 @@ namespace KADES.Controllers
         #endregion
 
         #region Taruna Karuna
-        public IActionResult KarangTaruna()
+        public IActionResult KarangTaruna(AdmSearchBydate AdmSearchBydate)
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+            {
+                AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+            {
+                AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+            }
 
             var model = from A in _context.KarangTaruna
                         join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
                         select new VW_KarangTaruna()
                         {
                             ID = A.ID,
@@ -1285,13 +1550,15 @@ namespace KADES.Controllers
                 //TemplateSurat = new TemplateSurat(),
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("KTR")).ToList(),
                 ddlJK = JK,
-                ListVW_KarangTaruna = model.ToList()
+                ListVW_KarangTaruna = model.ToList(),
+                AdmSearchBydate=AdmSearchBydate,
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("KTR")).Select(x => new SelectListItem
             {
                 Value = x.KODE_JABATAN,
                 Text = x.JABATAN.ToString(),
+                
             });
 
             ViewBag.ddlJabatan = getRoles;
@@ -1378,7 +1645,7 @@ namespace KADES.Controllers
             return RedirectToAction("KarangTaruna");
         }
 
-        public ActionResult DownloadExcelTaruna()
+        public ActionResult DownloadExcelTaruna(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             IQueryable<VW_KarangTaruna>? Query;
@@ -1400,6 +1667,7 @@ namespace KADES.Controllers
 
             Query = from A in _context.KarangTaruna
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_KarangTaruna()
                     {
                         ID = A.ID,
@@ -1466,7 +1734,7 @@ namespace KADES.Controllers
         }
         public IActionResult KegiatanKarangTaruna()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListKegiatanTaruna = _context.KegiatanTaruna.ToList(),
@@ -1558,12 +1826,23 @@ namespace KADES.Controllers
         #endregion
 
         #region PKK
-        public IActionResult PKK()
+        public IActionResult PKK(AdmSearchBydate AdmSearchBydate)
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODFROM))
+            {
+                AdmSearchBydate.PERIODFROM = DateTime.Now.ToString();
+            }
+
+            if (string.IsNullOrEmpty(AdmSearchBydate.PERIODTO))
+            {
+                AdmSearchBydate.PERIODTO = DateTime.Now.ToString();
+            }
 
             var model = from A in _context.PKK
                         join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(AdmSearchBydate.PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(AdmSearchBydate.PERIODTO).Date
                         select new VW_PKK()
                         {
                             ID = A.ID,
@@ -1591,13 +1870,15 @@ namespace KADES.Controllers
                 //TemplateSurat = new TemplateSurat(),
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).ToList(),
                 ddlJK = JK,
-                ListVW_PKK = model.ToList()
+                ListVW_PKK = model.ToList(),
+                AdmSearchBydate=AdmSearchBydate
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).Select(x => new SelectListItem
             {
                 Value = x.KODE_JABATAN,
                 Text = x.JABATAN.ToString(),
+                
             });
 
             ViewBag.ddlJabatan = getRoles;
@@ -1681,7 +1962,7 @@ namespace KADES.Controllers
             return RedirectToAction("PKK");
         }
 
-        public ActionResult DownloadExcelPKK()
+        public ActionResult DownloadExcelPKK(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             IQueryable<VW_PKK>? Query;
@@ -1703,6 +1984,7 @@ namespace KADES.Controllers
 
             Query = from A in _context.PKK
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
+                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_PKK()
                     {
                         ID = A.ID,
@@ -1770,7 +2052,7 @@ namespace KADES.Controllers
 
         public IActionResult KegiatanPKK()
         {
-            ViewBag.USERID = HttpContext.Session.GetString("UserId");
+            ViewBag.USERID = HttpContext.Session.GetString("UserId"); ViewBag.GROUPID = HttpContext.Session.GetString("GroupId");
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListKegiatanPKK = _context.KegiatanPKK.ToList(),

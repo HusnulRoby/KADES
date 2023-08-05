@@ -9,6 +9,7 @@ namespace KADES.Models.Asset
 
         public VW_DataAset VW_Aset { get; set; }
         public List<VW_DataAset> ListVW_Aset { get; set; }
+        public AsetSearchBydate? searchBydate { get; set; }
     }
 
     public class DataAset 
@@ -22,6 +23,7 @@ namespace KADES.Models.Asset
         public string LOKASI { get;set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
+        public DateTime TGL_HAPUS { get; set; }
         public bool STATUS { get; set; }
 
     }
@@ -39,6 +41,12 @@ namespace KADES.Models.Asset
         public string LOKASI { get; set; }
         public Double NILAI_ASET { get; set; }
         public DateTime TGL_INPUT { get; set; }
+        public DateTime TGL_HAPUS { get; set; }
         public bool STATUS { get; set; }
+    }
+    public class AsetSearchBydate
+    {
+        public string PERIODFROM { get; set; }
+        public string PERIODTO { get; set; }
     }
 }

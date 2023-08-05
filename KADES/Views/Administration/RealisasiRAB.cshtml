@@ -23,22 +23,47 @@
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
                         <h2>Buku Realisasi Kegiatan</h2>
-                        <span class="plus_green_bt_exp"><a class="fa fa-download" style="font-size:15px" asp-controller="Administration" asp-action="DownloadExcelRe"></a></span>
+                        <span class="plus_green_bt_exp"><a class="fa fa-download" style="font-size:15px" asp-controller="Administration" asp-action="DownloadExcelRe" asp-route-PERIODFROM="@Model.AdmSearchBydate.PERIODFROM" asp-route-PERIODTO="@Model.AdmSearchBydate.PERIODTO"></a></span>
                         <span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>
 
                     </div>
 
                 </div>
                 <div class="table_section padding_infor_info">
+                    <div class="box-body">
+                        <div id="divSearchList" class="table-responsive">
+                            <div class="divRectangle" id="rectangle" style="width:50%">
+                                <form method="get" action="@Url.Action("RealisasiRAB", "Administration")">
+                                    <div class="form-group row top-buffer">
+                                        <label class="control-label col-sm-5">Tanggal Realisasi</label>
+                                        <div class="col-6">
+                                            <input type="date" id="PERIODFROM" class="form-control form-control-sm form-control-user" asp-for="@Model.AdmSearchBydate.PERIODFROM" />
+                                            <span>To</span>
+                                            <input type="date" id="PERIODTO" class="form-control form-control-sm form-control-user" asp-for="@Model.AdmSearchBydate.PERIODTO" />
+                                        </div>
+                                    </div>
+
+                                    <div class="MenuSearch" style="text-align:center;padding-top:12px">
+                                        <button class="btn btn-sm btn-sm btn-outline-info" type="submit"><i class="glyphicon glyphicon-search"></i> <span>Search</span></button> <span></span>
+                                        <button class="btn btn-sm btn-sm btn-outline-warning" onclick="clearSearch()" type="button"><i class="glyphicon glyphicon-refresh"></i>  <span>Clear</span></button> <span></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+                    </br>
+                    </br>
                     <div class="table-responsive-sm">
                         <table id="dataTable" class="table" style="width:100%">
-                            <thead class="thead-light"  style="text-align:center">
+                            <thead class="thead-light" style="text-align:center">
                                 <tr>
                                     <th>Action</th>
                                     <th>Kegiatan</th>
                                     <th>Sumber RAB</th>
                                     <th>Tanggal Kegiatan</th>
                                     <th>Biaya</th>
+                                    <th>File Pendukung</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,13 +78,18 @@
                                                     <input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-secondary" value="Delete" onclick="DeleteRe(@item.ID)" />
                                                 </form>
                                             </div>
-                                            @await Html.PartialAsync("_UpdateRe",item) 
+                                            @await Html.PartialAsync("_UpdateRe",item)
                                         </td>
                                         <td>@item.KEGIATAN</td>
                                         <td>@item.JENIS_RAB</td>
                                         <td>@item.TGL_REALISASI.ToString("dd/MM/yyyy")</td>
                                         <td>@item.BIAYA</td>
-                                        
+                                        <td>
+                                            <form asp-action="DownloadFile" asp-route-id="@item.ID" id="DownloadFile" method="post" style="margin-left:3px">
+                                                <input type="submit" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Download" />
+                                            </form>
+                                        </td>
+
                                     </tr>
                                 }
                             </tbody>
@@ -99,8 +129,11 @@
                                 <label class="label_field  control-label">Biaya</label>
                                 <input id="BIAYA" asp-for="@Model.REALISASI_RAB.BIAYA" type="number" class="form-control form-control-sm form-control-user" required />
                             </div>
-                            
-                            
+                            <div class="field_form">
+                                <label class="label_field  control-label">Upload File Pendukung</label>
+                                <input id="FILE_UPLOAD" type="file" asp-for="@Model.REALISASI_RAB.PATH" name="FILE_UPLOAD" accept=".doc,.docx,.pdf" class="form-control form-control-sm form-control-user" multiple required />
+                            </div>
+
                         </fieldset>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-sm btn-success">Save</button>
@@ -122,12 +155,14 @@
     function DeleteRe(ID) {
 
         if (window.confirm("Delete This Data?")) {
-            $('#DelRe-'+ID).submit();
+            $('#DelRe-' + ID).submit();
         }
 
     }
 
-
+    function clearSearch() {
+        ClearDataInDIV("divSearchList");
+    }
 
 </script>
 

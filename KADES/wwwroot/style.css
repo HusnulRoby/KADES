@@ -1949,6 +1949,11 @@ button.main_bt {
     12. Dashboard Style 2
 -------------------------------------------------------------------*/
 
+.childMenu1 {
+    margin: 2px 10px 0 0 !important;
+    font-size: 15px !important;
+}
+
 .dashboard_2 .social_icon {
     float: left;
     width: 50%;
@@ -3452,7 +3457,7 @@ table.projects tr td:first-child {
 }
 
 .logo_login {
-    background: url('Content/images/layout_img/login_image.jpg');
+    background: url('Content/images/logo/karangParanje.jpg');
     padding: 50px 0;
     background-position: center center;
     position: relative;
