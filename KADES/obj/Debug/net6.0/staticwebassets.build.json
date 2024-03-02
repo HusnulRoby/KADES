@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "attRsHYjS2tl3qmQnmh8bgPFRn7FsEtsqkM3hWeC2xc=",
+  "Hash": "P3cVFKbmRWHWWA2MHi/ootaGcfR/yD92tC5sgYQ2/YE=",
   "Source": "KADES",
   "BasePath": "_content/KADES",
   "Mode": "Default",
@@ -7599,6 +7599,40 @@
       "OriginalItemSpec": "wwwroot\\style.css"
     },
     {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\18082023\\SuratPengantarKTP.docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/Document/18082023/SuratPengantarKTP.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Document\\18082023\\SuratPengantarKTP.docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\18082023\\Template Penulisan Artikel JRAMI.docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/Document/18082023/Template Penulisan Artikel JRAMI.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Document\\18082023\\Template Penulisan Artikel JRAMI.docx"
+    },
+    {
       "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\22032023\\CV_Husnul_Roby_Gunawan.docx",
       "SourceId": "KADES",
       "SourceType": "Discovered",
@@ -7801,6 +7835,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jembatan\\SuratPengantarKTP (1).docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/RealisasiRAB/Pembangunan Jembatan/SuratPengantarKTP (1).docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jembatan\\SuratPengantarKTP (1).docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Masjid Jami\\SuratPengantarKTP.docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/RealisasiRAB/Pembangunan Masjid Jami/SuratPengantarKTP.docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\RealisasiRAB\\Pembangunan Masjid Jami\\SuratPengantarKTP.docx"
     }
   ]
 }

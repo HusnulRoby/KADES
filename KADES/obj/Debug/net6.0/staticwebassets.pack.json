@@ -1521,6 +1521,14 @@
       "PackagePath": "staticwebassets\\Content\\modules\\zingchart-zoom.min.js"
     },
     {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\18082023\\SuratPengantarKTP.docx",
+      "PackagePath": "staticwebassets\\Upload\\Document\\18082023\\SuratPengantarKTP.docx"
+    },
+    {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\18082023\\Template Penulisan Artikel JRAMI.docx",
+      "PackagePath": "staticwebassets\\Upload\\Document\\18082023\\Template Penulisan Artikel JRAMI.docx"
+    },
+    {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\Document\\22032023\\CV_Husnul_Roby_Gunawan.docx",
       "PackagePath": "staticwebassets\\Upload\\Document\\22032023\\CV_Husnul_Roby_Gunawan.docx"
     },
@@ -1567,6 +1575,14 @@
     {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx",
       "PackagePath": "staticwebassets\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx"
+    },
+    {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jembatan\\SuratPengantarKTP (1).docx",
+      "PackagePath": "staticwebassets\\Upload\\RealisasiRAB\\Pembangunan Jembatan\\SuratPengantarKTP (1).docx"
+    },
+    {
+      "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Masjid Jami\\SuratPengantarKTP.docx",
+      "PackagePath": "staticwebassets\\Upload\\RealisasiRAB\\Pembangunan Masjid Jami\\SuratPengantarKTP.docx"
     },
     {
       "Id": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\css\\site.css",

@@ -181,7 +181,7 @@ namespace KADES.Controllers
                 };
 
                 FILENAME = getAcc.FILE_NAME;
-                PATH_FILE=getAcc.PATH_FILE;
+                PATH_FILE = getAcc.PATH_FILE;
 
                 _context.Add(getData);
                 _context.SaveChanges();
@@ -211,11 +211,12 @@ namespace KADES.Controllers
             try
             {
                 var data = _context.TemplateSurat.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
+                data.NO_SURAT = model.NO_SURAT;
+                data.NAMA_SURAT = model.NAMA_SURAT;
                 if (FILE_UPLOAD != null)
                 {
 
-                    data.NO_SURAT = model.NO_SURAT;
-                    data.NAMA_SURAT=model.NAMA_SURAT;
+                    
 
                     data.FILE_NAME = FILE_UPLOAD.FileName;
                     var pathFolder = Path.Combine(_env.WebRootPath, "Upload/Document/" + DateTime.Now.ToString("ddMMyyyy"));
@@ -255,7 +256,7 @@ namespace KADES.Controllers
                 {
                     return NotFound();
                 }
-               // getAcc.ACTIVE = false;
+                // getAcc.ACTIVE = false;
 
                 _context.Remove(getAcc);
                 _context.SaveChanges();
@@ -315,13 +316,13 @@ namespace KADES.Controllers
             PelayananModels PelayananModels = new PelayananModels()
             {
                 ListVW_LogSurat = Query.ToList(),
-                searchBydate= searchBydate
+                searchBydate = searchBydate
             };
 
             return View(PelayananModels);
         }
 
-        public ActionResult DownloadExcel(string PERIODFROM, string PERIODTO )
+        public ActionResult DownloadExcel(string PERIODFROM, string PERIODTO)
         {
             DataTable dt = new DataTable();
             IQueryable<VW_LogSurat>? Query;
@@ -339,12 +340,12 @@ namespace KADES.Controllers
             string[] listHeaders = new string[]
             {
                 "NO SURAT",
-                "NAMA SURAT", 
+                "NAMA SURAT",
                 "NAMA FILE",
                 "TANGGAL GENERATE"
             };
 
-            if (!string.IsNullOrEmpty(PERIODFROM)||!string.IsNullOrEmpty(PERIODTO))
+            if (!string.IsNullOrEmpty(PERIODFROM) || !string.IsNullOrEmpty(PERIODTO))
             {
                 Query = from a in _context.TemplateSurat
                         join b in _context.LogSurat on a.ID equals b.ID_SURAT
@@ -377,7 +378,7 @@ namespace KADES.Controllers
 
                         };
             }
-            
+
 
             for (int i = 0; i < listHeaders.Length; i++)
             {
@@ -397,7 +398,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.NO_SURAT,item.NAMA_SURAT,item.FILE_NAME,item.GENERATE_DATE.ToString("dd/MM/yyyy"));
+                    dt.Rows.Add(item.NO_SURAT, item.NAMA_SURAT, item.FILE_NAME, item.GENERATE_DATE.ToString("dd/MM/yyyy"));
                 }
 
 
@@ -418,10 +419,10 @@ namespace KADES.Controllers
                 var excelBytes = package.GetAsByteArray();
 
                 // Return the Excel file as a downloadable file
-                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LogSurat"+DateTime.Now.ToString("ddMMyyyy")+".xlsx");
+                return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "LogSurat" + DateTime.Now.ToString("ddMMyyyy") + ".xlsx");
             }
 
-            
+
         }
 
         #endregion

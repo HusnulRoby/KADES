@@ -23,7 +23,7 @@
                 <div class="full graph_head">
                     <div class="heading1 margin_0">
                         <h2>Data Aset Dihapus</h2>
-                        <span class="plus_green_bt_add"><a class="fa fa-download" style="font-size:15px" asp-controller="Asset" asp-action="DownloadExcelDel" asp-route-PERIODFROM="@Model.searchBydate.PERIODFROM" asp-route-PERIODTO="@Model.searchBydate.PERIODTO" ></a></span>
+                        <span class="plus_green_bt_add"><a class="fa fa-download" style="font-size:15px" asp-controller="Asset" asp-action="DownloadExcelDel" asp-route-PERIODFROM="@Model.searchBydate.PERIODFROM" asp-route-PERIODTO="@Model.searchBydate.PERIODTO"></a></span>
 
                         @*<span class="plus_green_bt_add"><a data-toggle="modal" data-target="#myModal">+</a></span>*@
 
@@ -39,7 +39,7 @@
                                         <label class="control-label col-sm-5">Tanggal Aset Dihapus</label>
                                         <div class="col-6">
                                             <input type="date" id="PERIODFROM" class="form-control form-control-sm form-control-user" asp-for="@Model.searchBydate.PERIODFROM" />
-                                                <span>To</span>
+                                            <span>To</span>
                                             <input type="date" id="PERIODTO" class="form-control form-control-sm form-control-user" asp-for="@Model.searchBydate.PERIODTO" />
                                         </div>
                                     </div>
@@ -92,7 +92,8 @@
                                                     KONDISI = "Rusak Berat";
                                                 }
 
-                                                @KONDISI;
+                                                @KONDISI
+                                                ;
                                             }
                                         </td>
                                         <td>@item.LOKASI</td>
@@ -110,12 +111,12 @@
     </div>
     <!-- model popup -->
     <!-- The Modal -->
-   
+
 </div>
 
-<script>  
-    function clearSearch(){
+<script>
+    function clearSearch() {
         ClearDataInDIV("divSearchList");
-    }    
+    }
 </script>
 

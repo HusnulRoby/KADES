@@ -109,7 +109,7 @@ namespace KADES.Controllers
 
                 throw ex;
             }
-            
+
         }
 
         [HttpPost]
@@ -208,7 +208,7 @@ namespace KADES.Controllers
                 }
 
                 getAcc.STATUS = false;
-                getAcc.TGL_HAPUS=DateTime.Now;
+                getAcc.TGL_HAPUS = DateTime.Now;
                 _context.Update(getAcc);
                 _context.SaveChanges();
                 _notyf.Success("Delete Data Sukses");
@@ -242,7 +242,7 @@ namespace KADES.Controllers
                 "TANGGAL INPUT"
             };
 
-            if (!string.IsNullOrEmpty(PERIODFROM)||!string.IsNullOrEmpty(PERIODTO))
+            if (!string.IsNullOrEmpty(PERIODFROM) || !string.IsNullOrEmpty(PERIODTO))
             {
                 Query = from a in _context.DataAset
                         where a.STATUS.Equals(true) && a.TGL_INPUT.Date >= DateTime.Parse(PERIODFROM).Date && a.TGL_INPUT.Date <= DateTime.Parse(PERIODTO).Date
@@ -416,7 +416,7 @@ namespace KADES.Controllers
                 "TANGGAL ASET DIHAPUS"
             };
 
-            if (!string.IsNullOrEmpty(PERIODFROM)||!string.IsNullOrEmpty(PERIODTO))
+            if (!string.IsNullOrEmpty(PERIODFROM) || !string.IsNullOrEmpty(PERIODTO))
             {
                 Query = from a in _context.DataAset
                         where a.STATUS.Equals(false)
@@ -461,7 +461,7 @@ namespace KADES.Controllers
                             TGL_HAPUS = a.TGL_HAPUS
                         };
             }
-            
+
 
             for (int i = 0; i < listHeaders.Length; i++)
             {

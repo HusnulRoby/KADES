@@ -32,7 +32,7 @@
                 <div class="table_section padding_infor_info">
                     <div class="table-responsive-sm">
                         <table id="dataTable" class="table" style="width:100%">
-                            <thead class="thead-light" >
+                            <thead class="thead-light">
                                 <tr>
                                     <th>Action</th>
                                     <th>Kode Surat</th>
@@ -47,7 +47,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            <div class="btn-group" >
+                                            <div class="btn-group">
 
                                                 <form asp-action="DeleteTempSurat" asp-route-id="@item.ID" id="DelTempSurat-@item.ID" method="post">
                                                     @*<input type="button" class="btn btn-sm btn-sm  cur-p btn-outline-success" value="Print" data-toggle="modal" data-target="@("#printSurat-"+item.ID)" data-url="@Url.Action($"PrintSurat/{item.ID}")" />*@
@@ -118,20 +118,16 @@
         </div>
         <!-- end model popup -->
     </div>
-
 </div>
 
 <script type="text/javascript">
 
     function DeleteTempsurat(ID) {
         if (window.confirm("Delete This Data?")) {
-            $('#DelTempSurat-'+ID).submit();
+            $('#DelTempSurat-' + ID).submit();
         }
-        
+
     }
-
-
-
 </script>
 
 

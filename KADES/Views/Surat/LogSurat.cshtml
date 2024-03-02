@@ -25,7 +25,7 @@
                         <h2>Log Surat Keluar</h2>
                         @*<form asp-action="DownloadExcel" method="post">*@
                         <span class="plus_green_bt_add"><a class="fa fa-download" style="font-size:15px" asp-controller="Surat" asp-action="DownloadExcel" asp-route-PERIODFROM="@Model.searchBydate.PERIODFROM" asp-route-PERIODTO="@Model.searchBydate.PERIODTO"></a></span>
-                            @*<span class="plus_green_bt_add"> <a class="fa fa-download" style="font-size:15px" onclick="exportToExcel()"><input type="button" onclick="exportToExcel()" /></a></span>*@
+                        @*<span class="plus_green_bt_add"> <a class="fa fa-download" style="font-size:15px" onclick="exportToExcel()"><input type="button" onclick="exportToExcel()" /></a></span>*@
                         @*</form>*@
                     </div>
                 </div>
@@ -39,8 +39,8 @@
                                     <div class="form-group row top-buffer">
                                         <label class="control-label col-sm-5">Tanggal Generate</label>
                                         <div class="col-6">
-                                            <input type="date" class="form-control form-control-sm form-control-user" asp-for="@Model.searchBydate.PERIODFROM"/>
-                                                <span>To</span>
+                                            <input type="date" class="form-control form-control-sm form-control-user" asp-for="@Model.searchBydate.PERIODFROM" />
+                                            <span>To</span>
                                             <input type="date" class="form-control form-control-sm form-control-user" asp-for="@Model.searchBydate.PERIODTO" />
                                         </div>
                                     </div>
@@ -76,8 +76,6 @@
                                         <td>@item.GENERATE_BY</td>
                                         <td>@item.GENERATE_DATE.ToString("dd/MM/yyyy")</td>
                                     </tr>
-
-
                                 }
                             </tbody>
                         </table>
@@ -94,7 +92,7 @@
     function exportToExcel() {
         console.log("test");
         $('#DownloadExcel).submit();
-    }
+        }
 
     function clearSearch() {
         ClearDataInDIV("divSearchList");

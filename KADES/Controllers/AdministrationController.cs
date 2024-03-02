@@ -40,7 +40,7 @@ namespace KADES.Controllers
         {
             try
             {
-                var userID= HttpContext.Session.GetString("UserId");
+                var userID = HttpContext.Session.GetString("UserId");
                 ViewBag.USERID = userID;
 
             }
@@ -112,7 +112,7 @@ namespace KADES.Controllers
 
                 throw ex;
             }
-            
+
         }
 
 
@@ -210,7 +210,7 @@ namespace KADES.Controllers
                 "TANGGAL PEMBERHENTIAN"
             };
 
-            if (!string.IsNullOrEmpty(PERIODFROM)|| !string.IsNullOrEmpty(PERIODTO))
+            if (!string.IsNullOrEmpty(PERIODFROM) || !string.IsNullOrEmpty(PERIODTO))
             {
                 Query = from A in _context.AparaturDesa
                         join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
@@ -276,7 +276,7 @@ namespace KADES.Controllers
                     JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
                     skBerhenti = !string.IsNullOrEmpty(item.SK_BERHENTI) ? item.SK_BERHENTI : "";
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_BERHENTI) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_BERHENTI));
-                    dt.Rows.Add(item.NIK, item.NAMA, item.SK, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_MASUK.ToString("dd/MM/yyyy"), skBerhenti,tglBerhenti);
+                    dt.Rows.Add(item.NIK, item.NAMA, item.SK, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_MASUK.ToString("dd/MM/yyyy"), skBerhenti, tglBerhenti);
                 }
 
 
@@ -579,7 +579,7 @@ namespace KADES.Controllers
                 {
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
                     dlmKeluargaTemp = item.ID_DLMKELUARGA;
-                    dlmKeluarga = dlmKeluargaTemp == 0 ? "Ayah" : dlmKeluargaTemp == 1 ? "Ibu" : dlmKeluargaTemp ==2 ? "Anak" : "";
+                    dlmKeluarga = dlmKeluargaTemp == 0 ? "Ayah" : dlmKeluargaTemp == 1 ? "Ibu" : dlmKeluargaTemp == 2 ? "Anak" : "";
                     kawin = item.ID_KAWIN.Equals(0) ? "Kawin" : "Belum Kawin";
                     dt.Rows.Add(item.NIK, item.NAMA, item.KK, dlmKeluarga, JK, item.AGAMA, kawin, item.NO_AKTA,
                         item.POB, item.DOB.ToString("dd/MM/yyyy"), item.PENDIDIKAN, item.PEKERJAAN, item.NAMA_AYAH,
@@ -642,15 +642,15 @@ namespace KADES.Controllers
                         select new VW_RAB_DESA()
                         {
                             ID = A.ID,
-                            JENIS_RAB=A.JENIS_RAB,
-                            TGL_RAB=A.TGL_RAB,
-                            IDSUMBER_DANA=A.IDSUMBER_DANA,
-                            SUMBER_DANA=B.SUMBER_ASET,
-                            SALDO_AWAL=A.SALDO_AWAL,
-                            SALDO_AKHIR=A.SALDO_AKHIR,
-                            KETERANGAN=A.KETERANGAN,
-                            CREATED_BY=A.CREATED_BY,
-                            CREATED_DATE=A.CREATED_DATE,
+                            JENIS_RAB = A.JENIS_RAB,
+                            TGL_RAB = A.TGL_RAB,
+                            IDSUMBER_DANA = A.IDSUMBER_DANA,
+                            SUMBER_DANA = B.SUMBER_ASET,
+                            SALDO_AWAL = A.SALDO_AWAL,
+                            SALDO_AKHIR = A.SALDO_AKHIR,
+                            KETERANGAN = A.KETERANGAN,
+                            CREATED_BY = A.CREATED_BY,
+                            CREATED_DATE = A.CREATED_DATE,
 
                         };
 
@@ -665,7 +665,7 @@ namespace KADES.Controllers
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListVWRAB_DESA = model.ToList(),
-                AdmSearchBydate=AdmSearchBydate
+                AdmSearchBydate = AdmSearchBydate
 
             };
             return View(AdministrasiModels);
@@ -684,7 +684,7 @@ namespace KADES.Controllers
                     TGL_RAB = RAB_DESA.TGL_RAB,
                     IDSUMBER_DANA = RAB_DESA.IDSUMBER_DANA,
                     SALDO_AWAL = RAB_DESA.SALDO_AWAL,
-                    SALDO_AKHIR= RAB_DESA.SALDO_AWAL,
+                    SALDO_AKHIR = RAB_DESA.SALDO_AWAL,
                     KETERANGAN = string.IsNullOrEmpty(RAB_DESA.KETERANGAN) ? "" : RAB_DESA.KETERANGAN,
                     CREATED_BY = USERID,
                     CREATED_DATE = DateTime.Now,
@@ -715,7 +715,7 @@ namespace KADES.Controllers
                 var data = _context.RAB_Desa.Where(x => x.ID.Equals(model.ID)).FirstOrDefault();
 
                 var selisih = model.SALDO_AWAL - data.SALDO_AWAL;
-;                data.SALDO_AWAL = model.SALDO_AWAL;
+                ; data.SALDO_AWAL = model.SALDO_AWAL;
                 data.SALDO_AKHIR += selisih;
                 data.IDSUMBER_DANA = model.IDSUMBER_DANA;
                 data.JENIS_RAB = model.JENIS_RAB;
@@ -794,11 +794,11 @@ namespace KADES.Controllers
                             ID = A.ID,
                             ID_RAB = B.ID,
                             JENIS_RAB = B.JENIS_RAB,
-                            KEGIATAN=A.KEGIATAN,
+                            KEGIATAN = A.KEGIATAN,
                             TGL_REALISASI = A.TGL_REALISASI,
-                            BIAYA=A.BIAYA,
-                            FILENAME=A.FILENAME,
-                            PATH=A.PATH,
+                            BIAYA = A.BIAYA,
+                            FILENAME = A.FILENAME,
+                            PATH = A.PATH,
 
                         };
 
@@ -813,7 +813,7 @@ namespace KADES.Controllers
             AdministrasiModels AdministrasiModels = new AdministrasiModels()
             {
                 ListVWREALISASI_RAB = model.ToList(),
-                AdmSearchBydate=AdmSearchBydate
+                AdmSearchBydate = AdmSearchBydate
 
             };
             return View(AdministrasiModels);
@@ -835,7 +835,7 @@ namespace KADES.Controllers
                     var jnsRAB = _context.RAB_Desa.FirstOrDefault(x => x.ID.Equals(REALISASI_RAB.ID_RAB)).JENIS_RAB;
 
                     var fileNama = FILE_UPLOAD.FileName;
-                    var fileToPath = "Upload/RealisasiRAB/" + jnsRAB.ToString()+"/";
+                    var fileToPath = "Upload/RealisasiRAB/" + jnsRAB.ToString() + "/";
                     var pathFolder = Path.Combine(_env.WebRootPath, fileToPath);
                     var fullPath = Path.Combine(pathFolder, fileNama);
 
@@ -892,7 +892,7 @@ namespace KADES.Controllers
             try
             {
                 var getAcc = _context.REALISASI_RAB.Find(ID);
-                
+
 
                 FILENAME = getAcc.FILENAME;
                 var PATH_FILE = Path.Combine(_env.WebRootPath, getAcc.PATH);
@@ -932,7 +932,7 @@ namespace KADES.Controllers
                     var pathFolder = Path.Combine(_env.WebRootPath, fileToPath);
                     var fullPath = Path.Combine(pathFolder, fileName);
 
-                    System.IO.File.Delete(pathFolder+model.FILENAME);
+                    System.IO.File.Delete(pathFolder + model.FILENAME);
 
                     if (!Directory.Exists(pathFolder))
                     {
@@ -960,7 +960,7 @@ namespace KADES.Controllers
                     _context.SaveChanges();
                     _notyf.Success("Update Data Sukses");
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -1087,7 +1087,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"),item.SUMBER_DANA,item.SALDO_AWAL,item.SALDO_AKHIR, item.KETERANGAN);
+                    dt.Rows.Add(item.JENIS_RAB, item.TGL_RAB.ToString("dd/MM/yyyy"), item.SUMBER_DANA, item.SALDO_AWAL, item.SALDO_AKHIR, item.KETERANGAN);
                 }
 
 
@@ -1158,7 +1158,7 @@ namespace KADES.Controllers
 
                 foreach (var item in Query)
                 {
-                    dt.Rows.Add(item.KEGIATAN,item.TGL_REALISASI.ToString("dd/MM/yyyy"), item.JENIS_RAB, item.BIAYA);
+                    dt.Rows.Add(item.KEGIATAN, item.TGL_REALISASI.ToString("dd/MM/yyyy"), item.JENIS_RAB, item.BIAYA);
                 }
 
 
@@ -1231,7 +1231,7 @@ namespace KADES.Controllers
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("BPD")).ToList(),
                 ddlJK = JK,
                 ListVW_BPD = model.ToList(),
-                AdmSearchBydate=AdmSearchBydate,
+                AdmSearchBydate = AdmSearchBydate,
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("BPD")).Select(x => new SelectListItem
@@ -1352,12 +1352,12 @@ namespace KADES.Controllers
 
             Query = from A in _context.BPD
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
-                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
+                    where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_BPD()
                     {
                         ID = A.ID,
-                        SK=A.SK,
-                        SK_BERHENTI=A.SK_BERHENTI,
+                        SK = A.SK,
+                        SK_BERHENTI = A.SK_BERHENTI,
                         NAMA = A.NAMA,
                         JENIS_KELAMIN = A.JENIS_KELAMIN,
                         KODE_JABATAN = A.KODE_JABATAN,
@@ -1393,7 +1393,7 @@ namespace KADES.Controllers
                     JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
                     skBerhenti = !string.IsNullOrEmpty(item.SK_BERHENTI) ? item.SK_BERHENTI : "";
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
+                    dt.Rows.Add(item.NIK, item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), skBerhenti, tglBerhenti);
                 }
 
 
@@ -1531,8 +1531,8 @@ namespace KADES.Controllers
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
-                            SK=A.SK,
-                            SK_BERHENTI=A.SK_BERHENTI,
+                            SK = A.SK,
+                            SK_BERHENTI = A.SK_BERHENTI,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
@@ -1551,14 +1551,14 @@ namespace KADES.Controllers
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("KTR")).ToList(),
                 ddlJK = JK,
                 ListVW_KarangTaruna = model.ToList(),
-                AdmSearchBydate=AdmSearchBydate,
+                AdmSearchBydate = AdmSearchBydate,
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("KTR")).Select(x => new SelectListItem
             {
                 Value = x.KODE_JABATAN,
                 Text = x.JABATAN.ToString(),
-                
+
             });
 
             ViewBag.ddlJabatan = getRoles;
@@ -1580,8 +1580,8 @@ namespace KADES.Controllers
                     NAMA = KarangTaruna.NAMA,
                     JENIS_KELAMIN = KarangTaruna.JENIS_KELAMIN,
                     NIK = KarangTaruna.NIK,
-                    SK=KarangTaruna.SK,
-                    SK_BERHENTI=null,
+                    SK = KarangTaruna.SK,
+                    SK_BERHENTI = null,
                     NO_TELP = KarangTaruna.NO_TELP,
                     ALAMAT = KarangTaruna.ALAMAT,
                     TGL_PENGANGKATAN = KarangTaruna.TGL_PENGANGKATAN,
@@ -1667,7 +1667,7 @@ namespace KADES.Controllers
 
             Query = from A in _context.KarangTaruna
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
-                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
+                    where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_KarangTaruna()
                     {
                         ID = A.ID,
@@ -1708,7 +1708,7 @@ namespace KADES.Controllers
                     JK = item.JENIS_KELAMIN.Equals(1) ? "P" : "L";
                     skBerhenti = string.IsNullOrEmpty(item.SK_BERHENTI) ? "" : item.SK_BERHENTI;
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
+                    dt.Rows.Add(item.NIK, item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), skBerhenti, tglBerhenti);
                 }
 
 
@@ -1851,8 +1851,8 @@ namespace KADES.Controllers
                             KODE_JABATAN = A.KODE_JABATAN,
                             JABATAN = B.JABATAN,
                             NIK = A.NIK,
-                            SK=A.SK,
-                            SK_BERHENTI=A.SK_BERHENTI,
+                            SK = A.SK,
+                            SK_BERHENTI = A.SK_BERHENTI,
                             NO_TELP = A.NO_TELP,
                             ALAMAT = A.ALAMAT,
                             TGL_PENGANGKATAN = DateTime.Parse(A.TGL_PENGANGKATAN.ToString("dd/MM/yyyy")),
@@ -1871,14 +1871,14 @@ namespace KADES.Controllers
                 ddlRFJabatan = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).ToList(),
                 ddlJK = JK,
                 ListVW_PKK = model.ToList(),
-                AdmSearchBydate=AdmSearchBydate
+                AdmSearchBydate = AdmSearchBydate
             };
 
             var getRoles = _context.RFJabatan.Where(x => x.ACTIVE.Equals(true) && x.KODE_TYPE.Equals("PKK")).Select(x => new SelectListItem
             {
                 Value = x.KODE_JABATAN,
                 Text = x.JABATAN.ToString(),
-                
+
             });
 
             ViewBag.ddlJabatan = getRoles;
@@ -1900,8 +1900,8 @@ namespace KADES.Controllers
                     NAMA = PKK.NAMA,
                     JENIS_KELAMIN = PKK.JENIS_KELAMIN,
                     NIK = PKK.NIK,
-                    SK=PKK.SK,
-                    SK_BERHENTI=null,
+                    SK = PKK.SK,
+                    SK_BERHENTI = null,
                     NO_TELP = PKK.NO_TELP,
                     ALAMAT = PKK.ALAMAT,
                     TGL_PENGANGKATAN = PKK.TGL_PENGANGKATAN,
@@ -1984,7 +1984,7 @@ namespace KADES.Controllers
 
             Query = from A in _context.PKK
                     join B in _context.RFJabatan on A.KODE_JABATAN equals B.KODE_JABATAN
-                        where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
+                    where A.TGL_PENGANGKATAN.Date >= DateTime.Parse(PERIODFROM).Date && A.TGL_PENGANGKATAN.Date <= DateTime.Parse(PERIODTO).Date
                     select new VW_PKK()
                     {
                         ID = A.ID,
@@ -1993,8 +1993,8 @@ namespace KADES.Controllers
                         KODE_JABATAN = A.KODE_JABATAN,
                         JABATAN = B.JABATAN,
                         NIK = A.NIK,
-                        SK=A.SK,
-                        SK_BERHENTI=A.SK_BERHENTI,
+                        SK = A.SK,
+                        SK_BERHENTI = A.SK_BERHENTI,
                         NO_TELP = A.NO_TELP,
                         ALAMAT = A.ALAMAT,
                         TGL_PENGANGKATAN = A.TGL_PENGANGKATAN,
@@ -2025,7 +2025,7 @@ namespace KADES.Controllers
                     JK = item.JENIS_KELAMIN.Equals('P') ? "Perempuan" : "Laki-laki";
                     skBerhenti = string.IsNullOrEmpty(item.SK_BERHENTI) ? "" : item.SK_BERHENTI;
                     tglBerhenti = string.IsNullOrEmpty(item.TGL_PEMBERHENTIAN) ? "-" : string.Format("{0:dd/MM/yyyy}", Convert.ToDateTime(item.TGL_PEMBERHENTIAN));
-                    dt.Rows.Add(item.NIK,item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"),skBerhenti, tglBerhenti);
+                    dt.Rows.Add(item.NIK, item.SK, item.NAMA, JK, item.JABATAN, item.ALAMAT, item.NO_TELP, item.TGL_PENGANGKATAN.ToString("dd/MM/yyyy"), skBerhenti, tglBerhenti);
                 }
 
 

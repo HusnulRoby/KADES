@@ -84,7 +84,7 @@
                                                     @{
                                                         disabled = "";
                                                         if (!string.IsNullOrEmpty(item.SK_BERHENTI))
-                                                                                        {
+                                                        {
                                                             disabled = "disabled";
                                                         }
                                                     }
@@ -101,14 +101,16 @@
                                                 var JENIS_KELAMIN = "";
                                                 if (item.JENIS_KELAMIN.Equals('P'))
                                                 {
-                                                    JENIS_KELAMIN= "Perempuan";
-                                                    @JENIS_KELAMIN;
+                                                    JENIS_KELAMIN = "Perempuan";
+                                                    @JENIS_KELAMIN
+                                                    ;
 
                                                 }
                                                 else
                                                 {
-                                                    JENIS_KELAMIN= "Laki - laki";
-                                                    @JENIS_KELAMIN;
+                                                    JENIS_KELAMIN = "Laki - laki";
+                                                    @JENIS_KELAMIN
+                                                    ;
                                                 }
                                             }
                                         </td>
@@ -180,12 +182,12 @@
                                         <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlJK" asp-for="@Model.AparaturDesa.JENIS_KELAMIN"></select>
                                         @*@Html.DropDownListFor(model => model.AparaturDesa.KODE_JABATAN, new SelectList(Model.ddlRFJabatan, "KODE_JABATAN", "JABATAN"), new { @class = "form-control form-control-user" })*@
                                     </div>
-                                    
 
-                                    
+
+
                                 </div>
                                 <div class="col-sm-6">
-                                    
+
                                     <div class="field_form">
                                         <label class="label_field  control-label">No Telp</label>
                                         <input id="NO_TELP" asp-for="@Model.AparaturDesa.NO_TELP" type="text" class="form-control form-control-sm form-control-user" required />
@@ -194,7 +196,7 @@
                                         <label class="label_field  control-label">Alamat</label>
                                         <textarea id="ALAMAT" style="height:100px;margin-bottom:10px" class="form-control form-control-sm form-control-user" asp-for="@Model.AparaturDesa.ALAMAT" required></textarea>
                                     </div>
-                                    
+
 
                                     <div class="field_form">
                                         <label class="label_field  control-label">Tanggal Masuk</label>
@@ -218,14 +220,11 @@
         </div>
         <!-- end model popup -->
     </div>
-
-    
-
 </div>
 
 
 <script type="text/javascript">
-     function clearSearch() {
+    function clearSearch() {
         ClearDataInDIV("divSearchList");
     }
 </script>

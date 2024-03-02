@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">NIK</label>
-                                        <input id="NIK" asp-for="@Model.Penduduk.NIK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" required/>
+                                        <input id="NIK" asp-for="@Model.Penduduk.NIK" type="number" maxlength="16" class="form-control form-control-sm form-control-user" required />
                                     </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">Nama</label>
@@ -144,8 +144,8 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    
-                                    
+
+
                                     <div class="field_form">
                                         <label class="label_field  control-label">No. Akta Kelahiran</label>
                                         <input id="AKTA" asp-for="@Model.Penduduk.NO_AKTA" type="number" maxlength="16" class="form-control form-control-sm form-control-user" />
@@ -161,14 +161,14 @@
                                         <input type="date" asp-for="@Model.Penduduk.DOB" class="form-control form-control-sm form-control-user" required />
                                     </div>
 
-                                        <div class="field_form">
-                                            <label class="label_field  control-label">Kampung</label>
-                                            <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDusun" asp-for="@Model.Penduduk.ID_DUSUN"></select>
-                                        </div>
-                                        <div class="field_form">
-                                            <label class="label_field  control-label">RT</label>
+                                    <div class="field_form">
+                                        <label class="label_field  control-label">Kampung</label>
+                                        <select class="form-control form-control-sm form-control-user" asp-items="@ViewBag.ddlDusun" asp-for="@Model.Penduduk.ID_DUSUN"></select>
+                                    </div>
+                                    <div class="field_form">
+                                        <label class="label_field  control-label">RT</label>
                                         <input id="RT" asp-for="@Model.Penduduk.RT" type="number" class="form-control form-control-sm form-control-user" required />
-                                        </div>
+                                    </div>
                                     <div class="field_form">
                                         <label class="label_field  control-label">RW</label>
                                         <input id="RW" asp-for="@Model.Penduduk.RW" type="number" class="form-control form-control-sm form-control-user" required />
@@ -201,11 +201,9 @@
                                         <label class="label_field  control-label">Nama Ibu</label>
                                         <input id="IBU" asp-for="@Model.Penduduk.NAMA_IBU" type="text" class="form-control form-control-sm form-control-user" />
                                     </div>
-                                    
+
                                 </div>
                             </div>
-
-                           
                         </fieldset>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-sm btn-success">Save</button>

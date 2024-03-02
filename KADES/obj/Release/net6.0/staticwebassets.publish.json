@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rnMiUgolWkbojgBjSyhhgIedxRyZ62X1fDERj8/CW+4=",
+  "Hash": "h7qNvbAhSYELOXUGHHp4AEnSLM//1wlxAr/FvHng9Ys=",
   "Source": "KADES",
   "BasePath": "_content/KADES",
   "Mode": "Default",
@@ -1545,6 +1545,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Content\\images\\layout_img\\visa.png"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\karangParanje.jpg",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Content/images/logo/karangParanje.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Content\\images\\logo\\karangParanje.jpg"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\karangParanje2.jpg",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Content/images/logo/karangParanje2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Content\\images\\logo\\karangParanje2.jpg"
     },
     {
       "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Content\\images\\logo\\Lambang_Kabupaten_Garut (1).png",
@@ -7750,6 +7784,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Upload\\RAB\\Lampiran\\jawaban1_UAP.docx"
+    },
+    {
+      "Identity": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx",
+      "SourceId": "KADES",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Kuliah\\Skripsi\\Apps\\KADES\\KADES\\wwwroot\\",
+      "BasePath": "_content/KADES",
+      "RelativePath": "Upload/RealisasiRAB/Pembangunan Jalan Umum/ListSoal_Kelompok Husnul & Pak Joni (1).docx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\RealisasiRAB\\Pembangunan Jalan Umum\\ListSoal_Kelompok Husnul & Pak Joni (1).docx"
     }
   ]
 }
